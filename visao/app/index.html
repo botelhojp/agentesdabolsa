@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html data-ng-app="gpapp">
+<head>
+<meta charset="utf-8">
+<title>Agentes da Bolsa</title>
+
+<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+<!-- build:css(.) styles/vendor.css -->
+<!-- bower:css -->
+<link rel="stylesheet" href="bower_components/ng-grid/ng-grid.css" />
+<link rel="stylesheet" href="bower_components/angular-swagger-ui/dist/css/swagger-ui.min.css" />
+<link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css" />
+<!-- endbower -->
+<!-- endbuild -->
+<!-- build:css(.tmp) styles/main.css -->
+<link rel="stylesheet" href="styles/yeti.css">
+<link rel="stylesheet" href="styles/main.css">
+<link rel="stylesheet" href="styles/animate.css">
+<!-- endbuild -->
+
+</head>
+
+<body ng-cloak>
+
+	<div class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#/home">Agentes da Bolsa</a>
+			</div>
+			<div class="navbar-collapse collapse" id="navbar-main">
+				<ul class="nav navbar-nav">
+					<li class="dropdown"><a class="dropdown-toggle"
+						data-toggle="dropdown" href="#" id="themes">Agentes<span
+							class="caret"></span></a>
+						<ul class="dropdown-menu" aria-labelledby="themes">
+							<li><a href="#/agent/">Criar</a></li>
+						</ul>
+					</li>
+
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes">Simulação<span class="caret"></span></a>
+						<ul class="dropdown-menu" aria-labelledby="themes">
+							<li><a href="#/run/start">Iniciar</a></li>
+							<li><a href="#/run/stop">Parar</a></li>
+						</ul></li>
+					<li>
+						<a href="#/about">Sobre</a>
+					</li>									
+				</ul>
+			</div>
+		</div>
+	</div>
+	
+	<div class="container-fluid">
+		<div class="col-sm-9 col-md-10 main" ng-view></div>		
+		
+		<div ng-controller="AuthController" >
+			<div  style="color: red;" class="container-fluid" ng-show="guiaEnabled === false">Guia Desativado</div>
+		</div>
+		
+		
+	</div>
+
+	
+	<!-- build:js(.) scripts/vendor.js -->
+	<!-- bower:js -->
+	<script src="bower_components/es5-shim/es5-shim.js"></script>
+	<script src="bower_components/jquery/dist/jquery.js"></script>
+	<script src="bower_components/angular/angular.js"></script>
+	<script src="bower_components/angular-animate/angular-animate.js"></script>
+	<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+	<script src="bower_components/angular-cookies/angular-cookies.js"></script>
+	<script src="bower_components/angular-i18n/angular-locale_pt-br.js"></script>
+	<script src="bower_components/angular-resource/angular-resource.js"></script>
+	<script src="bower_components/angular-route/angular-route.js"></script>
+	<script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+	<script src="bower_components/angular-touch/angular-touch.js"></script>
+	<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+	<script src="bower_components/bootbox/bootbox.js"></script>
+	<script src="bower_components/json3/lib/json3.js"></script>
+	<script src="bower_components/ng-grid/build/ng-grid.js"></script>
+	<script src="bower_components/angular-swagger-ui/dist/scripts/swagger-ui.min.js"></script>
+	<script src="bower_components/angular-notification/angular-notification.js"></script>
+	<script src="bower_components/angular-loading-bar/build/loading-bar.js"></script>
+	<!-- endbower -->
+	<!-- endbuild -->
+
+	<!-- build:js({.tmp,app}) scripts/scripts.js -->
+
+	<!-- Main -->		
+	<script src="scripts/app.js"></script>
+	<script src="scripts/config.js"></script>
+
+	<!-- Controllers -->
+	
+	<script src="scripts/authorization/controllers/auth.js"></script>
+
+	<!-- Services -->
+	<script src="scripts/authorization/services/auth.js"></script>
+	<script src="scripts/services/app.js"></script>
+	<script src="scripts/services/alert.js"></script>
+	<script src="scripts/services/data.js"></script>
+		
+	<!-- Lib's -->
+	<!-- endbuild -->
+
+
+</body>
+</html>

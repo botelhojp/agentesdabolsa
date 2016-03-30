@@ -1,0 +1,30 @@
+<div class="row">
+    <div class="col-sm-5 col-sm-offset-2 col-lg-offset-4 col-md-6 col-md-offset-0">
+        <div class="well bs-component">
+            <form name="form" ng-controller="AuthController" class="form-horizontal">
+                <fieldset>
+                    <legend>Identifique-se</legend>
+                    <div class="form-group">
+                        <label for="username" class="col-lg-2 control-label">Usuário</label>
+                        <div class="col-lg-10">
+                            <input required name="username" type="text" class="form-control" ng-model="user.username" placeholder="Usuário" maxlength="50">
+                        </div>
+                        <div class="help-block col-lg-10 col-lg-offset-2" ng-show="!form.username.$valid">Informe o usuário</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="col-lg-2 control-label">Senha</label>
+                        <div class="col-lg-10">
+                            <input required name="password" type="password" type="text" class="form-control" ng-model="user.password" placeholder="Senha" maxlength="25">
+                        </div>
+                        <div class="help-block col-lg-10 col-lg-offset-2" ng-show="!form.password.$valid">Informe sua senha</div>
+                    </div>
+                    <div class="col-lg-10 col-lg-offset-5">
+                        <button type="submit" class="btn btn-primary" ng-click="login()">Entrar</button>
+                    </div>
+                    </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
