@@ -9,12 +9,22 @@ app.config(['$routeProvider', '$httpProvider', 'USER_ROLES', 'cfpLoadingBarProvi
 
         cfpLoadingBarProvider.spinnerTemplate = '<div></div>';
 
-        $routeProvider.when('/about', {
-            templateUrl: 'views/about.html',
+        $routeProvider.when('/agente', {
+            templateUrl: 'views/agente.html',
             data: {
                 requires: [USER_ROLES.GUEST]
             },
-        }).otherwise({
+        }).when('/bolsa', {
+			templateUrl : 'views/bolsa.html',
+			data : {
+				requires : [ USER_ROLES.GUEST ]
+			},
+		}).when('/usuario', {
+			templateUrl : 'views/usuario.html',
+			data : {
+				requires : [ USER_ROLES.GUEST ]
+			},
+		}).otherwise({
             redirectTo: '/',
             data: {
                 requires: [USER_ROLES.GUEST]
@@ -36,7 +46,6 @@ app.config([
             function($q, $location, $rootScope, AppService, ENV) {
                 return {
                     'request': function(config) {
-
                         var token = AppService.getToken();
                         if (token) {
                             config.headers.Authorization = 'Token ' + token;
@@ -83,7 +92,7 @@ app
                     '$routeChangeStart',
                     function(event, next) {
 
-                        //console.log($location.path());
+                        console.log($location.path());
 
                         if (next.redirectTo !== '/') {
 
@@ -104,13 +113,7 @@ app
                 $rootScope.currentUser = null;
                 AppService.removeToken();
                 DataService.clear();
-                if (AppService.guiaIsOn()) {
-                    var redirect = ENV.applogin_url + "/" + ENV.applogin_login_page + "?" + ENV.app_login_redirect_parameter + "=" + ENV.index_page;
-                    //console.log("Redirec to guia: " + redirect);							
-                    $window.location = redirect;
-                } else {
-                    $location.path("/login");
-                }
+                $location.path("/login");
             });
 
             $rootScope.$on(AUTH_EVENTS.loginFailed, function() {
@@ -154,26 +157,23 @@ app.constant('APP_EVENTS', {
     offline: 'app-events-offline'
 });
 
-app.factory('AuthInterceptor', ['$rootScope', '$q', 'AUTH_EVENTS',
-    'APP_EVENTS',
-    function($rootScope, $q, AUTH_EVENTS, APP_EVENTS) {
 
-        return {
-            responseError: function(response) {
-                $rootScope.$broadcast({
-                    '-1': APP_EVENTS.offline,
-                    0: APP_EVENTS.offline,
-                    404: APP_EVENTS.offline,
-                    503: APP_EVENTS.offline,
-                    401: AUTH_EVENTS.notAuthenticated,
-                    403: AUTH_EVENTS.notAuthorized,
-                    419: AUTH_EVENTS.sessionTimeout,
-                    440: AUTH_EVENTS.sessionTimeout
-                }[response.status], response);
+app.factory('AuthInterceptor', [ '$rootScope', '$q', 'AUTH_EVENTS',
+'APP_EVENTS', function($rootScope, $q, AUTH_EVENTS, APP_EVENTS) {
+	return {
+		responseError : function(response) {
+			$rootScope.$broadcast({
+				'-1' : APP_EVENTS.offline,
+				0 : APP_EVENTS.offline,
+				404 : APP_EVENTS.offline,
+				503 : APP_EVENTS.offline,
+				401 : AUTH_EVENTS.notAuthenticated,
+				403 : AUTH_EVENTS.notAuthorized,
+				419 : AUTH_EVENTS.sessionTimeout,
+				440 : AUTH_EVENTS.sessionTimeout
+			}[response.status], response);
+			return $q.reject(response);
+		}
+	};
 
-                return $q.reject(response);
-            }
-        };
-
-    }
-]);
+} ]);

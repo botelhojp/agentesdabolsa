@@ -20,45 +20,43 @@
 
 </head>
 
-<body ng-cloak>
+<body data-ng-cloak>
 
-	<div class="navbar navbar-inverse navbar-fixed-top">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="#/home">Agentes da Bolsa</a>
-			</div>
-			<div class="navbar-collapse collapse" id="navbar-main">
-				<ul class="nav navbar-nav">
-					<li class="dropdown"><a class="dropdown-toggle"
-						data-toggle="dropdown" href="#" id="themes">Agentes<span
-							class="caret"></span></a>
-						<ul class="dropdown-menu" aria-labelledby="themes">
-							<li><a href="#/agent/">Criar</a></li>
-						</ul>
-					</li>
-
-					<li class="dropdown">
-						<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes">Simulação<span class="caret"></span></a>
-						<ul class="dropdown-menu" aria-labelledby="themes">
-							<li><a href="#/run/start">Iniciar</a></li>
-							<li><a href="#/run/stop">Parar</a></li>
-						</ul></li>
-					<li>
-						<a href="#/about">Sobre</a>
-					</li>									
-				</ul>
-			</div>
-		</div>
-	</div>
+	<nav class="navbar navbar-default">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>
+	      <a class="navbar-brand" href="#">Agentes da Bolsa</a>
+	    </div>
+	
+	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	      <ul class="nav navbar-nav">
+	        <li class="dropdown">
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Simulador<span class="caret"></span></a>
+	          <ul class="dropdown-menu">
+	            <li><a href="#/agente">Agentes</a></li>
+	            <li><a href="#/bolsa">Bolsa</a></li>
+	          </ul>
+	        </li>
+	        <li class="dropdown">
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administração<span class="caret"></span></a>
+	          <ul class="dropdown-menu">
+	            <li><a href="#/usuario">Usuários</a></li>
+	             <li><a href="#/dados">Dados</a></li>
+	          </ul>
+	        </li>
+	      </ul>
+	    </div>
+	  </div>
+</nav>
 	
 	<div class="container-fluid">
 		<div class="col-sm-9 col-md-10 main" ng-view></div>		
-		
-		<div ng-controller="AuthController" >
-			<div  style="color: red;" class="container-fluid" ng-show="guiaEnabled === false">Guia Desativado</div>
-		</div>
-		
-		
 	</div>
 
 	
@@ -93,10 +91,11 @@
 
 	<!-- Controllers -->
 	
-	<script src="scripts/authorization/controllers/auth.js"></script>
+	<script src="scripts/controllers/auth.js"></script>
+	<script src="scripts/controllers/agente.js"></script>
 
 	<!-- Services -->
-	<script src="scripts/authorization/services/auth.js"></script>
+	<script src="scripts/services/auth.js"></script>
 	<script src="scripts/services/app.js"></script>
 	<script src="scripts/services/alert.js"></script>
 	<script src="scripts/services/data.js"></script>
