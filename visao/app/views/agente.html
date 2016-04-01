@@ -3,47 +3,57 @@
 </div>
 
 <div data-ng-controller="AgenteController">
-	
-
-<div data-ng-grid="gridOptions"></div>
-
-<div class="row">
-	<div class="col-xs-12 col-md-6">
-		<div class="input-group input-group-lg">
-		  <span class="input-group-addon" id="sizing-addon1">Tipo</span>
-		  <input type="text" class="form-control" placeholder="Search">
-		</div>
-		<div class="input-group input-group-lg">
-		  <span class="input-group-addon" id="sizing-addon1">Quantidade</span>
-		  <input type="text" class="form-control" placeholder="Quantidade" aria-describedby="sizing-addon1">
+	<div data-ng-grid="gridOptions"></div>
+	<div class="row" style="text-align:center">
+		 <div class="btn-group" role="group" >
+		 	<button type="button" class="btn btn-default">Novo</button>
+			<button type="button" class="btn btn-default">Salvar</button>
+			<button type="button" class="btn btn-default">Excluir</button>
 		</div>
 	</div>
-	<div class="col-xs-12 col-md-6">
-		<div class="input-group">
-			<span class="input-group-addon" id="sizing-addon1">Ação Diária (Antes)</span>
-		    <textarea class="form-control custom-control" rows="3" style="resize:none"></textarea> 
-		 </div>
-		<div class="input-group">
-			<span class="input-group-addon" id="sizing-addon1">Ação Diária (Depois)</span>
-		    <textarea class="form-control custom-control" rows="5" style="resize:none"></textarea> 
-		 </div>
-		<div class="input-group">
-			<span class="input-group-addon" id="sizing-addon1">Solicitar Avaliação</span>
-		    <textarea class="form-control custom-control" rows="5" style="resize:none"></textarea> 
-		 </div>
-		<div class="input-group">
-			<span class="input-group-addon" id="sizing-addon1">Fornecer Ajuda</span>
-		    <textarea class="form-control custom-control" rows="5" style="resize:none"></textarea> 
-		 </div>
+	<div class="row" class="form-group">
+		<div class="col-xs-10 col-md-10">
+			<fieldset class="form-group">
+			  <label for="nome">Nome</label>
+			  <input type="text" class="form-control" id="nome" placeholder="Nome">
+			</fieldset>
+		</div>
+		<div class="col-xs-2 col-md-2">
+			<fieldset class="form-group">
+			  <label for="clones">Clones</label>
+			  <input type="number" name="input" class="form-control" id="clones"  min="0" max="99" required>
+			</fieldset>
+		</div>
 	</div>
-</div>
-
-<div class="row" style="text-align:center">
-	 <div class="btn-group" role="group" >
-		  <button type="button" class="btn btn-default">Salvar</button>
-		  <button type="button" class="btn btn-default">Excluir</button>
+	<div class="row">
+		<ul class="nav nav-pills">
+		  <li role="presentation" data-ng-class="{'active': view_tab == 'tab1'}"><a data-ng-click="changeTab('tab1')">Ação Diária (Pre)</a></li>
+		  <li role="presentation" data-ng-class="{'active': view_tab == 'tab2'}"><a data-ng-click="changeTab('tab2')">Ação Diária (Pos)</a></li>
+		  <li role="presentation" data-ng-class="{'active': view_tab == 'tab3'}"><a data-ng-click="changeTab('tab3')">Solicitar Ajuda</a></li>
+		  <li role="presentation" data-ng-class="{'active': view_tab == 'tab4'}"><a data-ng-click="changeTab('tab4')">Forcecer Ajuda</a></li>
+		  
+		</ul>
+	    <div>
+	        <div class="tab-pane" ng-show="view_tab == 'tab1'">
+				<fieldset class="form-group">
+				  <textarea class="form-control" rows="15" style="resize:none" ></textarea> 
+				</fieldset>
+	        </div>
+	        <div class="tab-pane" ng-show="view_tab == 'tab2'">
+				<fieldset class="form-group">
+				  <textarea class="form-control" rows="15" style="resize:none" ></textarea> 
+				</fieldset>
+	        </div>
+	        <div class="tab-pane" ng-show="view_tab == 'tab3'">
+				<fieldset class="form-group">
+				  <textarea class="form-control" rows="15" style="resize:none" ></textarea> 
+				</fieldset>
+	        </div>
+	        <div class="tab-pane" ng-show="view_tab == 'tab4'">
+				<fieldset class="form-group">
+				  <textarea class="form-control" rows="15" style="resize:none" ></textarea> 
+				</fieldset>
+	        </div>	        	        
+	    </div>
 	</div>
-</div>
-
-
 </div>

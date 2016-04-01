@@ -92,7 +92,7 @@ app
                     '$routeChangeStart',
                     function(event, next) {
 
-                        console.log($location.path());
+                       // console.log($location.path());
 
                         if (next.redirectTo !== '/') {
 

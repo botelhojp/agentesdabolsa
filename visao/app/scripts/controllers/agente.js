@@ -2,6 +2,14 @@
 app.controller('AgenteController', [ '$window', '$http', '$scope', '$route', '$rootScope', '$location', 
 function($window, $http, $scope, $route, $rootScope, $location ) {
 	
+	$scope.changeTab = function(tab) {
+	    $scope.view_tab = tab;
+	}
+	
+	if (!$scope.view_tab){
+		$scope.changeTab('tab1');
+	}
+	
     $scope.filterOptions = {
             filterText: "",
             useExternalFilter: true
@@ -56,6 +64,9 @@ function($window, $http, $scope, $route, $rootScope, $location ) {
             data: 'myData',
             enablePaging: true,
     		showFooter: true,
+    		enableColumnResize: true,
+    		showFilter: true,
+        
             totalServerItems: 'totalServerItems',
             pagingOptions: $scope.pagingOptions,
             filterOptions: $scope.filterOptions,
