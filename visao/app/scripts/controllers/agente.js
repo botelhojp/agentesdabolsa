@@ -1,6 +1,6 @@
 'use strict';
-app.controller('AgenteController', [ '$window', '$http', '$scope', '$route', '$rootScope', '$location', 
-function($window, $http, $scope, $route, $rootScope, $location ) {
+app.controller('AgenteController', [ '$window', '$http', '$scope', '$route', '$rootScope', '$location', 'DataService', 'NAV_DATA',
+function($window, $http, $scope, $route, $rootScope, $location, DataService, NAV_DATA ) {
 	
 	$scope.changeTab = function(tab) {
 	    $scope.view_tab = tab;
@@ -33,14 +33,14 @@ function($window, $http, $scope, $route, $rootScope, $location ) {
                 var data;
                 if (searchText) {
                     var ft = searchText.toLowerCase();
-                    $http.get('http://angular-ui.github.io/ui-grid/jsonFiles/largeLoad.json').success(function (largeLoad) {		
+                    $http.get('largeLoad.json').success(function (largeLoad) {		
                         data = largeLoad.filter(function(item) {
                             return JSON.stringify(item).toLowerCase().indexOf(ft) != -1;
                         });
                         $scope.setPagingData(data,page,pageSize);
                     });            
                 } else {
-                    $http.get('http://angular-ui.github.io/ui-grid/jsonFiles/largeLoad.json').success(function (largeLoad) {
+                    $http.get('largeLoad.json').success(function (largeLoad) {
                         $scope.setPagingData(largeLoad,page,pageSize);
                     });
                 }

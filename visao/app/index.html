@@ -24,7 +24,7 @@
 
 </head>
 
-<body data-ng-cloak>
+<body ng-cloak>
 
 	<nav class="navbar navbar-default">
 	  <div class="container-fluid">
@@ -54,16 +54,16 @@
 	             <li><a href="#/dados">Dados</a></li>
 	          </ul>
 	        </li>
+	        <li class="dropdown nav pull-right">
+	         <div data-ng-controller="UserController"><img alt="" src="{{foto}}" width="50px"></div>
+	        </li>
 	      </ul>
 	    </div>
 	  </div>
-</nav>
-	
+	</nav>
 	<div class="container-fluid">
 		<div class="col-sm-9 col-md-10 main" ng-view></div>		
 	</div>
-
-	
 	<!-- build:js(.) scripts/vendor.js -->
 	<!-- bower:js -->
 	<script src="bower_components/es5-shim/es5-shim.js"></script>
@@ -98,13 +98,14 @@
 	<script src="scripts/controllers/auth.js"></script>
 	<script src="scripts/controllers/agente.js"></script>
 	<script src="scripts/controllers/bolsa.js"></script>
+	<script src="scripts/controllers/user.js"></script>
 
 	<!-- Services -->
 	<script src="scripts/services/auth.js"></script>
 	<script src="scripts/services/app.js"></script>
 	<script src="scripts/services/alert.js"></script>
 	<script src="scripts/services/data.js"></script>
-	
+	<script src="scripts/services/user.js"></script>	
 	<!-- Lib's -->
 	<!-- endbuild -->
 
