@@ -21,11 +21,20 @@ public class AgenteREST {
 
 	@GET
 	public Response list() throws NotFoundException {
-		List<Agente> list = new ArrayList<>();
+		List<Body> list = new ArrayList<>();
 		for(int i = 0; i < 200; i++){
-			list.add(new Agente("agente_" + i, 10));
+			list.add(new Body(new Agente("agente_" + i, 10)));
 		}
 		return Response.ok().entity(list).build();
+	}
+	
+	class Body{
+		Body(Agente a){
+			name = a.getName();
+			clone = a.getClones();
+		}
+		public String name;
+		public long clone;
 	}
 
 	

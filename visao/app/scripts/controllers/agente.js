@@ -40,7 +40,12 @@ function($window, $http, $scope, $route, $rootScope, $location, DataService, NAV
                         $scope.setPagingData(data,page,pageSize);
                     });            
                 } else {
-                    $http.get('/api/agente').success(function (largeLoad) {
+                    $http(
+                    		{
+                    			method: 'GET',
+                    			url: '/api/agente'
+                    		}
+                    ).success(function (largeLoad) {
                         $scope.setPagingData(largeLoad,page,pageSize);
                     });
                 }
@@ -62,6 +67,8 @@ function($window, $http, $scope, $route, $rootScope, $location, DataService, NAV
     	
         $scope.gridOptions = {
             data: 'myData',
+            columnDefs: [{field: 'name', displayName: 'Agente', width: "90%"},
+     	                {field: 'clone', displayName: 'Clones', width: "10%"}],	                
             enablePaging: true,
     		showFooter: true,
     		enableColumnResize: true,

@@ -23,19 +23,4 @@ function($window, $scope, $route, $rootScope, $location, AUTH_EVENTS, AuthServic
 		$rootScope.$broadcast(AUTH_EVENTS.logoutSuccess);
     }	
 	
-	
-	$scope.guiaOn = function guiaOn() {
-		AuthService.guiaOn();		
-		$scope.guiaEnabled = AuthService.guiaEnabled();	
-    } 
-	
-	$scope.guiaOff = function guiaOff() {
-		AuthService.guiaOff();
-		$scope.guiaEnabled = AuthService.guiaEnabled();
-    } 	
-	
-	if (AuthService.guiaEnabled() === null) {		
-		AuthService.guiaOn();
-	}
-	$scope.guiaEnabled = AuthService.guiaEnabled();
 }]);

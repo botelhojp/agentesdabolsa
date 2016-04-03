@@ -53,7 +53,7 @@ app.config([
                         if (token) {
                             config.headers.Authorization = 'Token ' + token;
                         }
-                        if (config.url.indexOf("agentesdabolsa/api") !== -1) {
+                        if (config.url.indexOf("api") !== -1) {
                             config.url = ENV.apiEndpoint + config.url;
                         }
                         return config || $q.when(config);
