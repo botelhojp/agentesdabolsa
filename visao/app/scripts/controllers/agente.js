@@ -33,14 +33,14 @@ function($window, $http, $scope, $route, $rootScope, $location, DataService, NAV
                 var data;
                 if (searchText) {
                     var ft = searchText.toLowerCase();
-                    $http.get('largeLoad.json').success(function (largeLoad) {		
+                    $http.get('/api/agente').success(function (largeLoad) {		
                         data = largeLoad.filter(function(item) {
                             return JSON.stringify(item).toLowerCase().indexOf(ft) != -1;
                         });
                         $scope.setPagingData(data,page,pageSize);
                     });            
                 } else {
-                    $http.get('largeLoad.json').success(function (largeLoad) {
+                    $http.get('/api/agente').success(function (largeLoad) {
                         $scope.setPagingData(largeLoad,page,pageSize);
                     });
                 }
