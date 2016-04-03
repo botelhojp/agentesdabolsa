@@ -10,15 +10,15 @@ import javax.ws.rs.core.Response;
 
 import javassist.NotFoundException;
 
-@Path("agente")
+@Path("app")
 @Produces(APPLICATION_JSON)
 @Consumes(APPLICATION_JSON)
-public class AgenteREST {
+public class AppREST {
 
 	@GET
-	@Path("teste")
+	@Path("version")
 	public Response test() throws NotFoundException {
-		return Response.ok().entity("tudo ok!").build();
+		return Response.ok().entity("1.0.0").build();
 	}
 
 	
