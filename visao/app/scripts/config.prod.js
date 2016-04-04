@@ -4,8 +4,8 @@ angular.module('config', [])
 (
 		'ENV', {
 			name:						'development',
-			oauth2_redirect:				'http://agentesdabolsa.com.br/s',
-			apiEndpoint:					'http://agentesdabolsa.com.br/s'
+			oauth2_redirect:				'http://agentesdabolsa.com.br',
+			apiEndpoint:					'http://agentesdabolsa.com.br/s/agentesdabolsa'
 		}
 )
 ;
