@@ -140,6 +140,7 @@ app
 
             $rootScope.$on(AUTH_EVENTS.logoutSuccess, function() {
                 AppService.clear();
+                location.reload();
             });
 
             $rootScope.$on(AUTH_EVENTS.loginSuccess, function() {
