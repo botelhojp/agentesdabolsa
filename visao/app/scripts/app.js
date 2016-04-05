@@ -11,7 +11,13 @@ app.config(['$routeProvider', '$httpProvider', 'USER_ROLES', 'cfpLoadingBarProvi
         
         
 
-        $routeProvider.when('/agente', {
+        $routeProvider.when('/', {
+			templateUrl : 'views/home.html',
+			data : {
+				requires : [ USER_ROLES.GUEST ]
+			},
+		})
+		.when('/agente', {
 			templateUrl : 'views/agente.html',
 			data : {
 				requires : [ USER_ROLES.USER ]

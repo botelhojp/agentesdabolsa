@@ -16,7 +16,7 @@ function($window, $http, $scope, $route, $rootScope, $location, DataService, NAV
         }; 
         $scope.totalServerItems = 0;
         $scope.pagingOptions = {
-            pageSizes: [5],
+            pageSizes: [5,10],
             pageSize: 5,
             currentPage: 1
         };	
