@@ -27,8 +27,13 @@ app.config(['$routeProvider', '$httpProvider', 'USER_ROLES', 'cfpLoadingBarProvi
 			data : {
 				requires : [ USER_ROLES.USER ]
 			},
+		}).when('/logout', {
+			templateUrl : 'views/home.html',
+			data : {
+				requires : [ USER_ROLES.GUEST ]
+			},
 		}).otherwise({
-            redirectTo: '/',
+            redirectTo: 'views/home.html',
             data: {
                 requires: [USER_ROLES.GUEST]
             },
@@ -53,7 +58,7 @@ app.config([
                         if (token) {
                             config.headers.Authorization = 'Token ' + token;
                         }
-                        if (config.url.indexOf("api") !== -1) {
+                        if (config.url.indexOf("/api/") !== -1) {
                             config.url = ENV.apiEndpoint + config.url;
                         }
                         return config || $q.when(config);
@@ -104,7 +109,7 @@ app
                 			$rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
                 		}
                 	}	
-
+                	
                     if (next.redirectTo !== '/') {
 
                         var requires = next.data.requires;
@@ -122,7 +127,7 @@ app
 
             $rootScope.$on(AUTH_EVENTS.notAuthenticated, function() {
                 $rootScope.currentUser = null;
-                AppService.removeToken();
+                AppService.clear();
                 DataService.clear();
                 $window.location.replace("https://accounts.google.com/o/oauth2/auth?scope=email&client_id=246493542530-jrko5fkin01jiqo004k78j5bmv08135i.apps.googleusercontent.com&redirect_uri=" + ENV.oauth2_redirect + "&response_type=token");
                 
@@ -134,33 +139,25 @@ app
             });
 
             $rootScope.$on(AUTH_EVENTS.logoutSuccess, function() {
-                AppService.removeToken();
-                location.reload();
+                AppService.clear();
             });
 
             $rootScope.$on(AUTH_EVENTS.loginSuccess, function() {
-                $location.path(AppService.getTryUrl());
-                UserService.load(AppService.getToken());
-            	$route.reload();
-                
+    			UserService.load(AppService.getToken());
+    			$location.path(AppService.getTryUrl());
             });
-
         }
     ]);
 
 app.constant('USER_ROLES', {
-	ADMIN: 'USER',
+	USER: 'USER',
     ADMIN: 'ADMIN',
     GUEST: 'GUEST'
 });
 
 
 app.constant('NAV_DATA', {
-    ID_CESSIONARIO: 'nav_data_id_ces',
-    ID_RESPONSAVEL: 'nav_data_id_res',
-    CURRENT_USER_NAME: 'current_user_name',
-    CURRENT_USER_EMAIL: 'current_user_email',
-    CURRENT_USER_FOTO: 'current_user_foto'
+    CURRENT_USER: 'current_user'
 });
 
 app.constant('AUTH_EVENTS', {

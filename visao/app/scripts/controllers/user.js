@@ -1,14 +1,16 @@
 'use strict';
-app.controller('UserController', [ '$window', '$http', '$scope', '$route', '$rootScope', '$location', 'DataService', 'NAV_DATA',
-function($window, $http, $scope, $route, $rootScope, $location, DataService, NAV_DATA  ) {
+app.controller('UserController', [ '$window', '$http', '$scope', '$route', '$rootScope', '$location', 'DataService', 'NAV_DATA', 'AUTH_EVENTS',
+function($window, $http, $scope, $route, $rootScope, $location, DataService, NAV_DATA, AUTH_EVENTS ) {
+
+	setTimeout(function () {
+        $scope.$apply(function () {
+            $scope.user = JSON.parse(DataService.get(NAV_DATA.CURRENT_USER));
+        });
+    }, 2000);
 	
-	$scope.test = "dfdsf";
 	
-	$scope.foto = DataService.get(NAV_DATA.CURRENT_USER_FOTO);
-	$scope.name = DataService.get(NAV_DATA.CURRENT_USER_NAME);
-	
-	console.log($scope.foto);
-	
-	 
-	
+	$scope.logout = function logout() {
+		$rootScope.$broadcast(AUTH_EVENTS.logoutSuccess);
+    }	
+
 }]);

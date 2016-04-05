@@ -56,13 +56,13 @@
 	      </ul>
 	      <ul class="nav navbar-nav navbar-right" data-ng-controller="UserController">
 	        <li class="dropdown">
-	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{name}}<span class="caret"></span></a>
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{user.name}}<span class="caret"></span></a>
 	          <ul class="dropdown-menu">
-	            <li><a href="#/logout">Sair</a></li>
+	            <li data-ng-controller="UserController"><a href="#" data-ng-click="logout()">Sair</a></li>
 	          </ul>
 	        </li>	      
 	      	<li class="dropdown nav pull-right">
-	         <div><img alt="" src="{{foto}}" width="45px"></div>
+	         <div><img alt="" src="{{user.picture}}" width="45px"></div>
 	        </li>
 	      </ul>
 	    </div>
@@ -75,10 +75,7 @@
 	  </div>
 	  <div class="col-sm-2" ></div>
 	</div>
-	
-	
 			
-	</div>
 	<!-- build:js(.) scripts/vendor.js -->
 	<!-- bower:js -->
 	<script src="bower_components/es5-shim/es5-shim.js"></script>
@@ -110,7 +107,6 @@
 
 	<!-- Controllers -->
 	
-	<script src="scripts/controllers/auth.js"></script>
 	<script src="scripts/controllers/agente.js"></script>
 	<script src="scripts/controllers/bolsa.js"></script>
 	<script src="scripts/controllers/user.js"></script>

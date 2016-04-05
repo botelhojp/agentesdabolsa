@@ -1,6 +1,6 @@
 'use strict';
 
-app.service('AppService', ['$window', '$rootScope', '$cookies', 'ENV', function ($window, $rootScope, $cookies, ENV) {
+app.service('AppService', ['$window', '$rootScope', '$cookies', 'ENV', 'NAV_DATA', function ($window, $rootScope, $cookies, ENV, NAV_DATA) {
 
         var tokenKey = "agdb_oauth2";
 
@@ -24,8 +24,10 @@ app.service('AppService', ['$window', '$rootScope', '$cookies', 'ENV', function 
             $window.localStorage.setItem(tokenKey, token);
         };
 
-        service.removeToken = function () {
+        service.clear = function () {
             $window.localStorage.removeItem(tokenKey);
+            $window.localStorage.removeItem(NAV_DATA.CURRENT_USER);
+            
             var cookies = document.cookie.split(";");
             for (var i = 0; i < cookies.length; i++) {
             	var cookie = cookies[i];
