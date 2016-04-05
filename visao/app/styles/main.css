@@ -6,7 +6,7 @@
 
 .nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
     color: #ffffff;
-    background-color: #333333;
+    background-image: linear-gradient(#6d7070, #474949 50%, #3d3f3f);
 }
 
 a {

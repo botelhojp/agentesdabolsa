@@ -33,6 +33,11 @@ app.config(['$routeProvider', '$httpProvider', 'USER_ROLES', 'cfpLoadingBarProvi
 			data : {
 				requires : [ USER_ROLES.USER ]
 			},
+		}).when('/dados', {
+			templateUrl : 'views/dados.html',
+			data : {
+				requires : [ USER_ROLES.USER ]
+			},
 		}).when('/logout', {
 			templateUrl : 'views/home.html',
 			data : {
