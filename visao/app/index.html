@@ -24,7 +24,7 @@
 
 </head>
 
-<body data-ng-cloak>
+<body ng-cloak>
 	<nav class="navbar navbar-default">
 	  <div class="container-fluid">
 	    <div class="navbar-header">
@@ -54,24 +54,25 @@
 	          </ul>
 	        </li>
 	      </ul>
-	      <ul class="nav navbar-nav navbar-right" data-ng-controller="UserController">
+	      <ul class="nav navbar-nav navbar-right" data-ng-controller="UserController" ng-cloak>
 	        <li class="dropdown">
 	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{user.name}}<span class="caret"></span></a>
 	          <ul class="dropdown-menu">
-	            <li data-ng-controller="UserController"><a href="#" data-ng-click="logout()">Sair</a></li>
+	            <li data-ng-controller="UserController" ><a href="#" data-ng-click="logout()">Sair</a></li>
 	          </ul>
 	        </li>	      
 	      	<li class="dropdown nav pull-right">
-	         <div><img alt="" src="{{user.picture}}" width="50px"></div>
+	         <div><img alt="{{user.name}}" class="user-border" src="{{user.picture}}" width="45px"></div>
 	        </li>
 	      </ul>
 	    </div>
 	  </div>
 	</nav>
+	
 	<div class="row">
 	  <div class="col-sm-2" ></div>
 	  <div class="col-sm-8">
-	  	<div data-ng-view></div>	
+	  	<div class="col-sm-9 col-md-10 main" ng-view ng-cloak></div>		
 	  </div>
 	  <div class="col-sm-2" ></div>
 	</div>

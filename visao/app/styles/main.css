@@ -16,3 +16,7 @@ a {
 a:hover, a:focus {
     color: #333333;
 }
+
+.user-border{
+	border-radius: 50%;
+}

@@ -6,7 +6,7 @@ function($window, $http, $scope, $route, $rootScope, $location, DataService, NAV
         $scope.$apply(function () {
             $scope.user = JSON.parse(DataService.get(NAV_DATA.CURRENT_USER));
         });
-    }, 2000);
+    }, 100);
 	
 	
 	$scope.logout = function logout() {
