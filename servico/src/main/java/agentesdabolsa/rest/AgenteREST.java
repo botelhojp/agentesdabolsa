@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
@@ -18,7 +19,7 @@ import javassist.NotFoundException;
 @Produces(APPLICATION_JSON)
 @Consumes(APPLICATION_JSON)
 public class AgenteREST {
-
+	
 	@GET
 	public Response list() throws NotFoundException {
 		List<Body> list = new ArrayList<>();
@@ -27,6 +28,13 @@ public class AgenteREST {
 		}
 		return Response.ok().entity(list).build();
 	}
+	
+	
+    @POST
+    public Response insert(final Agente agente) {
+        return Response.ok().entity(agente).build();
+    }
+	
 	
 	class Body{
 		Body(Agente a){

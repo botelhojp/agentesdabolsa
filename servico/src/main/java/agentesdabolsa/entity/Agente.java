@@ -1,6 +1,6 @@
 package agentesdabolsa.entity;
 
-public class Agente {
+public class Agente extends JSONBean {
 
 	private String name;
 
