@@ -10,7 +10,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
-import agentesdabolsa.elk.AgenteDAO;
+import agentesdabolsa.dao.AgenteDAO;
 import javassist.NotFoundException;
 
 @Path("app")

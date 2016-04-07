@@ -1,6 +1,19 @@
 'use strict';
-app.controller('AgenteController', [ '$window', '$http', '$scope', '$route', '$rootScope', '$location', 'DataService', 'NAV_DATA',
-function($window, $http, $scope, $route, $rootScope, $location, DataService, NAV_DATA ) {
+app.controller('AgenteController', [ '$window', '$http', '$scope', '$route', '$rootScope', '$location', 'AgenteService', 'DataService', 'NAV_DATA',
+function($window, $http, $scope, $route, $rootScope, $location, AgenteService, DataService, NAV_DATA ) {
+	
+	$scope.agente = {};
+	
+	$scope.save = function () {		
+		AgenteService.save($scope.agente).then(
+			function (data) {
+				$location.path('/agente');
+			},
+			function (error) {
+				console.log(error);					
+			}
+		);
+	};	
 	
 	$scope.changeTab = function(tab) {
 	    $scope.view_tab = tab;
@@ -33,7 +46,7 @@ function($window, $http, $scope, $route, $rootScope, $location, DataService, NAV
                 var data;
                 if (searchText) {
                     var ft = searchText.toLowerCase();
-                    $http.get('/api/agente').success(function (largeLoad) {		
+                    $http.get('/api/agentes').success(function (largeLoad) {		
                         data = largeLoad.filter(function(item) {
                             return JSON.stringify(item).toLowerCase().indexOf(ft) != -1;
                         });
@@ -43,7 +56,7 @@ function($window, $http, $scope, $route, $rootScope, $location, DataService, NAV
                     $http(
                     		{
                     			method: 'GET',
-                    			url: '/api/agente'
+                    			url: '/api/agentes'
                     		}
                     ).success(function (largeLoad) {
                         $scope.setPagingData(largeLoad,page,pageSize);
@@ -68,7 +81,7 @@ function($window, $http, $scope, $route, $rootScope, $location, DataService, NAV
         $scope.gridOptions = {
             data: 'myData',
             columnDefs: [{field: 'name', displayName: 'Agente', width: "90%"},
-     	                {field: 'clone', displayName: 'Clones', width: "10%"}],	                
+     	                {field: 'clones', displayName: 'Clones', width: "10%"}],	                
             enablePaging: true,
     		showFooter: true,
     		enableColumnResize: true,

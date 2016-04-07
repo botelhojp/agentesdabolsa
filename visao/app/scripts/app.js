@@ -69,7 +69,7 @@ app.config([
                         if (token) {
                             config.headers.Authorization = 'Token ' + token;
                         }
-                        if (config.url.indexOf("/api/") !== -1) {
+                        if (config.url.indexOf("/api/") == 0) {
                             config.url = ENV.apiEndpoint + config.url;
                         }
                         return config || $q.when(config);

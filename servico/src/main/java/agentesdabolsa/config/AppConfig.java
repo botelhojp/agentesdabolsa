@@ -3,7 +3,7 @@ package agentesdabolsa.config;
 import java.io.IOException;
 import java.util.Properties;
 
-import agentesdabolsa.exception.AppExceptions;
+import agentesdabolsa.exception.AppException;
 
 public class AppConfig {
 	
@@ -16,7 +16,7 @@ public class AppConfig {
 			prop = new Properties();
 			prop.load(AppConfig.class.getClassLoader().getResourceAsStream("agdb.properties"));
 		} catch (IOException e) {
-			throw new AppExceptions("Erro ao carregar aquivo de propriedades", e);
+			throw new AppException("Erro ao carregar aquivo de propriedades", e);
 		}
 	}
 	

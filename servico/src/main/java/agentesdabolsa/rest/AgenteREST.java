@@ -2,9 +2,6 @@ package agentesdabolsa.rest;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -12,26 +9,26 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
+import agentesdabolsa.dao.AgenteDAO;
 import agentesdabolsa.entity.Agente;
 import javassist.NotFoundException;
 
-@Path("agente")
+@Path("agentes")
 @Produces(APPLICATION_JSON)
 @Consumes(APPLICATION_JSON)
 public class AgenteREST {
 	
+	AgenteDAO dao = AgenteDAO.getInstance();
+	
 	@GET
 	public Response list() throws NotFoundException {
-		List<Body> list = new ArrayList<>();
-		for(int i = 0; i < 200; i++){
-			list.add(new Body(new Agente("agente_" + i, 10)));
-		}
-		return Response.ok().entity(list).build();
+		return Response.ok().entity(dao.findByField("id", "*")).build();
 	}
 	
 	
     @POST
     public Response insert(final Agente agente) {
+    	dao.insert(agente);
         return Response.ok().entity(agente).build();
     }
 	

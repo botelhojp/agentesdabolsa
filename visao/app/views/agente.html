@@ -3,11 +3,12 @@
 </div>
 
 <div data-ng-controller="AgenteController">
+
 	<div data-ng-grid="gridOptions"></div>
 	<div class="row" style="text-align:center">
 		 <div class="btn-group" role="group" >
 		 	<button type="button" class="btn btn-default">Novo</button>
-			<button type="button" class="btn btn-default">Salvar</button>
+			<button type="button" ng-click="save()" class="btn btn-default">Salvar</button>
 			<button type="button" class="btn btn-default">Excluir</button>
 		</div>
 	</div>
@@ -15,13 +16,13 @@
 		<div class="col-xs-10 col-md-10">
 			<fieldset class="form-group">
 			  <label for="nome">Nome do agente</label>
-			  <input type="text" class="form-control" id="nome" placeholder="Nome do agente">
+			  <input type="text" class="form-control" id="nome" ng-model="agente.name" placeholder="Nome do agente">
 			</fieldset>
 		</div>
 		<div class="col-xs-2 col-md-2">
 			<fieldset class="form-group">
 			  <label for="clones">Número de Clones</label>
-			  <input type="number" name="input" class="form-control" id="clones"  min="0" max="99" required>
+			  <input type="number" name="input" class="form-control" ng-model="agente.clones" id="agente.clones"  min="0" max="99" required>
 			</fieldset>
 		</div>
 	</div>
@@ -36,7 +37,7 @@
 	    <div>
 	        <div class="tab-pane" ng-show="view_tab == 'tab1'">
 				<fieldset class="form-group">
-				  <textarea class="form-control" rows="15" style="resize:none" ></textarea> 
+				  <textarea ng-model="agente.actionAfter" class="form-control" rows="15" style="resize:none" ></textarea> 
 				</fieldset>
 	        </div>
 	        <div class="tab-pane" ng-show="view_tab == 'tab2'">

@@ -13,14 +13,17 @@ public class Agente extends JSONBean {
 	private String requestHelp;
 
 	private String responseHelp;
-
-	public Agente() {
-
+	
+	public Agente(){
 	}
 
 	public Agente(String name, long clones) {
 		this.name = name;
 		this.clones = clones;
+	}
+
+	public Agente(long id) {
+		super(id);
 	}
 
 	public String getName() {

@@ -1,14 +1,14 @@
 package agentesdabolsa.exception;
 
-public class AppExceptions extends RuntimeException {
+public class AppException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 	
-	public AppExceptions(String msg, Exception e) {
+	public AppException(String msg, Exception e) {
 		super(msg, e);
 	}
 
-	public AppExceptions(String msg) {
+	public AppException(String msg) {
 		super(msg);
 	}
 	
