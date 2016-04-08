@@ -9,7 +9,7 @@ public class JSONBeanTest {
 	public void test() {
 		Agente a = new Agente();
 		a.setName("agent009");
-		Assert.assertEquals("{\"name\":\"agent009\"}", a.toString());
+		Assert.assertEquals("{\"name\":\"agent009\",\"id\":0}", a.toString());
 	}
 
 }

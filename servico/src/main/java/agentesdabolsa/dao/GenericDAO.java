@@ -51,7 +51,22 @@ public abstract class GenericDAO<T extends JSONBean> extends ELKDAO<T> {
 			throw new AppException("erro no parse json", e);
 		}
 	}
-
+	
+	public List<T> list(){
+		ArrayList<T> rl = new ArrayList<T>();
+		String r = get(getResouce() + "/_search");
+		try {
+			JSONArray jsonArray = new JSONArray("[" + r + "]");
+			JSONArray hits = jsonArray.getJSONObject(0).getJSONObject("hits").getJSONArray("hits");
+			for (int i = 0; i < hits.length(); i++) {
+				rl.add(json.fromJson(hits.getJSONObject(i).getJSONObject("_source").toString(), clazz));
+			}
+			return rl;
+		} catch (JSONException e) {
+			throw new AppException("erro no parse json", e);
+		}	
+	}
+	
 	public T findByID(long id) {
 		try {
 			String r = get(getResouce() + "/" + id);
@@ -65,6 +80,11 @@ public abstract class GenericDAO<T extends JSONBean> extends ELKDAO<T> {
 			throw new AppException("erro no parse json", e);
 		}
 	}
+	
+	public List<T> findByField(String field, Object value){
+		return findByField("id", value.toString());
+	}
+	
 
 	public List<T> findByField(String field, String value) {
 		ArrayList<T> rl = new ArrayList<T>();

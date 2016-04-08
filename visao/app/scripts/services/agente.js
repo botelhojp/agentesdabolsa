@@ -23,5 +23,33 @@ app.service('AgenteService', ['$http', '$q', '$window', 'DataService', 'NAV_DATA
 		});
 		return deferred.promise;
 	};
+	
+	services.get = function(id) {
+		var deferred = $q.defer();
+		$http({
+			url : '/api/agentes/' + id,
+			method : "GET",
+		}).success(function(data) {
+			deferred.resolve(data);
+		}).error(function(data, status) {
+			deferred.reject([ data, status ]);
+		});
+		return deferred.promise;
+	};
+
+	services.delete = function(id) {
+        var deferred = $q.defer();
+        $http({
+            url: '/api/agentes/' + id,
+            method: "DELETE"
+        }).success(function(data) {
+            deferred.resolve(data);
+        }).error(function(data, status) {
+            deferred.reject([data, status]);
+        });
+        return deferred.promise;
+    };	
+	
+
 	return services;
 }]);

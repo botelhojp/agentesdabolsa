@@ -30,7 +30,7 @@ public class ELKDAO<T extends JSONBean> {
 	 * @return
 	 */
 	public String getVersion() {
-		return httpGet(null);
+		return httpGet("");
 	}
 
 	public void deleteAll(String resouce) {
@@ -62,11 +62,12 @@ public class ELKDAO<T extends JSONBean> {
 		InputStream is = null;
 		try {
 			URL url;
-			if (resource != null) {
+			if (resource != null && resource.length() > 0) {
 				url = new URL(SERVER + "/" + DB + "/" + resource);
 			} else {
 				url = new URL(SERVER + "/" + resource);
 			}
+			System.out.println(method + " - "+ url);
 			// System.out.println(method + " " +url.toString());
 			conn = (HttpURLConnection) url.openConnection();
 			conn.setUseCaches(false);

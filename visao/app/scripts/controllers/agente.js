@@ -8,12 +8,39 @@ function($window, $http, $scope, $route, $rootScope, $location, AgenteService, D
 		AgenteService.save($scope.agente).then(
 			function (data) {
 				$location.path('/agente');
+				$scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
 			},
 			function (error) {
 				console.log(error);					
 			}
 		);
 	};	
+	
+	$scope.delete = function () {	
+		console.log($scope.agente.id);
+		AgenteService.delete($scope.agente.id).then(
+				function (data) {
+					$location.path('/agente');
+					$scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
+				},
+				function (error) {
+					console.log(error);					
+				}
+			);			
+	};	
+	
+	$scope.load = function (id) {
+		AgenteService.get(id).then(
+				function (data) {
+					$scope.agente = data;
+				},
+				function (error) {
+					console.log(error);					
+				}
+			);
+	};	
+	
+	console.log($scope.agente);
 	
 	$scope.changeTab = function(tab) {
 	    $scope.view_tab = tab;
@@ -77,11 +104,24 @@ function($window, $http, $scope, $route, $rootScope, $location, AgenteService, D
               $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage, $scope.filterOptions.filterText);
             }
         }, true);
-    	
+
+        
         $scope.gridOptions = {
             data: 'myData',
-            columnDefs: [{field: 'name', displayName: 'Agente', width: "90%"},
-     	                {field: 'clones', displayName: 'Clones', width: "10%"}],	                
+            columnDefs: [
+                         {
+                        	 field: 'name', 
+                        	 displayName: 'Agente', 
+                        	 cellTemplate: '<div  ng-click="load(row.entity.id)" ng-bind="row.getProperty(col.field)"></div>',
+                        	 width: "90%"
+                        },
+     	                {
+                        	field: 'clones', 
+                        	displayName: 'Clones', 
+                        	cellTemplate: '<div  ng-click="load(row.entity.id)" ng-bind="row.getProperty(col.field)"></div>',
+                        	width: "10%"
+                        }
+                        ],	                
             enablePaging: true,
     		showFooter: true,
     		enableColumnResize: true,

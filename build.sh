@@ -10,7 +10,7 @@ git pull
 cd servico
 
 echo "mvn package"
-mvn clean package
+mvn clean package -Dmaven.test.skip=true
 
 cd ../visao
 cp app/scripts/config.prod.js app/scripts/config.js 
