@@ -22,4 +22,4 @@ echo "enviando"
 scp -r  -i ~/.ssh/agdb.pem servico/target/agentesdabolsa.war 	ubuntu@agentesdabolsa.com.br:/home/ubuntu/devvander
 scp -r  -i ~/.ssh/agdb.pem visao/dist 				ubuntu@agentesdabolsa.com.br:/home/ubuntu/devvander
 
-ssh -i ~/.ssh/agdb.pem ubuntu@agentesdabolsa.com.br
+#ssh -i ~/.ssh/agdb.pem ubuntu@agentesdabolsa.com.br
