@@ -4,11 +4,15 @@ function($window, $http, $scope, $route, $rootScope, $location, AgenteService, D
 	
 	$scope.agente = {};
 	
+	$scope.new = function () {		
+		$scope.agente = {};
+	};
+	
 	$scope.save = function () {		
 		AgenteService.save($scope.agente).then(
 			function (data) {
-				$location.path('/agente');
-				$scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
+				$scope.new();
+				$scope.refreshGrid();
 			},
 			function (error) {
 				console.log(error);					
@@ -16,12 +20,17 @@ function($window, $http, $scope, $route, $rootScope, $location, AgenteService, D
 		);
 	};	
 	
+	$scope.refreshGrid = function () {	
+         setTimeout(function () {
+        	 $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
+         }, 1000);
+	}
+	
 	$scope.delete = function () {	
 		console.log($scope.agente.id);
 		AgenteService.delete($scope.agente.id).then(
 				function (data) {
-					$location.path('/agente');
-					$scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
+					$scope.refreshGrid();
 				},
 				function (error) {
 					console.log(error);					
@@ -32,6 +41,7 @@ function($window, $http, $scope, $route, $rootScope, $location, AgenteService, D
 	$scope.load = function (id) {
 		AgenteService.get(id).then(
 				function (data) {
+					console.log(data);
 					$scope.agente = data;
 				},
 				function (error) {
@@ -92,7 +102,9 @@ function($window, $http, $scope, $route, $rootScope, $location, AgenteService, D
             }, 100);
         };
     	
-        $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
+       
+        console.log("update grid");
+        $scope.refreshGrid();
     	
         $scope.$watch('pagingOptions', function (newVal, oldVal) {
             if (newVal !== oldVal && newVal.currentPage !== oldVal.currentPage) {
