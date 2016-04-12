@@ -100,5 +100,14 @@ public abstract class GenericDAO<T extends JSONBean> extends ELKDAO<T> {
 			throw new AppException("erro no parse json", e);
 		}
 	}
+	
+	
+	public T findByFieldUniqueResult(String field, String value) {
+		List<T> rl = findByField(field, value);
+		if (rl.size() >= 1){
+			return rl.get(0);
+		}
+		return null;
+	}
 
 }

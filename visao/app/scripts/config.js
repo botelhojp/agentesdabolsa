@@ -3,9 +3,9 @@ angular.module('config', [])
 .constant
 (
 		'ENV', {
-			name:							'development',
-			oauth2_redirect:				'http://localhost:9000/',
-			apiEndpoint:					'http://localhost:8080/agentesdabolsa'
+			name:						'development',
+			oauth2_redirect:				'http://agentesdabolsa.com.br',
+			apiEndpoint:					'http://agentesdabolsa.com.br/s/agentesdabolsa'
 		}
 )
 ;

@@ -1,6 +1,6 @@
 package agentesdabolsa.entity;
 
-import agentesdabolsa.commons.StringUtils;
+import agentesdabolsa.commons.AppUtils;
 
 public class FileSerie extends JSONBean {
 
@@ -22,7 +22,7 @@ public class FileSerie extends JSONBean {
 	}
 
 	public void setName(String name) {
-		this.name = StringUtils.normalize(name);
+		this.name = AppUtils.normalize(name);
 	}
 
 }

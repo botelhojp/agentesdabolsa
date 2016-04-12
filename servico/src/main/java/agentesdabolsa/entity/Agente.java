@@ -1,6 +1,6 @@
 package agentesdabolsa.entity;
 
-import agentesdabolsa.commons.StringUtils;
+import agentesdabolsa.commons.AppUtils;
 
 public class Agente extends JSONBean {
 
@@ -33,7 +33,7 @@ public class Agente extends JSONBean {
 	}
 
 	public void setName(String name) {
-		this.name = StringUtils.normalize(name);
+		this.name = AppUtils.normalize(name);
 	}
 
 	public Long getClones() {
@@ -49,7 +49,7 @@ public class Agente extends JSONBean {
 	}
 
 	public void setActionAfter(String actionAfter) {
-		this.actionAfter = StringUtils.normalize(actionAfter);
+		this.actionAfter = AppUtils.normalize(actionAfter);
 	}
 
 	public String getActionBefore() {
@@ -57,7 +57,7 @@ public class Agente extends JSONBean {
 	}
 
 	public void setActionBefore(String actionBefore) {
-		this.actionBefore = StringUtils.normalize(actionBefore);
+		this.actionBefore = AppUtils.normalize(actionBefore);
 	}
 
 	public String getRequestHelp() {
@@ -65,7 +65,7 @@ public class Agente extends JSONBean {
 	}
 
 	public void setRequestHelp(String requestHelp) {
-		this.requestHelp = StringUtils.normalize(requestHelp);
+		this.requestHelp = AppUtils.normalize(requestHelp);
 	}
 
 	public String getResponseHelp() {
@@ -73,6 +73,6 @@ public class Agente extends JSONBean {
 	}
 
 	public void setResponseHelp(String responseHelp) {
-		this.responseHelp = StringUtils.normalize(responseHelp);
+		this.responseHelp = AppUtils.normalize(responseHelp);
 	}
 }

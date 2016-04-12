@@ -23,6 +23,10 @@ public class AppException extends RuntimeException {
 		this.status = status;
 	}
 
+	public AppException(String string) {
+		super(string);
+	}
+
 	public Status getStatus() {
 		return status;
 	}
