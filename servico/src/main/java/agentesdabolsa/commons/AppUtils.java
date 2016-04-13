@@ -11,6 +11,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Enumeration;
+import java.util.Hashtable;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -44,6 +45,12 @@ public class AppUtils {
 
 	public static long makeLong(String string) {
 		return new Long(string).longValue();
+	}
+	
+	public static Hashtable<String, String> getMessage(String key, String value){
+		Hashtable<String, String> e = new Hashtable<String, String>();
+		e.put(key, value);
+		return e;
 	}
 
 	public static File descompacta(File _fileZip) {
