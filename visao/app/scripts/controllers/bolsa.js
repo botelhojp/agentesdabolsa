@@ -12,15 +12,23 @@ function($window, $filter, $http, $scope, $route, $rootScope, $location, BolsaSe
 	$scope.end;
 	$scope.cotacoes;
 	
-	$scope.load = function () {	
-		console.log($scope.acao);
-		console.log( $filter('date')($scope.init, 'yyyy-MM-dd') );
-		console.log($scope.end);
-		alert('oba');
+	
+	$scope.loadAcoes = function () {		
+		BolsaService.loadAcoes().then(
+			function (data) {
+				$scope.acoes = data;
+				console.log($scope.acoes);	
+			},
+			function (error) {
+				console.log(error);					
+			}
+		);
 	};
 	
+	$scope.loadAcoes();
+	
 	$scope.loadCotacoes = function () {		
-		BolsaService.loadCotacoes($scope.acao, $filter('date')($scope.init, 'yyyy-MM-dd'), $filter('date')($scope.end, 'yyyy-MM-dd')).then(
+		BolsaService.loadCotacoes($scope.acao).then(
 			function (data) {
 				$scope.cotacoes = data.cotacoes;
 				if (AmCharts.isReady) {
@@ -35,8 +43,13 @@ function($window, $filter, $http, $scope, $route, $rootScope, $location, BolsaSe
 		);
 	};
 	
-	
-	
+	$scope.change = function () {	
+		if ($scope.acao.length === 5){
+			$scope.loadCotacoes();
+		}else{
+			$scope.cotacoes = null;
+		}
+	};
 	
 	//CHART
 
@@ -190,7 +203,4 @@ function($window, $filter, $http, $scope, $route, $rootScope, $location, BolsaSe
 	    // WRITE
 	    chart.write("chartdiv");
 	  };
-	  
-	 
-	
 }]);

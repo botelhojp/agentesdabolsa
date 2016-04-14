@@ -8,6 +8,7 @@ import java.util.List;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 
+import agentesdabolsa.entity.Cotacao;
 import agentesdabolsa.entity.JSONBean;
 import agentesdabolsa.exception.AppException;
 
@@ -53,10 +54,28 @@ public abstract class GenericDAO<T extends JSONBean> extends ELKDAO<T> {
 	}
 	
 	public List<T> list(){
+		return list(get(getResouce() + "/_search"));
+	}
+	
+	
+	public List<T> listOrderDesc(String field){
+		String filtro = "{ \"sort\" : [{ \""+field+"\" : \"desc\" }]}";
+		String jsonResult = http(getResouce()+ "/_search", "POST", filtro);
+		return list(jsonResult);
+	}
+	
+	public List<T> listOrderAsc(String field){
+		String filtro = "{\"from\" : 0, \"size\" : 500, \"sort\" : [{ \""+field+"\" : \"asc\" }]}";
+		String jsonResult = http(getResouce()+ "/_search", "POST", filtro);
+		return list(jsonResult);
+	}
+	
+	
+	
+	public List<T> list(String jsonResult){
 		ArrayList<T> rl = new ArrayList<T>();
-		String r = get(getResouce() + "/_search");
 		try {
-			JSONArray jsonArray = new JSONArray("[" + r + "]");
+			JSONArray jsonArray = new JSONArray("[" + jsonResult + "]");
 			JSONArray hits = jsonArray.getJSONObject(0).getJSONObject("hits").getJSONArray("hits");
 			for (int i = 0; i < hits.length(); i++) {
 				rl.add(json.fromJson(hits.getJSONObject(i).getJSONObject("_source").toString(), clazz));
@@ -67,6 +86,8 @@ public abstract class GenericDAO<T extends JSONBean> extends ELKDAO<T> {
 		}	
 	}
 	
+	
+
 	public T findByID(long id) {
 		try {
 			String r = get(getResouce() + "/" + id);
@@ -85,6 +106,7 @@ public abstract class GenericDAO<T extends JSONBean> extends ELKDAO<T> {
 		return findByField("id", value.toString());
 	}
 	
+	
 
 	public List<T> findByField(String field, String value) {
 		ArrayList<T> rl = new ArrayList<T>();
@@ -101,6 +123,7 @@ public abstract class GenericDAO<T extends JSONBean> extends ELKDAO<T> {
 		}
 	}
 	
+
 	
 	public T findByFieldUniqueResult(String field, String value) {
 		List<T> rl = findByField(field, value);

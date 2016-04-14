@@ -4,55 +4,20 @@
 
 <div data-ng-controller="BolsaController">
 
-<!-- 
-	<div class="row" class="form-group">
-		<div class="col-xs-6 col-md-6">
-			<fieldset class="form-group">
-			  <label for="nome">Início da Simulação:</label>
-			  <input type="date" id="exampleInput" name="input" min="01-01-2005" max="31-12-2015" required />
-			</fieldset>
-		</div>
-		<div class="col-xs-6 col-md-6">
-			<fieldset class="form-group">
-			  <label for="nome">Final da Simulação:</label>
-			  <input type="date" id="exampleInput" name="input" min="01-01-2005" max="31-12-2015" required />
-			</fieldset>
-		</div>
-	</div>
-	<div class="row" class="form-group">
-		<button type="button" class="btn btn-default">Iniciar</button>
-		<button type="button" class="btn btn-default">Parar</button>
-		<button type="button" class="btn btn-default">Limpar</button>
-	</div>
-	
-		<div class="col-xs-6 col-md-6">
-			<fieldset class="form-group">
-			  <label for="nome">Resultados:</label>
-			   <flow-chart style="margin: 5px; width: 100%; height: 100%;"  chart="chartViewModel" ></flow-chart>
-			</fieldset>
-		</div>
- -->
  <div class="row" class="form-group">
-	 <div class="col-md-3">
+	 <div class="col-md-1">
 		<fieldset class="form-group">
 		  <label for="nome">Ação</label>
-		  <input type="text" id="exampleInput" ng-model="acao" name="input"  />
+		    <select  ng-model="acao" ng-change="loadCotacoes()">
+		      <option ng-repeat="option in acoes" value="{{option.nomeres}}">{{option.nomeres}}</option>
+		    </select>
 		</fieldset>
 	 </div>
-	 <div class="col-md-3">
+	 <div class="col-md-1">
 		<fieldset class="form-group">
-		  <label for="nome">Início</label>
-		  <input type="date" id="exampleInput" ng-model="init" name="input" min="01-01-2005" max="31-12-2015" required />
+		  <label for="nome">Ação</label>
+		    <input type="text" id="exampleInput" ng-model="acao" name="input"  maxlength="5" size="5" ng-change="change()" />
 		</fieldset>
-	 </div>
-	 <div class="col-md-3">
-		<fieldset class="form-group">
-		  <label for="nome">Fim</label>
-		  <input type="date" id="exampleInput" ng-model="end" name="input" min="01-01-2005" max="31-12-2015" required />
-		</fieldset>
-	 </div>
-	 <div class="col-md-3">
-		<button type="button" class="btn btn-default" ng-click="loadCotacoes()">Run</button>
 	 </div>
  </div>
 <div id="chartdiv" style="width:100%; height:400px;"></div>
