@@ -8,7 +8,6 @@ import java.util.List;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 
-import agentesdabolsa.entity.Cotacao;
 import agentesdabolsa.entity.JSONBean;
 import agentesdabolsa.exception.AppException;
 

@@ -7,13 +7,29 @@ function($window, $http, $scope, $route, $rootScope, $location, GameService, Bol
 	var graphType = "candlestick";
 	var maxCandlesticks = 100;
 	
+	$scope.dia = "";
+	
 	
 	$scope.buy = function () {
-		$scope.getAtivoRandom();
+		GameService.buy($scope.ativoAtual.nomeres, $scope.dia).then(
+				function (data) {
+					console.log(data);
+				},
+				function (error) {
+					console.log(error);					
+				}
+			);
 	};
 	
 	$scope.sell = function () {
-		$scope.getAtivoRandom();
+		GameService.sell($scope.ativoAtual.nomeres, $scope.dia).then(
+				function (data) {
+					console.log(data);
+				},
+				function (error) {
+					console.log(error);					
+				}
+			);
 	};
 	
 	$scope.help = function () {
@@ -37,9 +53,10 @@ function($window, $http, $scope, $route, $rootScope, $location, GameService, Bol
 	
 	
 	$scope.loadCotacoes = function (ativo) {		
-		BolsaService.loadCotacoes(ativo).then(
+		BolsaService.loadCotacoes(ativo, 'random').then(
 			function (data) {
 				$scope.cotacoes = data.cotacoes;
+				$scope.dia = $scope.cotacoes.substring(0, 10);
 				if (AmCharts.isReady) {
 					  $scope.configChart();
 				  } else {

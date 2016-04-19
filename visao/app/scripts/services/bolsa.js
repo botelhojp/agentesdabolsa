@@ -4,10 +4,10 @@ app.service('BolsaService', ['$window', '$q','$http', 'NAV_DATA', function($wind
 
 	var services = {};
 	
-	services.loadCotacoes = function(acao, init, end) {
+	services.loadCotacoes = function(acao, search) {
 		var deferred = $q.defer();
 		$http({
-			url : '/api/cotacoes?acao='+ acao,
+			url : search ? '/api/cotacoes?acao='+ acao + '&search=random' : '/api/cotacoes?acao='+ acao,
 			method : "GET",
 			headers : {
 				'Content-Type' : 'application/json;charset=utf8'

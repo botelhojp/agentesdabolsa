@@ -15,5 +15,16 @@ app.service('GameService', ['$http', '$window', '$q', function($http, $window, $
 	};
 	
 	
+	services.buy = function(acao, dia) {
+		var deferred = $q.defer();
+		$http.get('/api/game/buy?acao=random&dia=dia').success(function(data) {
+			deferred.resolve(data);
+		}).error(function(data, status) {
+			deferred.reject([ data, status ]);
+		});
+		return deferred.promise;
+	};
+	
+	
 	return services;
 }]);

@@ -12,7 +12,6 @@ import javax.ws.rs.core.Response;
 import com.sun.jersey.api.NotFoundException;
 
 import agentesdabolsa.dao.AcaoDAO;
-import agentesdabolsa.entity.Acao;
 
 @Path("acoes")
 @Produces(APPLICATION_JSON)

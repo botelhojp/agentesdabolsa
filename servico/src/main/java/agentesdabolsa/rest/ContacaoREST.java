@@ -26,10 +26,18 @@ public class ContacaoREST {
 	private CotacaoDAO dao = CotacaoDAO.getInstance();
 	
 	@GET
-	public Response getCotacoes(@QueryParam("acao") String acao){
+	public Response getCotacoes(@QueryParam("acao") String acao, @QueryParam("search") String search){
 		StringBuffer sf = new StringBuffer();
 		System.out.println(acao);
-		List<Cotacao> cotacoes = dao.listCotacoes(acao);
+		
+		List<Cotacao> cotacoes = null;
+		if (search != null && search.equals("random")){
+			cotacoes = dao.findByAcaoRandomResult(acao);
+		}else{
+			cotacoes = dao.listCotacoes(acao);
+		}
+		
+		
 		
 		for (int i = 0; i < cotacoes.size(); i++) {
 			Cotacao cotacao = cotacoes.get(i);
