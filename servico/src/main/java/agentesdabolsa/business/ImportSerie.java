@@ -89,6 +89,7 @@ public class ImportSerie {
 			cotacao.setQuatot(AppUtils.makeLong(linha.substring(152, 170)));
 			cotacao.setVotot(AppUtils.makeLong(linha.substring(170, 188)));
 			cotacao.setIdAcao(acao.getId());
+			
 			cotacaoDao.insert(cotacao);
 			currentStatus.put("value", cotacao.getDatapre() + " itens:" + cont);
 		}

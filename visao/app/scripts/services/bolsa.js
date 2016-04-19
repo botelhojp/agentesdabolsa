@@ -20,6 +20,8 @@ app.service('BolsaService', ['$window', '$q','$http', 'NAV_DATA', function($wind
 		return deferred.promise;
 	};
 
+	
+	//nao usado
 	services.loadAcoes = function() {
 		var deferred = $q.defer();
 		$http({

@@ -34,7 +34,14 @@ public abstract class GenericDAO<T extends JSONBean> extends ELKDAO<T> {
 		}
 	}
 	
-	
+	public long count(){
+		try {
+			JSONArray jsonArray = new JSONArray("[" + get(getResouce() + "/_count") + "]");
+			return jsonArray.getJSONObject(0).getLong("count");
+		} catch (JSONException e) {
+			throw new AppException("erro no parse json", e);
+		}
+	}
 	public long update(T bean) {
 		try {
 			JSONArray jsonArray = new JSONArray("[" + update(getResouce(), bean) + "]");
@@ -45,9 +52,13 @@ public abstract class GenericDAO<T extends JSONBean> extends ELKDAO<T> {
 	}
 
 	public long delete(long id) {
+		JSONArray jsonArray;
 		try {
-			JSONArray jsonArray = new JSONArray("[" + delete(getResouce(), id) + "]");
-			return jsonArray.getJSONObject(0).getLong("_id");
+			jsonArray = new JSONArray("[" + delete(getResouce(), id) + "]");
+			if (jsonArray.getJSONObject(0).getBoolean("found")){
+				return jsonArray.getJSONObject(0).getLong("_id");
+			}
+			return 0;
 		} catch (JSONException e) {
 			throw new AppException("erro no parse json", e);
 		}
@@ -62,6 +73,12 @@ public abstract class GenericDAO<T extends JSONBean> extends ELKDAO<T> {
 		String filtro = "{ \"sort\" : [{ \""+field+"\" : \"desc\" }]}";
 		String jsonResult = http(getResouce()+ "/_search", "POST", filtro);
 		return list(jsonResult);
+	}
+	
+	public T getEntinty(long from, long size){
+		String filtro = "{\"from\" : "+from+", \"size\" : "+size+"}";
+		String jsonResult = http(getResouce()+ "/_search", "POST", filtro);
+		return list(jsonResult).get(0);
 	}
 	
 	public List<T> listOrderAsc(String field){
@@ -102,15 +119,16 @@ public abstract class GenericDAO<T extends JSONBean> extends ELKDAO<T> {
 		}
 	}
 	
-	public List<T> findByField(String field, Object value){
-		return findByField("id", value.toString());
-	}
-	
-	
-
-	public List<T> findByField(String field, String value) {
+	public List<T> findByField(String... params) {
+		String consult = "";
+		for (int i = 0; i < params.length; i= i + 2) {
+			consult += "q=" + params[0] + ":" + params[1];
+			if (i + 2 < params.length){
+				consult += "&";
+			}
+		}
 		ArrayList<T> rl = new ArrayList<T>();
-		String r = get(getResouce() + "/_search?q=" + field + ":" + value + "&pretty=true");
+		String r = get(getResouce() + "/_search?" + consult +  "&pretty=true");
 		try {
 			JSONArray jsonArray = new JSONArray("[" + r + "]");
 			JSONArray hits = jsonArray.getJSONObject(0).getJSONObject("hits").getJSONArray("hits");
@@ -123,7 +141,28 @@ public abstract class GenericDAO<T extends JSONBean> extends ELKDAO<T> {
 		}
 	}
 	
-
+	
+	public long deleteAll() {
+		long count = 0;
+		boolean done = false;
+		while (!done) {
+			List<T> list = list();
+			if (list.isEmpty()) {
+				done = true;
+			} else {
+				for (T t : list) {
+					count++;
+					try{
+						delete(t.getId());
+					}catch(AppException e ){
+						
+					}
+				}
+			}
+		}
+		return count;
+	}
+	
 	
 	public T findByFieldUniqueResult(String field, String value) {
 		List<T> rl = findByField(field, value);

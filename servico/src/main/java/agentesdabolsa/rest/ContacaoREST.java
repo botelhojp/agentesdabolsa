@@ -5,6 +5,7 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -44,4 +45,10 @@ public class ContacaoREST {
 		return Response.ok().entity(AppUtils.getMessage("cotacoes", sf.toString())).build();
 	}
 
+	
+	@DELETE
+	public Response delete(){
+		long total = CotacaoDAO.getInstance().deleteAll();
+		return Response.ok().entity(AppUtils.getMessage("registros_removidos", ""+total)).build();
+	}
 }

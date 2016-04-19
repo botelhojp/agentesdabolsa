@@ -33,10 +33,6 @@ public class ELKDAO<T extends JSONBean> {
 		return httpGet("");
 	}
 
-	public void deleteAll(String resouce) {
-		http(resouce + "/" + "_search?q=*", "DELETE", null);
-	}
-
 	public String get(String resouce) {
 		return httpGet(resouce);
 	}

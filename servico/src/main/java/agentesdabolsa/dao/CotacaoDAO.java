@@ -3,8 +3,11 @@ package agentesdabolsa.dao;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import javax.ws.rs.core.Response.Status;
+
 import agentesdabolsa.entity.Acao;
 import agentesdabolsa.entity.Cotacao;
+import agentesdabolsa.exception.AppException;
 
 public class CotacaoDAO extends GenericDAO<Cotacao> {
 	private static CotacaoDAO dao = new CotacaoDAO();
@@ -23,6 +26,9 @@ public class CotacaoDAO extends GenericDAO<Cotacao> {
 
 	public List<Cotacao> listCotacoes(String _acao) {
 		Acao acao = acaoDao.findByName(_acao);
+		if (acao == null){
+			throw new AppException(Status.NOT_FOUND, "detalhe", "Ação [" + _acao + "] não encontrada");
+		}
 		List<Cotacao> rt = findByAcao(acao.getId());
 		return rt;
 	}

@@ -27,7 +27,6 @@ function($window, $http, $scope, $route, $rootScope, $location, AgenteService, D
 	}
 	
 	$scope.delete = function () {	
-		console.log($scope.agente.id);
 		AgenteService.delete($scope.agente.id).then(
 				function (data) {
 					$scope.refreshGrid();
@@ -41,7 +40,6 @@ function($window, $http, $scope, $route, $rootScope, $location, AgenteService, D
 	$scope.load = function (id) {
 		AgenteService.get(id).then(
 				function (data) {
-					console.log(data);
 					$scope.agente = data;
 				},
 				function (error) {
@@ -49,8 +47,6 @@ function($window, $http, $scope, $route, $rootScope, $location, AgenteService, D
 				}
 			);
 	};	
-	
-	console.log($scope.agente);
 	
 	$scope.changeTab = function(tab) {
 	    $scope.view_tab = tab;
@@ -102,8 +98,6 @@ function($window, $http, $scope, $route, $rootScope, $location, AgenteService, D
             }, 100);
         };
     	
-       
-        console.log("update grid");
         $scope.refreshGrid();
     	
         $scope.$watch('pagingOptions', function (newVal, oldVal) {

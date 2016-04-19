@@ -17,4 +17,11 @@ public class AcaoDAO extends GenericDAO<Acao>{
 	public Acao findByName(String nomeres) {
 		return findByFieldUniqueResult("nomeres", nomeres);
 	}
+
+	public Acao getRandom() {		
+		long from = Math.round(count()* Math.random());
+		return getEntinty(from,1);
+	}
+	
+	
 }

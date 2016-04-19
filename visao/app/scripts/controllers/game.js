@@ -1,35 +1,50 @@
 'use strict';
-app.controller('BolsaController', [ '$window', '$filter', '$http', '$scope', '$route', '$rootScope', '$location', 'BolsaService',
-function($window, $filter, $http, $scope, $route, $rootScope, $location, BolsaService ) {
-	
-	
+app.controller('GameController', [ '$window', '$http', '$scope', '$route', '$rootScope', '$location', 'GameService', 'BolsaService',
+function($window, $http, $scope, $route, $rootScope, $location, GameService, BolsaService ) {
+
 	var chart;
 	var graph;
 	var graphType = "candlestick";
 	var maxCandlesticks = 100;
 	
-	$scope.acao;
-	$scope.init;
-	$scope.end;
-	$scope.cotacoes;
-	$scope.indiceBovespa = ["ABEV3","BBAS3","BBDC3","BBDC4","BBSE3","BRAP4","BRFS3","BRKM5","BRML3","BVMF3","CCRO3","CESP6","CIEL3","CMIG4","CPFE3","CPLE6","CSAN3","CSNA3","CTIP3","CYRE3","ECOR3","EMBR3","ENBR3","EQTL3","ESTC3","FIBR3","GGBR4","GOAU4","HGTX3","HYPE3","ITSA4","ITUB4","JBSS3","KLBN11","KROT3","LAME4","LREN3","MRFG3","MRVE3","MULT3","NATU3","OIBR3","PCAR4","PETR3","PETR4","QUAL3","RADL3","RENT3","RUMO3","SANB11","SBSP3","SMLE3","SUZB5","TBLE3","TIMP3","UGPA3","USIM5","VALE3","VALE5","VIVT4","WEGE3"];
 	
-	$scope.loadCotacoes = function () {	
-		
-		var ativo;
-		if ($scope.carteiraIbovespa){
-			ativo = $scope.carteiraIbovespa;
-		}else{
-			ativo = $scope.acao;
-		}
+	$scope.buy = function () {
+		$scope.getAtivoRandom();
+	};
+	
+	$scope.sell = function () {
+		$scope.getAtivoRandom();
+	};
+	
+	$scope.help = function () {
+		$scope.getAtivoRandom();
+	};
+	
+	$scope.getAtivoRandom = function () {
+		GameService.getAtivoRandom().then(
+			function (data) {
+				$scope.ativoAtual = data;
+				$scope.loadCotacoes($scope.ativoAtual.nomeres);
+			},
+			function (error) {
+				console.log(error);					
+			}
+		);
+	};	
+	
+	$scope.getAtivoRandom();
+	
+	
+	
+	$scope.loadCotacoes = function (ativo) {		
 		BolsaService.loadCotacoes(ativo).then(
 			function (data) {
 				$scope.cotacoes = data.cotacoes;
 				if (AmCharts.isReady) {
-					$scope.configChart();
-				} else {
-					AmCharts.ready($scope.configChart);
-				}
+					  $scope.configChart();
+				  } else {
+					  AmCharts.ready($scope.configChart);
+				  }
 			},
 			function (error) {
 				console.log(error);					
@@ -37,14 +52,7 @@ function($window, $filter, $http, $scope, $route, $rootScope, $location, BolsaSe
 		);
 	};
 	
-	$scope.change = function () {	
-		if ($scope.acao.length === 5){
-			$scope.carteiraIbovespa = undefined;
-			$scope.loadCotacoes();
-		}else{
-			$scope.cotacoes = null;
-		}
-	};
+	
 	
 	//CHART
 
@@ -199,4 +207,5 @@ function($window, $filter, $http, $scope, $route, $rootScope, $location, BolsaSe
 	    // WRITE
 	    chart.write("chartdiv");
 	  };
+	  
 }]);

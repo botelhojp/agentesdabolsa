@@ -23,6 +23,12 @@ app.config(['$routeProvider', '$httpProvider', 'USER_ROLES', 'cfpLoadingBarProvi
 				requires : [ USER_ROLES.USER ]
 			},
 		})
+		.when('/game', {
+			templateUrl : 'views/game.html',
+			data : {
+				requires : [ USER_ROLES.USER ]
+			},
+		})
         .when('/bolsa', {
 			templateUrl : 'views/bolsa.html',
 			data : {
