@@ -9,6 +9,7 @@ import org.codehaus.jettison.json.JSONArray;
 
 import agentesdabolsa.entity.Acao;
 import agentesdabolsa.entity.Cotacao;
+import agentesdabolsa.entity.Game;
 import agentesdabolsa.exception.AppException;
 
 public class CotacaoDAO extends GenericDAO<Cotacao> {
@@ -43,10 +44,10 @@ public class CotacaoDAO extends GenericDAO<Cotacao> {
 		return super.list(jsonResult);
 	}
 
-	public List<Cotacao> findByAcaoRandomResult(String _acao) {
-		Acao acao = acaoDao.findByName(_acao);
+	public List<Cotacao> findByAcaoRandomResult(Game game) {
+		Acao acao = acaoDao.findByName(game.getAcao().getNomeres());
 		if (acao == null) {
-			throw new AppException(Status.NOT_FOUND, "detalhe", "Ação [" + _acao + "] não encontrada");
+			throw new AppException(Status.NOT_FOUND, "detalhe", "Ação [" + game.getAcao().getNomeres() + "] não encontrada");
 		}
 		
 		long total = 0;
@@ -64,10 +65,22 @@ public class CotacaoDAO extends GenericDAO<Cotacao> {
 			}
 		}
 		long from = Math.round((total - SIZE) * Math.random());
+		game.setFrom(from);
 
 		String filtro = "{ \"from\" : " + from + ", \"size\" : " + SIZE + ",  \"sort\" : [{ \"datapre\" : \"desc\" }]}";
 		String jsonResult = http(getResouce() + "/_search?q=idAcao:" + acao.getId(), "POST", filtro);
 		return super.list(jsonResult);
+	}
+
+	public Cotacao getCotacao(String _acao, long from) {
+		Acao acao = acaoDao.findByName(_acao);
+		if (acao == null) {
+			throw new AppException(Status.NOT_FOUND, "detalhe", "Ação [" + _acao + "] não encontrada");
+		}
+		from = (from < 0)? 0 : from;
+		String filtro = "{ \"from\" : " + from + ", \"size\" : " + SIZE + ",  \"sort\" : [{ \"datapre\" : \"desc\" }]}";
+		String jsonResult = http(getResouce() + "/_search?q=idAcao:" + acao.getId(), "POST", filtro);
+		return super.list(jsonResult).get(0);		
 	}
 
 }

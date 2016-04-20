@@ -1,7 +1,8 @@
 'use strict';
-app.controller('GameController', [ '$window', '$http', '$scope', '$route', '$rootScope', '$location', 'GameService', 'BolsaService',
-function($window, $http, $scope, $route, $rootScope, $location, GameService, BolsaService ) {
-
+app.controller('GameController', [ '$window', '$http', '$scope', '$route', '$rootScope', '$location', 'GameService', 'UserService',
+function($window, $http, $scope, $route, $rootScope, $location, GameService, UserService ) {
+	
+	
 	var chart;
 	var graph;
 	var graphType = "candlestick";
@@ -11,9 +12,10 @@ function($window, $http, $scope, $route, $rootScope, $location, GameService, Bol
 	
 	
 	$scope.buy = function () {
-		GameService.buy($scope.ativoAtual.nomeres, $scope.dia).then(
+		GameService.buy($scope.game).then(
 				function (data) {
-					console.log(data);
+					$scope.game = data;
+					$scope.play();
 				},
 				function (error) {
 					console.log(error);					
@@ -22,9 +24,10 @@ function($window, $http, $scope, $route, $rootScope, $location, GameService, Bol
 	};
 	
 	$scope.sell = function () {
-		GameService.sell($scope.ativoAtual.nomeres, $scope.dia).then(
+		GameService.sell($scope.game).then(
 				function (data) {
-					console.log(data);
+					$scope.game = data;
+					$scope.play();
 				},
 				function (error) {
 					console.log(error);					
@@ -36,38 +39,37 @@ function($window, $http, $scope, $route, $rootScope, $location, GameService, Bol
 		$scope.getAtivoRandom();
 	};
 	
-	$scope.getAtivoRandom = function () {
-		GameService.getAtivoRandom().then(
-			function (data) {
-				$scope.ativoAtual = data;
-				$scope.loadCotacoes($scope.ativoAtual.nomeres);
-			},
-			function (error) {
-				console.log(error);					
-			}
-		);
+	$scope.play = function () {
+		if ($scope.game == undefined){
+			GameService.start(UserService.getUser().email).then(
+					function (data) {
+						$scope.game = data;
+						$scope.play();
+					},
+					function (error) {
+						console.log(error);					
+					}
+				);
+		}else{
+			GameService.play($scope.game).then(
+				function (data) {
+					$scope.ativoAtual = data.acao;
+					$scope.cotacoes = data.cotecoes;
+					$scope.dia = $scope.cotacoes.substring(0, 10);
+					if (AmCharts.isReady) {
+						  $scope.configChart();
+					  } else {
+						  AmCharts.ready($scope.configChart);
+					  }
+				},
+				function (error) {
+					console.log(error);					
+				}
+			);
+		}
 	};	
 	
-	$scope.getAtivoRandom();
-	
-	
-	
-	$scope.loadCotacoes = function (ativo) {		
-		BolsaService.loadCotacoes(ativo, 'random').then(
-			function (data) {
-				$scope.cotacoes = data.cotacoes;
-				$scope.dia = $scope.cotacoes.substring(0, 10);
-				if (AmCharts.isReady) {
-					  $scope.configChart();
-				  } else {
-					  AmCharts.ready($scope.configChart);
-				  }
-			},
-			function (error) {
-				console.log(error);					
-			}
-		);
-	};
+	$scope.play();
 	
 	
 	

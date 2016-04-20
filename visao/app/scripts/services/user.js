@@ -8,5 +8,11 @@ app.service('UserService', ['$http', '$window', 'DataService', 'NAV_DATA', funct
             DataService.set(NAV_DATA.CURRENT_USER, JSON.stringify(response.data));
         });
     };
+    
+    
+    services.getUser = function(){
+    	return JSON.parse(DataService.get(NAV_DATA.CURRENT_USER));
+    }
+    
 	return services;
 }]);

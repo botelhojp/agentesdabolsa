@@ -20,25 +20,17 @@ import agentesdabolsa.entity.Cotacao;
 @Produces(APPLICATION_JSON)
 @Consumes(APPLICATION_JSON)
 public class ContacaoREST {
-	
-	//private SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-	
+
 	private CotacaoDAO dao = CotacaoDAO.getInstance();
-	
+
 	@GET
-	public Response getCotacoes(@QueryParam("acao") String acao, @QueryParam("search") String search){
+	public Response getCotacoes(@QueryParam("acao") String acao) {
 		StringBuffer sf = new StringBuffer();
 		System.out.println(acao);
-		
+
 		List<Cotacao> cotacoes = null;
-		if (search != null && search.equals("random")){
-			cotacoes = dao.findByAcaoRandomResult(acao);
-		}else{
-			cotacoes = dao.listCotacoes(acao);
-		}
-		
-		
-		
+		cotacoes = dao.listCotacoes(acao);
+
 		for (int i = 0; i < cotacoes.size(); i++) {
 			Cotacao cotacao = cotacoes.get(i);
 			sf.append(cotacao.getDatapre()).append(",");
@@ -46,17 +38,16 @@ public class ContacaoREST {
 			sf.append(cotacao.getPremax()).append(",");
 			sf.append(cotacao.getPremin()).append(",");
 			sf.append(cotacao.getPreult());
-			if (i < cotacoes.size() - 1){
+			if (i < cotacoes.size() - 1) {
 				sf.append("\n");
 			}
 		}
 		return Response.ok().entity(AppUtils.getMessage("cotacoes", sf.toString())).build();
 	}
 
-	
 	@DELETE
-	public Response delete(){
+	public Response delete() {
 		long total = CotacaoDAO.getInstance().deleteAll();
-		return Response.ok().entity(AppUtils.getMessage("registros_removidos", ""+total)).build();
+		return Response.ok().entity(AppUtils.getMessage("registros_removidos", "" + total)).build();
 	}
 }

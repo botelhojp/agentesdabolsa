@@ -1,6 +1,7 @@
 package agentesdabolsa.servlet;
 
 import java.io.IOException;
+import java.util.Enumeration;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -20,8 +21,17 @@ public class AuthServer implements Filter {
 	}
 
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		System.out.println("doFilter");
+	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+		final Enumeration<String> attributeNames = servletRequest.getAttributeNames();
+        while (attributeNames.hasMoreElements()) {
+            System.out.println("{attribute} " + servletRequest.getParameter(attributeNames.nextElement()));
+        }
+
+        final Enumeration<String> parameterNames = servletRequest.getParameterNames();
+        while (parameterNames.hasMoreElements()) {
+            System.out.println("{parameter} " + servletRequest.getParameter(parameterNames.nextElement()));
+        }
+        filterChain.doFilter(servletRequest, servletResponse);
 		
 	}
 
