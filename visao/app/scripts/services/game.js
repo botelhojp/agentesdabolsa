@@ -25,6 +25,18 @@ app.service('GameService', ['$http', '$window', '$q', function($http, $window, $
 	};
 	
 	
+	services.addGame = function(agente) {
+		var deferred = $q.defer();
+		$http.get('/api/game/add?agente=' + agente.id).success(function(data) {
+			deferred.resolve(data);
+		}).error(function(data, status) {
+			deferred.reject([ data, status ]);
+		});
+		return deferred.promise;
+	};
+	
+	
+	
 	services.buy = function(game) {
 		var deferred = $q.defer();
 		$http.get('/api/game/buy?game=' + game.user).success(function(data) {

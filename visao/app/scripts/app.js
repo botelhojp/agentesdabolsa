@@ -8,8 +8,6 @@ app.config(['$routeProvider', '$httpProvider', 'USER_ROLES', 'cfpLoadingBarProvi
     function($routeProvider, $httpProvider, USER_ROLES, cfpLoadingBarProvider) {
 
         cfpLoadingBarProvider.spinnerTemplate = '<div></div>';
-        
-        
 
         $routeProvider.when('/', {
 			templateUrl : 'views/home.html',
@@ -25,6 +23,12 @@ app.config(['$routeProvider', '$httpProvider', 'USER_ROLES', 'cfpLoadingBarProvi
 		})
 		.when('/game', {
 			templateUrl : 'views/game.html',
+			data : {
+				requires : [ USER_ROLES.USER ]
+			},
+		})
+		.when('/log', {
+			templateUrl : 'views/log.html',
 			data : {
 				requires : [ USER_ROLES.USER ]
 			},

@@ -11,6 +11,7 @@
 		 <div class="btn-group" role="group" >
 		 	<button type="button" ng-click="new()" class="btn btn-default">Novo</button>
 			<button type="button" ng-click="save()" class="btn btn-default">Salvar</button>
+			<button type="button" ng-click="startGame()" class="btn btn-default">Iniciar Jogo</button>
 			<button type="button" ng-click="delete()" class="btn btn-default">Excluir</button>
 		</div>
 	</div>
@@ -39,22 +40,22 @@
 	    <div>
 	        <div class="tab-pane" ng-show="view_tab == 'tab1'">
 				<fieldset class="form-group">
-				  <textarea ng-model="agente.actionBefore" class="form-control" rows="15" style="resize:none" ></textarea> 
+				  <textarea ng-model="agente.actionBefore" class="form-control code" rows="15" style="resize:none" ></textarea> 
 				</fieldset>
 	        </div>
 	        <div class="tab-pane" ng-show="view_tab == 'tab2'">
 				<fieldset class="form-group">
-				  <textarea ng-model="agente.actionAfter" class="form-control" rows="15" style="resize:none" ></textarea> 
+				  <textarea ng-model="agente.actionAfter" class="form-control code" rows="15" style="resize:none" ></textarea> 
 				</fieldset>
 	        </div>
 	        <div class="tab-pane" ng-show="view_tab == 'tab3'">
 				<fieldset class="form-group">
-				  <textarea ng-model="agente.requestHelp" class="form-control" rows="15" style="resize:none" ></textarea> 
+				  <textarea ng-model="agente.requestHelp" class="form-control code" rows="15" style="resize:none" ></textarea> 
 				</fieldset>
 	        </div>
 	        <div class="tab-pane" ng-show="view_tab == 'tab4'">
 				<fieldset class="form-group">
-				  <textarea ng-model="agente.responseHelp"  class="form-control" rows="15" style="resize:none" ></textarea> 
+				  <textarea ng-model="agente.responseHelp"  class="form-control code" rows="15" style="resize:none" ></textarea> 
 				</fieldset>
 	        </div>	        	        
 	    </div>

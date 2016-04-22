@@ -12,6 +12,7 @@ import javax.ws.rs.core.Response;
 
 import com.sun.jersey.api.NotFoundException;
 
+import agentesdabolsa.business.LogBC;
 import agentesdabolsa.dao.AgenteDAO;
 
 @Path("app")
@@ -26,6 +27,12 @@ public class AppREST {
 	public Response test() throws NotFoundException {
 		Version version = new Version("1.0.0", dao.getVersion());
 		return Response.ok().entity(version).build();
+	}
+	
+	@GET
+	@Path("log")
+	public Response log() throws NotFoundException {
+		return Response.ok().entity(LogBC.getMessages()).build();
 	}
 	
 	 class Version implements Serializable{

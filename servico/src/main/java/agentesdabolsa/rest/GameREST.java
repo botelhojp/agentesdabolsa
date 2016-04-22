@@ -15,9 +15,10 @@ import javax.ws.rs.core.Response;
 import com.sun.jersey.api.NotFoundException;
 
 import agentesdabolsa.business.GameBC;
-import agentesdabolsa.commons.AppUtils;
 import agentesdabolsa.dao.AcaoDAO;
+import agentesdabolsa.dao.AgenteDAO;
 import agentesdabolsa.dao.CotacaoDAO;
+import agentesdabolsa.entity.Agente;
 import agentesdabolsa.entity.Cotacao;
 import agentesdabolsa.entity.Game;
 
@@ -26,6 +27,8 @@ import agentesdabolsa.entity.Game;
 @Consumes(APPLICATION_JSON)
 public class GameREST {
 
+	private GameBC game = GameBC.getInstance();
+	private AgenteDAO agenteDao = AgenteDAO.getInstance();
 	private AcaoDAO dao = AcaoDAO.getInstance();
 	private CotacaoDAO ctDao = CotacaoDAO.getInstance();
 
@@ -38,6 +41,7 @@ public class GameREST {
 	@GET
 	@Path("play")
 	public Response getRandom(@QueryParam("game") String user) throws NotFoundException {
+		
 		Game game = GameBC.getInstance().getGame(user);
 		game.setAcao(dao.getRandom());
 		StringBuffer sf = new StringBuffer();
@@ -79,4 +83,15 @@ public class GameREST {
 		GameBC.getInstance().buy(game);
 		return Response.ok().entity(game).build();
 	}
+	
+	
+	@GET
+	@Path("add")
+	public Response add(@QueryParam("agente") String id) throws NotFoundException {
+		Agente agente = agenteDao.findByID(Long.parseLong(id));
+		game.add(agente);
+		return Response.ok().build();
+	}
+	
+	
 }

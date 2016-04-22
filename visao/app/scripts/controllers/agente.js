@@ -1,6 +1,6 @@
 'use strict';
-app.controller('AgenteController', [ '$window', '$http', '$scope', '$route', '$rootScope', '$location', 'AgenteService', 'DataService', 'NAV_DATA',
-function($window, $http, $scope, $route, $rootScope, $location, AgenteService, DataService, NAV_DATA ) {
+app.controller('AgenteController', [ '$window', '$http', '$scope', '$route', '$rootScope', '$location', 'AgenteService', 'DataService', 'NAV_DATA', 'GameService',
+function($window, $http, $scope, $route, $rootScope, $location, AgenteService, DataService, NAV_DATA, GameService ) {
 	
 	$scope.agente = {};
 	
@@ -19,6 +19,18 @@ function($window, $http, $scope, $route, $rootScope, $location, AgenteService, D
 			}
 		);
 	};	
+	
+	$scope.startGame = function () {		
+		GameService.addGame($scope.agente).then(
+				function (data) {
+					
+				},
+				function (error) {
+					console.log(error);					
+				}
+			);
+	};	
+	
 	
 	$scope.refreshGrid = function () {	
          setTimeout(function () {

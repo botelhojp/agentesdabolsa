@@ -1,19 +1,31 @@
 package agentesdabolsa.business;
 
+import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.List;
 
 import agentesdabolsa.dao.CotacaoDAO;
+import agentesdabolsa.entity.Agente;
 import agentesdabolsa.entity.Cotacao;
 import agentesdabolsa.entity.Game;
 
 public class GameBC {
 	private static GameBC instance = new GameBC();
 	
+	
 	private Hashtable<String, Game> games = new Hashtable<String, Game>();
+	
+	private static List<Agente> list;
+	private static Thread time;
 	
 	private CotacaoDAO cotacaoDao = CotacaoDAO.getInstance();
 	
-	private GameBC(){}
+	
+	private GameBC(){
+		list = new ArrayList<Agente>();
+		time = new Thread(new Time(list));
+		time.start();
+	}
 	
 	public static GameBC getInstance(){
 		return instance;
@@ -66,5 +78,11 @@ public class GameBC {
 			game.setCarteira(game.getCarteira() * (1 - diff));
 		}
 	}
+
+	public void add(Agente agente) {
+		list.add(agente);
+	}
+
+	
 
 }
