@@ -4,6 +4,7 @@ function($window, $http, $scope, $route, $rootScope, $location, AgenteService, D
 	
 	$scope.agente = {};
 	
+	
 	$scope.new = function () {		
 		$scope.agente = {};
 	};

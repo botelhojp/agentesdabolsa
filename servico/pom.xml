@@ -11,6 +11,12 @@
 
 	<dependencies>
 
+		<dependency>
+			<groupId>javax.websocket</groupId>
+			<artifactId>javax.websocket-api</artifactId>
+			<version>1.0</version>
+		</dependency>
+
 		<!-- rest -->
 		<dependency>
 			<groupId>javax.ws.rs</groupId>

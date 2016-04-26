@@ -43,7 +43,8 @@ public class AgenteBC {
 			default:
 				break;
 			}
-			System.out.println(game.getCarteira());
+			
+			LogBC.log("agente: " + agente.getId() + " carteira: " + game.getCarteira() ) ;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
