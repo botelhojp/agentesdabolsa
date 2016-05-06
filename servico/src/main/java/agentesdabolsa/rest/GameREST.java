@@ -27,8 +27,6 @@ import agentesdabolsa.entity.Game;
 @Consumes(APPLICATION_JSON)
 public class GameREST {
 
-	private GameBC game = GameBC.getInstance();
-	private AgenteDAO agenteDao = AgenteDAO.getInstance();
 	private AcaoDAO dao = AcaoDAO.getInstance();
 	private CotacaoDAO ctDao = CotacaoDAO.getInstance();
 
@@ -86,10 +84,15 @@ public class GameREST {
 	
 	
 	@GET
-	@Path("add")
-	public Response add(@QueryParam("agente") String id) throws NotFoundException {
-		Agente agente = agenteDao.findByID(Long.parseLong(id));
-		game.add(agente);
+	@Path("simulate_start")
+	public Response add(@QueryParam("rounds") int rounds ) throws NotFoundException {
+		AgenteDAO agenteDao = AgenteDAO.getInstance();
+		GameBC.configure(rounds);
+		GameBC game = GameBC.getInstance();
+		for(Agente agente : agenteDao.list()){
+			game.add(agente);
+		}
+		GameBC.start();
 		return Response.ok().build();
 	}
 	

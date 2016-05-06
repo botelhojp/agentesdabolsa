@@ -21,17 +21,6 @@ function($window, $http, $scope, $route, $rootScope, $location, AgenteService, D
 		);
 	};	
 	
-	$scope.startGame = function () {		
-		GameService.addGame($scope.agente).then(
-				function (data) {
-					
-				},
-				function (error) {
-					console.log(error);					
-				}
-			);
-	};	
-	
 	
 	$scope.refreshGrid = function () {	
          setTimeout(function () {

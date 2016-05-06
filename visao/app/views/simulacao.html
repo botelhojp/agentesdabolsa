@@ -1,0 +1,43 @@
+<div class="page-header">
+  <h1>Simulação <small>Jogo dos agentes</small></h1>
+</div>
+
+<div data-ng-controller="SimuladorController">
+
+	<div class="row" class="form-group">
+		<div class="col-md-2">
+			<fieldset class="form-group">
+				<label for="nome" >Rounds</label>		
+				<input type="text" class="form-control" id="nome" ng-model="rounds" placeholder="N. Rounds" size="3" maxlength="3">
+			</fieldset>
+		</div>
+		<div class="col-md-1">			
+			<fieldset class="form-group">
+				<label for="nome" >&nbsp;</label>		
+				<button type="button" ng-click="startGame()" class="btn btn-default">Iniciar</button>
+			</fieldset>			
+		</div>
+
+		<div class="col-md-1">			
+			<fieldset class="form-group">
+				<label for="nome" >&nbsp;</label>		
+				<button type="button" ng-click="startGame()" class="btn btn-default">Parar</button>
+			</fieldset>			
+		</div>
+		<div class="col-md-1">			
+			<fieldset class="form-group">
+				<label for="nome" >&nbsp;</label>		
+				<button type="button" ng-click="startGame()" class="btn btn-default">Resultado</button>
+			</fieldset>			
+		</div>
+		<div class="col-md-7">			
+						
+		</div>
+	</div>
+	
+	<div class="row" class="form-group">
+		<div class="col-md-12">
+			<textarea id="messageArea" rows="25" cols="170"></textarea>
+		</div>
+	</div> 
+</div>

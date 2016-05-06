@@ -11,8 +11,10 @@ public class Time implements Runnable {
 
 	private List<Agente> list;
 	private long iteration = 0;
+	private long maxIterations = 0;
 	
-	public Time(List<Agente> list) {
+	public Time(List<Agente> list, int maxIterations) {
+		this.maxIterations = maxIterations;
 		this.list = list;
 	}
 
@@ -24,18 +26,15 @@ public class Time implements Runnable {
 				for (Iterator<Agente> it = list.iterator(); it.hasNext();) {
 					Agente agente = it.next();
 					agenteBC.play(agente, iteration);
-					LogBC.log("agente:" + agente.getId());
-				}
-				LogBC.log("sleep...");
-				Thread.sleep(5000);
-			} catch (InterruptedException e) {
+				}				
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 	}
 
 	private boolean isDone() {
-		return true;
+		return ( iteration < maxIterations );
 	}
 
 }

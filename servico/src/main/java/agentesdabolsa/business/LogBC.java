@@ -7,8 +7,14 @@ import agentesdabolsa.servlet.WebsocketClientEndpoint;
 public class LogBC {
 
 	private static WebsocketClientEndpoint clientEndPoint;
+	
+	private static boolean local = false;
 
 	public static void log(String log) {
+		if (local){
+			System.out.println(log);
+			return;
+		}
 		try {
 			// open websocket
 			if (clientEndPoint == null){
@@ -26,7 +32,12 @@ public class LogBC {
 
 
 		} catch (Exception ex) {
-			System.err.println("InterruptedException exception: " + ex.getMessage());
+			//System.err.println("InterruptedException exception: " + ex.getMessage());
 		}
+	}
+
+	public static void configure(boolean value) {
+		local = value;
+		
 	}
 }

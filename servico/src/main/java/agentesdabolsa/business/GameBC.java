@@ -10,7 +10,7 @@ import agentesdabolsa.entity.Cotacao;
 import agentesdabolsa.entity.Game;
 
 public class GameBC {
-	private static GameBC instance = new GameBC();
+	private static GameBC instance;
 	
 	
 	private Hashtable<String, Game> games = new Hashtable<String, Game>();
@@ -19,12 +19,10 @@ public class GameBC {
 	private static Thread time;
 	
 	private CotacaoDAO cotacaoDao = CotacaoDAO.getInstance();
-	
-	
-	private GameBC(){
+
+	private GameBC(int iterations){
 		list = new ArrayList<Agente>();
-		time = new Thread(new Time(list));
-		time.start();
+		time = new Thread(new Time(list, iterations));
 	}
 	
 	public static GameBC getInstance(){
@@ -83,6 +81,11 @@ public class GameBC {
 		list.add(agente);
 	}
 
-	
+	public static void configure(int iterations) {
+		instance = new GameBC(iterations);
+	}
 
+	public static void start() {
+		time.start();
+	}
 }

@@ -2,6 +2,7 @@ package agentesdabolsa.business;
 
 import java.util.List;
 
+import agentesdabolsa.commons.AppUtils;
 import agentesdabolsa.dao.AcaoDAO;
 import agentesdabolsa.dao.CotacaoDAO;
 import agentesdabolsa.entity.Action;
@@ -44,7 +45,7 @@ public class AgenteBC {
 				break;
 			}
 			
-			LogBC.log("agente: " + agente.getId() + " carteira: " + game.getCarteira() ) ;
+			LogBC.log(iteration + ": Agente: (" + agente.getName() + ") Carteira: " + AppUtils.formatMoeda(game.getCarteira()) ) ;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

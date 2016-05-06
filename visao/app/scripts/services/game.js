@@ -25,9 +25,9 @@ app.service('GameService', ['$http', '$window', '$q', function($http, $window, $
 	};
 	
 	
-	services.addGame = function(agente) {
+	services.simulate = function(rounds) {
 		var deferred = $q.defer();
-		$http.get('/api/game/add?agente=' + agente.id).success(function(data) {
+		$http.get('/api/game/simulate_start?rounds=' + rounds).success(function(data) {
 			deferred.resolve(data);
 		}).error(function(data, status) {
 			deferred.reject([ data, status ]);

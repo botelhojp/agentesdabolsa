@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.Normalizer;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -16,7 +17,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 public class AppUtils {
-
+	
 	public static String normalize(String value) {
 		if (value == null) {
 			return null;
@@ -52,6 +53,11 @@ public class AppUtils {
 		e.put(key, value);
 		return e;
 	}
+	
+	public static String formatMoeda(double value){
+		return NumberFormat.getCurrencyInstance().format(value);
+	}
+	  
 
 	public static File descompacta(File _fileZip) {
 		try {
@@ -87,4 +93,5 @@ public class AppUtils {
 		out.close();
 	}
 
+	
 }
