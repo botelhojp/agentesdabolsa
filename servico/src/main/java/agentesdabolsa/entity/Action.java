@@ -2,6 +2,6 @@ package agentesdabolsa.entity;
 
 public enum Action {
 	
-	BUY, SELL;
+	BUY, SELL, WAIT;
 
 }

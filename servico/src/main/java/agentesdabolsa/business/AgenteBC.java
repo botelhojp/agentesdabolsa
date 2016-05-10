@@ -1,5 +1,7 @@
 package agentesdabolsa.business;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.List;
 
 import agentesdabolsa.commons.AppUtils;
@@ -31,15 +33,20 @@ public class AgenteBC {
 		Interpreter i = new Interpreter();
 		try {
 			i.set("_acao", game.getAcao());
+			i.set("_carteira", game.getCarteira());
 			i.set("_cotacoes", cotacoes);
 			i.eval(agente.getActionBefore());
 			Action action =  (Action) i.get("_return");
+			Double value =  (Double) i.get("_value");
 			switch (action) {
 			case BUY:
-				GameBC.getInstance().buy(game);
+				GameBC.getInstance().buy(game, value);
 				break;
 			case SELL:
-				GameBC.getInstance().sell(game);
+				GameBC.getInstance().sell(game, value);
+				break;
+			case WAIT:
+				GameBC.getInstance().wait(game);
 				break;
 			default:
 				break;
@@ -47,7 +54,11 @@ public class AgenteBC {
 			
 			LogBC.log(iteration + ": Agente: (" + agente.getName() + ") Carteira: " + AppUtils.formatMoeda(game.getCarteira()) ) ;
 		} catch (Exception e) {
-			e.printStackTrace();
+			StringWriter sw = new StringWriter();
+			PrintWriter pw = new PrintWriter(sw);
+			e.printStackTrace(pw);
+			sw.toString();
+			LogBC.log("Error: " + sw.toString());
 		}
 	}
 

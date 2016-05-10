@@ -224,15 +224,6 @@ app.directive('ngEnter', function () {
     };
 });
 
-app.directive(
-		'cadastroMenu',
-		function (){
-			return {
-				templateUrl: 'menu.html'
-			};
-	});
-
-
 
 app.directive('modal', function(){
         return {

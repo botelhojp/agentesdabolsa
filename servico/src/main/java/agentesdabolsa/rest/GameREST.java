@@ -69,7 +69,7 @@ public class GameREST {
 	@Path("buy")
 	public Response buy(@QueryParam("game") String user) throws NotFoundException {
 		Game game = GameBC.getInstance().getGame(user);
-		GameBC.getInstance().buy(game);
+		GameBC.getInstance().buy(game, null);
 		return Response.ok().entity(game).build();
 	}
 	
@@ -78,7 +78,7 @@ public class GameREST {
 	@Path("sell")
 	public Response sell(@QueryParam("game") String user) throws NotFoundException {
 		Game game = GameBC.getInstance().getGame(user);
-		GameBC.getInstance().buy(game);
+		GameBC.getInstance().sell(game, null);
 		return Response.ok().entity(game).build();
 	}
 	
