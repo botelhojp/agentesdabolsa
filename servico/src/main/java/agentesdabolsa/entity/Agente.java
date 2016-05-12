@@ -29,6 +29,9 @@ public class Agente extends JSONBean {
 	}
 
 	public String getName() {
+		if (name == null || name.isEmpty()){
+			return "---";
+		}
 		return name;
 	}
 
