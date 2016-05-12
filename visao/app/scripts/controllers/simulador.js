@@ -2,9 +2,10 @@
 app.controller('SimuladorController', [ '$window', '$http', '$scope', '$route', '$rootScope', '$location', 'GameService', 'NAV_DATA', 'AUTH_EVENTS', 'ENV',
 function($window, $http, $scope, $route, $rootScope, $location, GameService, NAV_DATA, AUTH_EVENTS, ENV ) {
 	
-	$scope.rounds = 1;
-	
-	$scope.startGame = function () {
+	$scope.rounds = 1;	
+
+	$scope.startGame = function () {		
+		
 		$window.document.getElementById("messageArea").value = "";		
 		
 		GameService.simulate($scope.rounds).then(
@@ -15,15 +16,20 @@ function($window, $http, $scope, $route, $rootScope, $location, GameService, NAV
 					console.log(error);					
 				}
 			);
-	};	
+	};		
+
+
+
+	if ($rootScope.mySocket === undefined){
+		 $rootScope.mySocket = new WebSocket(ENV.wsEndpoint);
+	}
 	
-	
-    var mySocket = new WebSocket(ENV.wsEndpoint);
-    mySocket.onopen = function(evt) {
+   
+    $rootScope.mySocket.onopen = function(evt) {
     	 //console.log("Abre conexão…");
     };
     
-    mySocket.onmessage = function(evt) {
+    $rootScope.mySocket.onmessage = function(evt) {
     	$window.document.getElementById("messageArea").value += evt.data + "\n";
 		
 		//rola para a ultima linha
@@ -32,10 +38,10 @@ function($window, $http, $scope, $route, $rootScope, $location, GameService, NAV
 		obj.scrollTop = (obj.scrollTop + 100000); 
 		
     };
-    mySocket.onclose = function(evt) {
+    $rootScope.mySocket.onclose = function(evt) {
     	 console.log("Conexão fechada…");
     };
-    mySocket.onerror = function(evt) {
+    $rootScope.mySocket.onerror = function(evt) {
     	 console.log("Erro…");
     };
 }]);

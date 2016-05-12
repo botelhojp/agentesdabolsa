@@ -3,13 +3,20 @@ app.controller('AgenteController', [ '$window', '$http', '$scope', '$route', '$r
 function($window, $http, $scope, $route, $rootScope, $location, AgenteService, DataService, NAV_DATA, GameService ) {
 	
 	$scope.agente = {};
+
+    var modal = document.getElementById('myModal');
 	
 	
-	$scope.new = function () {		
+	$scope.new = function () {	
+        modal.style.display = "block";	
 		$scope.agente = {};
 	};
+
+    $scope.close = function () {  
+        modal.style.display = "none";  
+    };
 	
-	$scope.save = function () {		
+	$scope.save = function () {		        
 		AgenteService.save($scope.agente).then(
 			function (data) {
 				$scope.new();
@@ -24,6 +31,7 @@ function($window, $http, $scope, $route, $rootScope, $location, AgenteService, D
 	
 	$scope.refreshGrid = function () {	
          setTimeout(function () {
+            modal.style.display = "none";
         	 $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
          }, 1000);
 	}
@@ -40,6 +48,7 @@ function($window, $http, $scope, $route, $rootScope, $location, AgenteService, D
 	};	
 	
 	$scope.load = function (id) {
+        modal.style.display = "block";
 		AgenteService.get(id).then(
 				function (data) {
 					$scope.agente = data;

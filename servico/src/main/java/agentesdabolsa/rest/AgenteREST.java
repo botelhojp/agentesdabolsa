@@ -54,6 +54,9 @@ public class AgenteREST {
 
 	@POST
 	public Response insert(final Agente agente) {
+		if (agente.getName()== null){
+			throw new AppException(Status.BAD_REQUEST, "detalhe", "agente não possui nome");
+		}
 		dao.insert(agente);
 		return Response.ok().entity(agente).build();
 	}
@@ -62,7 +65,10 @@ public class AgenteREST {
 	@Path("{id}")
 	public Response update(@PathParam("id") Long id, final Agente agente) {
 		if (dao.findByID(id) == null) {
-			throw new AppException(Status.NOT_FOUND, "detalhe", "agente não encontrado");
+			throw new AppException(Status.BAD_REQUEST, "detalhe", "agente não encontrado");
+		}
+		if (agente.getName()== null){
+			throw new AppException(Status.BAD_REQUEST, "detalhe", "agente não possui nome");
 		}
 		agente.setId(id);
 		dao.update(agente);

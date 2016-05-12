@@ -4,20 +4,16 @@
 
 <div data-ng-controller="AgenteController">
 
+<!-- The Modal -->
+<div id="myModal" class="modal">
 
-	<div data-ng-grid="gridOptions"></div>
-	
-	<div class="row" style="text-align:center">
-		 <div class="btn-group" role="group" >
-		 	<button type="button" ng-click="new()" class="btn btn-default">Novo</button>
-			<button type="button" ng-click="save()" class="btn btn-default">Salvar</button>			
-			<button type="button" ng-click="delete()" class="btn btn-default">Excluir</button>
-		</div>
-	</div>
+  <!-- Modal content -->
+  <div class="modal-content"> 
+
 	<div class="row" class="form-group">
 		<div class="col-md-10">
 			<fieldset class="form-group">
-			  <label for="nome">Nome do agente</label>
+			  <label for="nome">Agente</label>
 			  <input type="text" class="form-control" id="nome" ng-model="agente.name" placeholder="Nome do agente">
 			</fieldset>
 		</div>
@@ -28,10 +24,11 @@
 			</fieldset>
 		</div>
 	</div>
+
 	<div class="row">
 		<ul class="nav nav-pills">
-		  <li role="presentation" data-ng-class="{'active': view_tab == 'tab1'}"><a data-ng-click="changeTab('tab1')">Ação Diária (Pre)</a></li>
-		  <li role="presentation" data-ng-class="{'active': view_tab == 'tab2'}"><a data-ng-click="changeTab('tab2')">Ação Diária (Pos)</a></li>
+		  <li role="presentation" data-ng-class="{'active': view_tab == 'tab1'}"><a data-ng-click="changeTab('tab1')">Jogar</a></li>
+		  <li role="presentation" data-ng-class="{'active': view_tab == 'tab2'}"><a data-ng-click="changeTab('tab2')">Resultado</a></li>
 		  <li role="presentation" data-ng-class="{'active': view_tab == 'tab3'}"><a data-ng-click="changeTab('tab3')">Solicitar Ajuda</a></li>
 		  <li role="presentation" data-ng-class="{'active': view_tab == 'tab4'}"><a data-ng-click="changeTab('tab4')">Forcecer Ajuda</a></li>
 		  <li role="presentation"><a href="https://github.com/botelhojp/agentesdabolsa/tree/master/servico/src/main/java/agentesdabolsa/entity" target="_new">API</a></li>
@@ -40,24 +37,57 @@
 	    <div>
 	        <div class="tab-pane" ng-show="view_tab == 'tab1'">
 				<fieldset class="form-group">
-				  <textarea ng-model="agente.actionBefore" class="form-control code" rows="15" style="resize:none" ></textarea> 
+				  <textarea ng-model="agente.actionBefore" class="form-control code" rows="20" style="resize:none" ></textarea> 
 				</fieldset>
 	        </div>
 	        <div class="tab-pane" ng-show="view_tab == 'tab2'">
 				<fieldset class="form-group">
-				  <textarea ng-model="agente.actionAfter" class="form-control code" rows="15" style="resize:none" ></textarea> 
+				  <textarea ng-model="agente.actionAfter" class="form-control code" rows="20" style="resize:none" ></textarea> 
 				</fieldset>
 	        </div>
 	        <div class="tab-pane" ng-show="view_tab == 'tab3'">
 				<fieldset class="form-group">
-				  <textarea ng-model="agente.requestHelp" class="form-control code" rows="15" style="resize:none" ></textarea> 
+				  <textarea ng-model="agente.requestHelp" class="form-control code" rows="20" style="resize:none" ></textarea> 
 				</fieldset>
 	        </div>
 	        <div class="tab-pane" ng-show="view_tab == 'tab4'">
 				<fieldset class="form-group">
-				  <textarea ng-model="agente.responseHelp"  class="form-control code" rows="15" style="resize:none" ></textarea> 
+				  <textarea ng-model="agente.responseHelp"  class="form-control code" rows="20" style="resize:none" ></textarea> 
 				</fieldset>
 	        </div>	  
 	    </div>
 	</div>
+
+	 <div class="row" >
+
+		 <div class="btn-group col-md-6" role="group" >	
+		 	<div style="text-align: right;">	 				
+				<button type="button" ng-click="save()" class="btn btn-default" >Salvar</button>			
+				<button type="button" ng-click="close()" class="btn btn-default" >Cancelar</button>	
+			</div>		
+		</div>
+		<div class="btn-group col-md-6" role="group" >		 				
+			<button type="button" ng-click="delete()" class="btn" style="float: right;">Excluir</button>
+		</div>
+	</div>
+
+  </div>
+
+</div>
+
+
+
+<button type="button" ng-click="new()" class="btn btn-default">Novo</button>
+
+
+
+
+	<div data-ng-grid="gridOptions"></div>
+	
+
+
+
+
+
+
 </div>

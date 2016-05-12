@@ -4,13 +4,13 @@ import java.net.URI;
 
 import agentesdabolsa.servlet.WebsocketClientEndpoint;
 
-public class LogBC {
+public class Log {
 
 	private static WebsocketClientEndpoint clientEndPoint;
 	
 	private static boolean local = false;
 
-	public static void log(String log) {
+	public static void info(String log) {
 		if (local){
 			System.out.println(log);
 			return;

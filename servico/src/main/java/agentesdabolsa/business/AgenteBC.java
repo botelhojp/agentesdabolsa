@@ -4,7 +4,6 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.List;
 
-import agentesdabolsa.commons.AppUtils;
 import agentesdabolsa.dao.AcaoDAO;
 import agentesdabolsa.dao.CotacaoDAO;
 import agentesdabolsa.entity.Action;
@@ -28,37 +27,43 @@ public class AgenteBC {
 		Game game = getGame(agente);
 		game.setAcao(agenteDao.getRandom());
 		List<Cotacao> cotacoes = ctDao.findByAcaoRandomResult(game);
-		game.setCotacao(cotacoes.get(0));
+		game.setCotacao(cotacoes.get(cotacoes.size()-1));
 
 		Interpreter i = new Interpreter();
 		try {
+			i.set("_agente", agente);
+			i.set("_game", game);
 			i.set("_acao", game.getAcao());
 			i.set("_carteira", game.getCarteira());
 			i.set("_cotacoes", cotacoes);
-			i.eval(agente.getActionBefore());
-			Action action =  (Action) i.get("_return");
-			Double value =  (Double) i.get("_value");
-			switch (action) {
-			case BUY:
-				GameBC.getInstance().buy(game, value);
-				break;
-			case SELL:
-				GameBC.getInstance().sell(game, value);
-				break;
-			case WAIT:
-				GameBC.getInstance().wait(game);
-				break;
-			default:
-				break;
+			i.set("_iteration", iteration);
+			if (agente.getActionBefore() != null && !agente.getActionBefore().isEmpty()){
+				i.eval(agente.getActionBefore());
+				Action action =  (Action) i.get("_return");
+				Double value =  (Double) i.get("_value");
+				switch (action) {
+				case BUY:
+					GameBC.getInstance().buy(game, value);
+					break;
+				case SELL:
+					GameBC.getInstance().sell(game, value);
+					break;
+				case WAIT:
+					GameBC.getInstance().wait(game);
+					break;
+				default:
+					break;
+				}
 			}
-			
-			LogBC.log(iteration + ": Agente: (" + agente.getName() + ") Carteira: " + AppUtils.formatMoeda(game.getCarteira()) ) ;
+			if (agente.getActionAfter() != null && !agente.getActionAfter().isEmpty()){
+				i.eval(agente.getActionAfter());
+			}
 		} catch (Exception e) {
 			StringWriter sw = new StringWriter();
 			PrintWriter pw = new PrintWriter(sw);
 			e.printStackTrace(pw);
 			sw.toString();
-			LogBC.log("Error: " + sw.toString());
+			Log.info("Error: " + sw.toString());
 		}
 	}
 

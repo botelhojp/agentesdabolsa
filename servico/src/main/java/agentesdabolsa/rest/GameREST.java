@@ -90,7 +90,9 @@ public class GameREST {
 		GameBC.configure(rounds);
 		GameBC game = GameBC.getInstance();
 		for(Agente agente : agenteDao.list()){
-			game.add(agente);
+			if (agente.getClones() != null && agente.getClones() > 0){
+				game.add(agente);
+			}
 		}
 		GameBC.start();
 		return Response.ok().build();
