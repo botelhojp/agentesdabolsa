@@ -13,11 +13,13 @@ public class GameBC {
 	private static GameBC instance;
 
 	private Hashtable<String, Game> games = new Hashtable<String, Game>();
+	
+	private CotacaoDAO cotacaoDao = CotacaoDAO.getInstance();
 
 	private static List<Agente> list;
 	private static Thread time;
 
-	private CotacaoDAO cotacaoDao = CotacaoDAO.getInstance();
+	
 
 	private GameBC(int iterations) {
 		list = new ArrayList<Agente>();
@@ -25,6 +27,9 @@ public class GameBC {
 	}
 
 	public static GameBC getInstance() {
+		if (instance == null){
+			configure(0);
+		}
 		return instance;
 	}
 
@@ -39,16 +44,20 @@ public class GameBC {
 	public Game getGame(String user) {
 		return games.get(user);
 	}
+	
+	public void buy(Game game) {
+		Cotacao cotacaoD = cotacaoDao.getCotacao(game.getAcao().getNomeres(), game.getFrom() - 20);
+		buy(game, game.getCarteira(), cotacaoD);
+	}
 
-	public void buy(Game game, Double value) {
+	public void buy(Game game, Double value, Cotacao cotacaoD) {
 		if (value == null){
 			value = game.getCarteira();
 		}
 		game.setAcaoAnterior(game.getAcao());
-		Cotacao cotacao = cotacaoDao.getCotacao(game.getAcao().getNomeres(), game.getFrom() - 20);
-		game.setNovaCotacao(cotacao);
+		game.setNovaCotacao(cotacaoD);
 		Float antes = game.getCotacao().getPreult();
-		Float depois = cotacao.getPreult();
+		Float depois = cotacaoD.getPreult();
 		Float diff = Math.abs((depois - antes) / antes);
 		game.setDiff(diff);
 		if (depois >= antes) {
@@ -59,23 +68,29 @@ public class GameBC {
 			game.setCarteira((game.getCarteira() - value) + (value * (1 - diff)));
 		}
 	}
+	
+	public void sell(Game game) {
+		Cotacao cotacaoD = cotacaoDao.getCotacao(game.getAcao().getNomeres(), game.getFrom() - 20);
+		sell(game, game.getCarteira(), cotacaoD);
+	}
 
-	public void sell(Game game, Double value) {
+	public void sell(Game game, Double value, Cotacao cotacaoD) {
 		if (value == null){
 			value = game.getCarteira();
 		}
 		game.setAcaoAnterior(game.getAcao());
-		Cotacao cotacao = cotacaoDao.getCotacao(game.getAcao().getNomeres(), game.getFrom() - 20);
-		game.setNovaCotacao(cotacao);
+		
+		
+		game.setNovaCotacao(cotacaoD);
 		Float antes = game.getCotacao().getPreult();
-		Float depois = cotacao.getPreult();
+		Float depois = cotacaoD.getPreult();
 		Float diff = Math.abs((depois - antes) / antes);
 		game.setDiff(diff);
 		if (depois <= antes) {
-			game.setResultado(false);
+			game.setResultado(true);
 			game.setCarteira((game.getCarteira() - value) + (value * (1 + diff)));
 		} else {
-			game.setResultado(true);
+			game.setResultado(false);
 			game.setCarteira((game.getCarteira() - value) + (value * (1 - diff)));
 		}
 	}

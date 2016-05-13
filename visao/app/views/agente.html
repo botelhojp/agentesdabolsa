@@ -11,7 +11,7 @@
   <div class="modal-content"> 
 
 	<div class="row" class="form-group">
-		<div class="col-md-10">
+		<div class="col-md-8">
 			<fieldset class="form-group">
 			  <label for="nome">Agente</label>
 			  <input type="text" class="form-control" id="nome" ng-model="agente.name" placeholder="Nome do agente">
@@ -20,9 +20,15 @@
 		<div class="col-md-2">
 			<fieldset class="form-group">
 			  <label for="clones">Número de Clones</label>
-			  <input type="number" name="input" class="form-control" placeholder="Clones" ng-model="agente.clones" id="agente.clones"  min="0" max="99" required>
+			  <input type="number" name="input" class="form-control" placeholder="Clones" ng-model="agente.clones" min="0" max="99" required>
 			</fieldset>
 		</div>
+		<div class="col-md-2">
+			<fieldset class="form-group">
+			  <label for="clones">Ativo</label>
+			  <input type="checkbox" name="input" class="form-control" ng-model="agente.enabled">
+			</fieldset>
+		</div>		
 	</div>
 
 	<div class="row">
@@ -64,6 +70,7 @@
 		 	<div style="text-align: right;">	 				
 				<button type="button" ng-click="save()" class="btn btn-default" >Salvar</button>			
 				<button type="button" ng-click="close()" class="btn btn-default" >Cancelar</button>	
+				<a  ng-href="#/simular" class="btn btn-default" >Jogar</a>
 			</div>		
 		</div>
 		<div class="btn-group col-md-6" role="group" >		 				
@@ -78,16 +85,8 @@
 
 
 <button type="button" ng-click="new()" class="btn btn-default">Novo</button>
+<a  ng-href="#/simular" class="btn btn-default" >Jogar</a>
 
-
-
-
-	<div data-ng-grid="gridOptions"></div>
+<div data-ng-grid="gridOptions"></div>
 	
-
-
-
-
-
-
 </div>

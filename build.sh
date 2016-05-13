@@ -9,7 +9,7 @@ git pull
 
 cd servico
 
-echo "mvn package"
+echo "mvn clean package"
 mvn clean package -Dmaven.test.skip=true
 
 cd ../visao

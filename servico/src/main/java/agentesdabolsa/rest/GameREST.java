@@ -69,7 +69,7 @@ public class GameREST {
 	@Path("buy")
 	public Response buy(@QueryParam("game") String user) throws NotFoundException {
 		Game game = GameBC.getInstance().getGame(user);
-		GameBC.getInstance().buy(game, null);
+		GameBC.getInstance().buy(game);
 		return Response.ok().entity(game).build();
 	}
 	
@@ -78,7 +78,7 @@ public class GameREST {
 	@Path("sell")
 	public Response sell(@QueryParam("game") String user) throws NotFoundException {
 		Game game = GameBC.getInstance().getGame(user);
-		GameBC.getInstance().sell(game, null);
+		GameBC.getInstance().sell(game);
 		return Response.ok().entity(game).build();
 	}
 	
@@ -90,7 +90,7 @@ public class GameREST {
 		GameBC.configure(rounds);
 		GameBC game = GameBC.getInstance();
 		for(Agente agente : agenteDao.list()){
-			if (agente.getClones() != null && agente.getClones() > 0){
+			if (agente.getEnabled()){
 				game.add(agente);
 			}
 		}

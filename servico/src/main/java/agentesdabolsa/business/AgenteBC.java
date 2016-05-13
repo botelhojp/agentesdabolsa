@@ -15,6 +15,7 @@ import bsh.Interpreter;
 public class AgenteBC {
 
 	private AcaoDAO agenteDao = AcaoDAO.getInstance();
+	private CotacaoDAO cotacaoDao = CotacaoDAO.getInstance();
 	private CotacaoDAO ctDao = CotacaoDAO.getInstance();
 
 	private static AgenteBC instance = new AgenteBC();
@@ -27,7 +28,8 @@ public class AgenteBC {
 		Game game = getGame(agente);
 		game.setAcao(agenteDao.getRandom());
 		List<Cotacao> cotacoes = ctDao.findByAcaoRandomResult(game);
-		game.setCotacao(cotacoes.get(cotacoes.size()-1));
+		Cotacao cotacaoD = cotacaoDao.getCotacao(game.getAcao().getNomeres(), game.getFrom() - 20);
+		game.setCotacao(cotacoes.get(cotacoes.size() - 1));
 
 		Interpreter i = new Interpreter();
 		try {
@@ -36,26 +38,29 @@ public class AgenteBC {
 			i.set("_acao", game.getAcao());
 			i.set("_carteira", game.getCarteira());
 			i.set("_cotacoes", cotacoes);
+			i.set("_cotacaoD", cotacaoD);			
 			i.set("_iteration", iteration);
-			if (agente.getActionBefore() != null && !agente.getActionBefore().isEmpty()){
+			if (agente.getActionBefore() != null && !agente.getActionBefore().isEmpty()) {
 				i.eval(agente.getActionBefore());
-				Action action =  (Action) i.get("_return");
-				Double value =  (Double) i.get("_value");
-				switch (action) {
-				case BUY:
-					GameBC.getInstance().buy(game, value);
-					break;
-				case SELL:
-					GameBC.getInstance().sell(game, value);
-					break;
-				case WAIT:
-					GameBC.getInstance().wait(game);
-					break;
-				default:
-					break;
+				Action action = (Action) i.get("_return");
+				Double value = (Double) i.get("_value");
+				if (action != null && value != null) {
+					switch (action) {
+					case BUY:
+						GameBC.getInstance().buy(game, value, cotacaoD);
+						break;
+					case SELL:
+						GameBC.getInstance().sell(game, value, cotacaoD);
+						break;
+					case WAIT:
+						GameBC.getInstance().wait(game);
+						break;
+					default:
+						break;
+					}
 				}
 			}
-			if (agente.getActionAfter() != null && !agente.getActionAfter().isEmpty()){
+			if (agente.getActionAfter() != null && !agente.getActionAfter().isEmpty()) {
 				i.eval(agente.getActionAfter());
 			}
 		} catch (Exception e) {
@@ -63,7 +68,7 @@ public class AgenteBC {
 			PrintWriter pw = new PrintWriter(sw);
 			e.printStackTrace(pw);
 			sw.toString();
-			Log.info("Error: " + sw.toString());
+			Log.info(">>>>>> Error interno <<<<<<<<<\n" + sw.toString());
 		}
 	}
 

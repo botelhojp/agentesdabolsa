@@ -16,6 +16,8 @@ public class Agente extends JSONBean {
 
 	private String responseHelp;
 	
+	private Boolean enabled;
+	
 	public Agente(){
 	}
 
@@ -78,4 +80,16 @@ public class Agente extends JSONBean {
 	public void setResponseHelp(String responseHelp) {
 		this.responseHelp = AppUtils.normalize(responseHelp);
 	}
+
+	public Boolean getEnabled() {
+		if (enabled == null)
+			return false;
+		return enabled;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
+	
+	
 }

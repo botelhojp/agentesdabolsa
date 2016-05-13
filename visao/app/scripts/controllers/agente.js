@@ -122,6 +122,15 @@ function($window, $http, $scope, $route, $rootScope, $location, AgenteService, D
             }
         }, true);
 
+         $scope.labelBoolean = function(value){
+            if (value){
+                return 'sim';
+            }
+            return 'não';
+
+         }
+
+
         
         $scope.gridOptions = {
             data: 'myData',
@@ -129,8 +138,14 @@ function($window, $http, $scope, $route, $rootScope, $location, AgenteService, D
                          {
                         	 field: 'name', 
                         	 displayName: 'Agente', 
-                        	 cellTemplate: '<div  ng-click="load(row.entity.id)" ng-bind="row.getProperty(col.field)"></div>',
-                        	 width: "90%"
+                        	 cellTemplate: '<div  ng-click="load(row.entity.id)" ng-bind="row.getProperty(col.field) "></div>',
+                        	 width: "80%"
+                        },
+                        {
+                            field: 'enabled', 
+                            displayName: 'Ativo', 
+                            cellTemplate: '<div  ng-click="load(row.entity.id)" ng-bind="labelBoolean(row.getProperty(col.field))"></div>',
+                            width: "10%"
                         },
      	                {
                         	field: 'clones', 
