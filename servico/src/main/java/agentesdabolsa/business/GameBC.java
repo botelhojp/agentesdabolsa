@@ -16,14 +16,14 @@ public class GameBC {
 	
 	private CotacaoDAO cotacaoDao = CotacaoDAO.getInstance();
 
-	private static List<Agente> list;
+	private static List<Agente> agents;
 	private static Thread time;
 
 	
 
 	private GameBC(int iterations) {
-		list = new ArrayList<Agente>();
-		time = new Thread(new Time(list, iterations));
+		agents = new ArrayList<Agente>();
+		time = new Thread(new Time(agents, iterations));
 	}
 
 	public static GameBC getInstance() {
@@ -101,7 +101,15 @@ public class GameBC {
 	}
 
 	public void add(Agente agente) {
-		list.add(agente);
+		agents.add(agente);
+	}
+
+	public static List<Agente> getAgents() {
+		return agents;
+	}
+
+	public static void setAgents(List<Agente> agents) {
+		GameBC.agents = agents;
 	}
 
 	public static void configure(int iterations) {

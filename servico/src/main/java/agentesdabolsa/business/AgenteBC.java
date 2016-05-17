@@ -2,14 +2,17 @@ package agentesdabolsa.business;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import agentesdabolsa.dao.AcaoDAO;
 import agentesdabolsa.dao.CotacaoDAO;
 import agentesdabolsa.entity.Action;
+import agentesdabolsa.entity.Advice;
 import agentesdabolsa.entity.Agente;
 import agentesdabolsa.entity.Cotacao;
 import agentesdabolsa.entity.Game;
+import agentesdabolsa.trust.MARSHModel;
 import bsh.Interpreter;
 
 public class AgenteBC {
@@ -25,6 +28,7 @@ public class AgenteBC {
 	}
 
 	public void play(Agente agente, long iteration) {
+		List<Advice> advices = new ArrayList<Advice>();
 		Game game = getGame(agente);
 		game.setAcao(agenteDao.getRandom());
 		List<Cotacao> cotacoes = ctDao.findByAcaoRandomResult(game);
@@ -40,6 +44,25 @@ public class AgenteBC {
 			i.set("_cotacoes", cotacoes);
 			i.set("_cotacaoD", cotacaoD);			
 			i.set("_iteration", iteration);
+			i.set("_advice", advices);
+			//pedir ajuda			
+			if (agente.getRequestHelp() != null && !agente.getRequestHelp().isEmpty()) {
+				i.eval(agente.getRequestHelp());
+				Action action = (Action) i.get("_request");
+				if (action != null && action.equals(Action.REQUEST_ALL)){
+					for (Agente ag : GameBC.getAgents()){
+						if (ag.getId() != agente.getId() && ag.getResponseHelp() != null && !ag.getResponseHelp().isEmpty()){
+							i.eval(ag.getResponseHelp());
+							Action advice = (Action) i.get("_return");
+							if (advice != null){
+								advices.add(new Advice(advice, ag));
+							}
+						}
+					}
+				}
+			}
+			
+			//joga
 			if (agente.getActionBefore() != null && !agente.getActionBefore().isEmpty()) {
 				i.eval(agente.getActionBefore());
 				Action action = (Action) i.get("_return");
@@ -75,6 +98,7 @@ public class AgenteBC {
 	private Game getGame(Agente agente) {
 		Game game = GameBC.getInstance().getGame(agente.getId() + "");
 		if (game == null) {
+			agente.setTrust(new MARSHModel(agente));
 			game = GameBC.getInstance().newGame(agente.getId() + "");
 		}
 		return game;

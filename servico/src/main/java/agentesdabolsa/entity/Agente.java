@@ -1,6 +1,7 @@
 package agentesdabolsa.entity;
 
 import agentesdabolsa.commons.AppUtils;
+import agentesdabolsa.trust.MARSHModel;
 
 public class Agente extends JSONBean {
 
@@ -18,6 +19,16 @@ public class Agente extends JSONBean {
 	
 	private Boolean enabled;
 	
+	private MARSHModel trust;
+	
+	public MARSHModel getTrust() {
+		return trust;
+	}
+
+	public void setTrust(MARSHModel trust) {
+		this.trust = trust;
+	}
+
 	public Agente(){
 	}
 

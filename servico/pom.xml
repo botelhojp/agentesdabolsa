@@ -11,6 +11,20 @@
 
 	<dependencies>
 
+		<!-- Jade -->
+		<dependency>
+			<groupId>jade</groupId>
+			<artifactId>jade</artifactId>
+			<version>4.5</version>
+		</dependency>
+
+		<!-- Open Jade -->
+		<dependency>
+			<groupId>openj</groupId>
+			<artifactId>openj-framework</artifactId>
+			<version>1.2.0-FINAL</version>
+		</dependency>
+
 		<dependency>
 			<groupId>javax.websocket</groupId>
 			<artifactId>javax.websocket-api</artifactId>
@@ -148,6 +162,19 @@
 		<repository>
 			<id>JDBC Oracle</id>
 			<url>https://maven-us.nuxeo.org/nexus/content/groups/public/</url>
+		</repository>
+		<repository>
+			<id>ibiblio</id>
+			<url>http://mirrors.ibiblio.org/pub/mirrors/maven2</url>
+		</repository>
+		<repository>
+			<id>ppgia.releases</id>
+			<url>http://www.ppgia.pucpr.br/~vanderson/repositories/internal</url>
+		</repository>
+		<repository>
+			<id>sonatype-nexus-releases</id>
+			<name>Sonatype Nexus Releases</name>
+			<url>https://oss.sonatype.org/content/repositories/releases</url>
 		</repository>
 	</repositories>
 
