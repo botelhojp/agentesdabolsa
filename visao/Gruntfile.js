@@ -268,6 +268,7 @@ module.exports = function (grunt) {
                             'views/{,*/}*.html',
                             'images/{,*/}*',
                             'amcharts/{,*/}*',
+                            'ace/{,*/}*',
                             'img/{,*/}*',
                             'fonts/*',
                             'WEB-INF/*',
