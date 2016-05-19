@@ -5,6 +5,36 @@ function($window, $http, $scope, $route, $rootScope, $location, AgenteService, D
 	$scope.agente = {};
 
     var modal = document.getElementById('myModal');
+
+    //editor actionBefore
+    var editorActionBefore = ace.edit("editorActionBefore");
+    editorActionBefore.setTheme("ace/theme/eclipse");
+    editorActionBefore.session.setMode("ace/mode/java");     
+    editorActionBefore.$blockScrolling = Infinity;
+
+    var editorActionAfter = ace.edit("editorActionAfter");
+    editorActionAfter.setTheme("ace/theme/eclipse");
+    editorActionAfter.session.setMode("ace/mode/java");     
+    editorActionAfter.$blockScrolling = Infinity;
+
+    var editorRequestHelp = ace.edit("editorRequestHelp");
+    editorRequestHelp.setTheme("ace/theme/eclipse");
+    editorRequestHelp.session.setMode("ace/mode/java");     
+    editorRequestHelp.$blockScrolling = Infinity;
+
+    var editorResponseHelp = ace.edit("editorResponseHelp");
+    editorResponseHelp.setTheme("ace/theme/eclipse");
+    editorResponseHelp.session.setMode("ace/mode/java");     
+    editorResponseHelp.$blockScrolling = Infinity;
+
+
+    
+
+    
+
+
+
+
 	
 	
 	$scope.new = function () {	
@@ -16,7 +46,14 @@ function($window, $http, $scope, $route, $rootScope, $location, AgenteService, D
         modal.style.display = "none";  
     };
 	
-	$scope.save = function () {		        
+	$scope.save = function () {	
+        $scope.agente.actionBefore = editorActionBefore.getValue();	
+        $scope.agente.actionAfter = editorActionAfter.getValue(); 
+        $scope.agente.requestHelp = editorRequestHelp.getValue(); 
+        $scope.agente.responseHelp = editorResponseHelp.getValue(); 
+        
+
+                
 		AgenteService.save($scope.agente).then(
 			function (data) {
 				$scope.new();
@@ -27,6 +64,30 @@ function($window, $http, $scope, $route, $rootScope, $location, AgenteService, D
 			}
 		);
 	};	
+
+    $scope.load = function (id) {
+        modal.style.display = "block";
+        AgenteService.get(id).then(
+                function (data) {
+                    $scope.agente = data;
+                    editorActionBefore.setValue($scope.agente.actionBefore);
+                    editorActionBefore.gotoLine(0);                    
+
+                    editorActionAfter.setValue($scope.agente.actionAfter);
+                    editorActionAfter.gotoLine(0);
+
+                    editorRequestHelp.setValue($scope.agente.requestHelp);
+                    editorRequestHelp.gotoLine(0);
+
+                    editorResponseHelp.setValue($scope.agente.responseHelp);
+                    editorResponseHelp.gotoLine(0);                    
+
+                },
+                function (error) {
+                    console.log(error);                 
+                }
+            );
+    };  
 	
 	
 	$scope.refreshGrid = function () {	
@@ -47,17 +108,7 @@ function($window, $http, $scope, $route, $rootScope, $location, AgenteService, D
 			);			
 	};	
 	
-	$scope.load = function (id) {
-        modal.style.display = "block";
-		AgenteService.get(id).then(
-				function (data) {
-					$scope.agente = data;
-				},
-				function (error) {
-					console.log(error);					
-				}
-			);
-	};	
+
 	
 	$scope.changeTab = function(tab) {
 	    $scope.view_tab = tab;

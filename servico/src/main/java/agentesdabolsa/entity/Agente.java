@@ -2,8 +2,11 @@ package agentesdabolsa.entity;
 
 import agentesdabolsa.commons.AppUtils;
 import agentesdabolsa.trust.MARSHModel;
+import jade.core.AID;
 
 public class Agente extends JSONBean {
+	
+	private AID aid;
 
 	private String name;
 
@@ -31,6 +34,12 @@ public class Agente extends JSONBean {
 
 	public Agente(){
 	}
+	
+	public Agente(AID aid, String name, long clones) {
+		setAID(aid);
+		setName(name);
+		setClones(clones);
+	}
 
 	public Agente(String name, long clones) {
 		setName(name);
@@ -39,6 +48,10 @@ public class Agente extends JSONBean {
 
 	public Agente(long id) {
 		super(id);
+	}
+
+	public Agente(Agente agente, int instance) {
+		
 	}
 
 	public String getName() {
@@ -101,6 +114,12 @@ public class Agente extends JSONBean {
 	public void setEnabled(Boolean enabled) {
 		this.enabled = enabled;
 	}
-	
-	
+
+	public AID getAID() {
+		return aid;
+	}
+
+	public void setAID(AID aid) {
+		this.aid = aid;
+	}
 }

@@ -10,7 +10,7 @@ public class Time implements Runnable {
 	private AgenteBC agenteBC = AgenteBC.getInstance();
 
 	private List<Agente> list;
-	private long iteration = 0;
+	private int iteration = 0;
 	private long maxIterations = 0;
 	
 	public Time(List<Agente> list, int maxIterations) {

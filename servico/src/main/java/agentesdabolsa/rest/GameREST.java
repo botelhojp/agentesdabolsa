@@ -15,12 +15,14 @@ import javax.ws.rs.core.Response;
 import com.sun.jersey.api.NotFoundException;
 
 import agentesdabolsa.business.GameBC;
+import agentesdabolsa.commons.AppUtils;
 import agentesdabolsa.dao.AcaoDAO;
 import agentesdabolsa.dao.AgenteDAO;
 import agentesdabolsa.dao.CotacaoDAO;
 import agentesdabolsa.entity.Agente;
 import agentesdabolsa.entity.Cotacao;
 import agentesdabolsa.entity.Game;
+import jade.core.AID;
 
 @Path("game")
 @Produces(APPLICATION_JSON)
@@ -90,8 +92,12 @@ public class GameREST {
 		GameBC.configure(rounds);
 		GameBC game = GameBC.getInstance();
 		for(Agente agente : agenteDao.list()){
-			if (agente.getEnabled()){
-				game.add(agente);
+			if (agente.getEnabled() && agente.getClones() != null && agente.getClones() > 0){
+				for (int i = 0; i < agente.getClones(); i++) {
+					Agente clone = (Agente) AppUtils.cloneObject(agente);
+					clone.setAID(new AID(clone.getName()+ "_" +i, true));
+					game.add(clone);
+				}
 			}
 		}
 		GameBC.start();

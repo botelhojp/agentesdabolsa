@@ -19,4 +19,8 @@ public class MARSHModel  {
 	public void setTest(Rating rating) {
 		
 	}
+	public void addRating(Rating rt) {
+		// TODO Auto-generated method stub
+		
+	}
 }

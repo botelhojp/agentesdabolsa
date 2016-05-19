@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.Field;
 import java.text.Normalizer;
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -57,6 +58,20 @@ public class AppUtils {
 	public static String formatMoeda(double value){
 		return NumberFormat.getCurrencyInstance().format(value);
 	}
+	
+	public static Object cloneObject(Object obj){
+        try{
+            Object clone = obj.getClass().newInstance();
+            for (Field field : obj.getClass().getDeclaredFields()) {
+                field.setAccessible(true);
+                field.set(clone, field.get(obj));
+            }
+            return clone;
+        }catch(Exception e){
+        	e.printStackTrace();
+            return null;
+        }
+    }
 	  
 
 	public static File descompacta(File _fileZip) {

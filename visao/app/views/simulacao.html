@@ -13,8 +13,25 @@
 		</div>
 		<div class="col-md-2">
 			<fieldset class="form-group">
-				<label for="nome" >Modelo de Confiança</label>
-				<input type="number" name="input" class="form-control" placeholder="Clones" ng-model="rounds" min="0" max="1000" required>
+				<label for="nome" >Confiança</label>
+				<select class="form-control" class="btn btn-default">
+				  <option>Direta</option>
+				  <option>Indireta</option>
+				  <option>Dossie</option>
+				  <option>TrustNet</option>
+				  <option>Marsh</option>
+				</select>
+			</fieldset>
+		</div>
+
+		<div class="col-md-2">
+			<fieldset class="form-group">
+				<label for="nome" >Métricas</label>
+				<select class="form-control" class="btn btn-default">
+				  <option>Média</option>
+				  <option>Utilidade Total</option>
+				  <option>Percentual de Erro</option>
+				</select>
 			</fieldset>
 		</div>
 

@@ -10,6 +10,7 @@
   <!-- Modal content -->
   <div class="modal-content"> 
 
+
 	<div class="row" class="form-group">
 		<div class="col-md-8">
 			<fieldset class="form-group">
@@ -41,25 +42,27 @@
 		  
 		</ul>
 	    <div>
-	        <div class="tab-pane" ng-show="view_tab == 'tab1'">
+	        <div class="tab-pane" ng-show="view_tab == 'tab1'" style="height: 300px;">
 				<fieldset class="form-group">
-				  <textarea ng-model="agente.actionBefore" class="form-control code" rows="20" style="resize:none" ></textarea> 
+				  <div style="width: 100%;  height: 200px;">
+				  	<pre id="editorActionBefore"></pre>
+				  </div>
 				</fieldset>
 	        </div>
 	        <div class="tab-pane" ng-show="view_tab == 'tab2'">
-				<fieldset class="form-group">
-				  <textarea ng-model="agente.actionAfter" class="form-control code" rows="20" style="resize:none" ></textarea> 
-				</fieldset>
+				  <div style="width: 100%;  height: 200px;">
+				  	<pre id="editorActionAfter"></pre>
+				  </div>
 	        </div>
 	        <div class="tab-pane" ng-show="view_tab == 'tab3'">
-				<fieldset class="form-group">
-				  <textarea ng-model="agente.requestHelp" class="form-control code" rows="20" style="resize:none" ></textarea> 
-				</fieldset>
+				<div style="width: 100%;  height: 200px;">
+					<pre id="editorRequestHelp"></pre>
+				</div>
 	        </div>
 	        <div class="tab-pane" ng-show="view_tab == 'tab4'">
-				<fieldset class="form-group">
-				  <textarea ng-model="agente.responseHelp"  class="form-control code" rows="20" style="resize:none" ></textarea> 
-				</fieldset>
+				<div style="width: 100%;  height: 200px;">
+					<pre id="editorResponseHelp"></pre>
+				</div>				
 	        </div>	  
 	    </div>
 	</div>
