@@ -38,8 +38,8 @@ app.config(['$routeProvider', '$httpProvider', 'USER_ROLES', 'cfpLoadingBarProvi
 			data : {
 				requires : [ USER_ROLES.USER ]
 			},
-		}).when('/usuario', {
-			templateUrl : 'views/usuario.html',
+		}).when('/config', {
+			templateUrl : 'views/config.html',
 			data : {
 				requires : [ USER_ROLES.USER ]
 			},
