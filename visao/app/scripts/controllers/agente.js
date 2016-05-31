@@ -121,99 +121,102 @@ function($window, $http, $scope, $route, $rootScope, $location, AgenteService, D
     $scope.filterOptions = {
             filterText: "",
             useExternalFilter: true
-        }; 
-        $scope.totalServerItems = 0;
-        $scope.pagingOptions = {
-            pageSizes: [5,10],
-            pageSize: 5,
-            currentPage: 1
-        };	
-        $scope.setPagingData = function(data, page, pageSize){	
-            var pagedData = data.slice((page - 1) * pageSize, page * pageSize);
-            $scope.myData = pagedData;
-            $scope.totalServerItems = data.length;
-            if (!$scope.$$phase) {
-                $scope.$apply();
-            }
-        };
-        $scope.getPagedDataAsync = function (pageSize, page, searchText) {
-            setTimeout(function () {
-                var data;
-                if (searchText) {
-                    var ft = searchText.toLowerCase();
-                    $http.get('/api/agentes').success(function (largeLoad) {		
-                        data = largeLoad.filter(function(item) {
-                            return JSON.stringify(item).toLowerCase().indexOf(ft) != -1;
-                        });
-                        $scope.setPagingData(data,page,pageSize);
-                    });            
-                } else {
-                    $http(
-                    		{
-                    			method: 'GET',
-                    			url: '/api/agentes'
-                    		}
-                    ).success(function (largeLoad) {
-                        $scope.setPagingData(largeLoad,page,pageSize);
+    }; 
+
+    $scope.totalServerItems = 0;
+
+    $scope.pagingOptions = {
+        pageSizes: [5,10],
+        pageSize: 5,
+        currentPage: 1
+    };	
+
+    $scope.setPagingData = function(data, page, pageSize){	
+        var pagedData = data.slice((page - 1) * pageSize, page * pageSize);
+        $scope.myData = pagedData;
+        $scope.totalServerItems = data.length;
+        if (!$scope.$$phase) {
+            $scope.$apply();
+        }
+    };
+
+    $scope.getPagedDataAsync = function (pageSize, page, searchText) {
+        setTimeout(function () {
+            var data;
+            if (searchText) {
+                var ft = searchText.toLowerCase();
+                $http.get('/api/agentes').success(function (largeLoad) {		
+                    data = largeLoad.filter(function(item) {
+                        return JSON.stringify(item).toLowerCase().indexOf(ft) != -1;
                     });
-                }
-            }, 100);
-        };
+                    $scope.setPagingData(data,page,pageSize);
+                });            
+            } else {
+                $http(
+                		{
+                			method: 'GET',
+                			url: '/api/agentes'
+                		}
+                ).success(function (largeLoad) {
+                    $scope.setPagingData(largeLoad,page,pageSize);
+                });
+            }
+        }, 100);
+    };
     	
-        $scope.refreshGrid();
+    $scope.refreshGrid();
     	
-        $scope.$watch('pagingOptions', function (newVal, oldVal) {
-            if (newVal !== oldVal && newVal.currentPage !== oldVal.currentPage) {
-              $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage, $scope.filterOptions.filterText);
-            }
-        }, true);
-        $scope.$watch('filterOptions', function (newVal, oldVal) {
-            if (newVal !== oldVal) {
-              $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage, $scope.filterOptions.filterText);
-            }
-        }, true);
+    $scope.$watch('pagingOptions', function (newVal, oldVal) {
+        if (newVal !== oldVal && newVal.currentPage !== oldVal.currentPage) {
+          $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage, $scope.filterOptions.filterText);
+        }
+    }, true);
 
-         $scope.labelBoolean = function(value){
-            if (value){
-                return 'sim';
-            }
-            return 'não';
+    $scope.$watch('filterOptions', function (newVal, oldVal) {
+        if (newVal !== oldVal) {
+          $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage, $scope.filterOptions.filterText);
+        }
+    }, true);
 
-         }
-
+    $scope.labelBoolean = function(value){
+        if (value){
+            return 'sim';
+        }
+        return 'não';
+    }
 
         
-        $scope.gridOptions = {
-            data: 'myData',
-            columnDefs: [
-                         {
-                        	 field: 'name', 
-                        	 displayName: 'Agente', 
-                        	 cellTemplate: '<div  ng-click="load(row.entity.id)" ng-bind="row.getProperty(col.field) "></div>',
-                        	 width: "80%"
-                        },
-                        {
-                            field: 'enabled', 
-                            displayName: 'Ativo', 
-                            cellTemplate: '<div  ng-click="load(row.entity.id)" ng-bind="labelBoolean(row.getProperty(col.field))"></div>',
-                            width: "10%"
-                        },
-     	                {
-                        	field: 'clones', 
-                        	displayName: 'Clones', 
-                        	cellTemplate: '<div  ng-click="load(row.entity.id)" ng-bind="row.getProperty(col.field)"></div>',
-                        	width: "10%"
-                        }
-                        ],	                
-            enablePaging: true,
-    		showFooter: true,
-    		enableColumnResize: true,
-    		showFilter: true,
-        
-            totalServerItems: 'totalServerItems',
-            pagingOptions: $scope.pagingOptions,
-            filterOptions: $scope.filterOptions,
-            multiSelect: false
-        };
+    $scope.gridOptions = {
+        data: 'myData',
+        columnDefs: [
+                     {
+                    	 field: 'name', 
+                    	 displayName: 'Agente', 
+                    	 cellTemplate: '<div  ng-click="load(row.entity.id)" ng-bind="row.getProperty(col.field) "></div>',
+                    	 width: "80%"
+                    },
+                    {
+                        field: 'enabled', 
+                        displayName: 'Ativo', 
+                        cellTemplate: '<div  ng-click="load(row.entity.id)" ng-bind="labelBoolean(row.getProperty(col.field))"></div>',
+                        width: "10%"
+                    },
+ 	                {
+                    	field: 'clones', 
+                    	displayName: 'Clones', 
+                    	cellTemplate: '<div  ng-click="load(row.entity.id)" ng-bind="row.getProperty(col.field)"></div>',
+                    	width: "10%"
+                    }
+                    ],	                
+        enablePaging: true,
+		showFooter: true,
+		enableColumnResize: true,
+		showFilter: true,
+    
+        totalServerItems: 'totalServerItems',
+        pagingOptions: $scope.pagingOptions,
+        filterOptions: $scope.filterOptions,
+        multiSelect: false
+    };
 	
 }]);

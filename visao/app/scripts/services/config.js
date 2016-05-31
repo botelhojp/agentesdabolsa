@@ -5,14 +5,15 @@ app.service('ConfigService', ['$http', '$q', '$window', 'DataService', 'NAV_DATA
 	var services = {};
 
     
-	services.save = function(config) {
+	services.save = function(obj) {
 		var deferred = $q.defer();
-		var id = config.id;
-		config.id = null;
+		var id = obj.id;
+		obj.id = null;
+
 		$http({
-			url : id ? '/api/config/' + id : '/api/config',
+			url : id ? '/api/configuracoes/' + id : '/api/configuracoes',
 			method : id ? "PUT" : "POST",
-			data : agente,
+			data : obj,
 			headers : {
 				'Content-Type' : 'application/json;charset=utf8'
 			}
@@ -27,7 +28,7 @@ app.service('ConfigService', ['$http', '$q', '$window', 'DataService', 'NAV_DATA
 	services.get = function() {
 		var deferred = $q.defer();
 		$http({
-			url : '/api/config/',
+			url : '/api/configuracoes/',
 			method : "GET",
 		}).success(function(data) {
 			deferred.resolve(data);

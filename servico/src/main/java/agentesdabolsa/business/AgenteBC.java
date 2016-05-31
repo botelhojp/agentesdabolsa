@@ -21,6 +21,7 @@ public class AgenteBC {
 	private AcaoDAO agenteDao = AcaoDAO.getInstance();
 	private CotacaoDAO cotacaoDao = CotacaoDAO.getInstance();
 	private CotacaoDAO ctDao = CotacaoDAO.getInstance();
+	private GameBC gameBC = GameBC.getInstance();
 
 	private static AgenteBC instance = new AgenteBC();
 
@@ -31,8 +32,11 @@ public class AgenteBC {
 	public void play(Agente client, int iteration) {
 		List<Advice> advices = new ArrayList<Advice>();
 		Game game = getGame(client);
-		game.setAcao(agenteDao.getRandom());
-		List<Cotacao> cotacoes = ctDao.findByAcaoRandomResult(game);
+		game.setAcao(agenteDao.getRandom(GameBC.acoes));
+		
+		List<Cotacao> cotacoes = ctDao.findByAcaoRandomResult(game, GameBC.random, iteration);
+		
+		
 		Cotacao cotacaoD = cotacaoDao.getCotacao(game.getAcao().getNomeres(), game.getFrom() - 20);
 		game.setCotacao(cotacoes.get(cotacoes.size() - 1));
 
@@ -118,10 +122,10 @@ public class AgenteBC {
 	}
 
 	private Game getGame(Agente agente) {
-		Game game = GameBC.getInstance().getGame(agente.getId() + "");
+		Game game = gameBC.getGame(agente.getId() + "");
 		if (game == null) {
 			agente.setTrust(new MARSHModel(agente));
-			game = GameBC.getInstance().newGame(agente.getId() + "");
+			game = gameBC.newGame(agente.getId() + "");
 		}
 		return game;
 	}

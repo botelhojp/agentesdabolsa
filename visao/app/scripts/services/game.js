@@ -14,9 +14,9 @@ app.service('GameService', ['$http', '$window', '$q', function($http, $window, $
 		return deferred.promise;
 	};
     
-	services.play = function(game) {
+	services.play = function(game, iteration) {
 		var deferred = $q.defer();
-		$http.get('/api/game/play?game=' + game.user).success(function(data) {
+		$http.get('/api/game/play?game=' + game.user + '&iteration=' + iteration).success(function(data) {
 			deferred.resolve(data);
 		}).error(function(data, status) {
 			deferred.reject([ data, status ]);

@@ -6,6 +6,7 @@ import java.util.List;
 
 import agentesdabolsa.dao.CotacaoDAO;
 import agentesdabolsa.entity.Agente;
+import agentesdabolsa.entity.Config;
 import agentesdabolsa.entity.Cotacao;
 import agentesdabolsa.entity.Game;
 
@@ -15,10 +16,17 @@ public class GameBC {
 	private Hashtable<String, Game> games = new Hashtable<String, Game>();
 	
 	private CotacaoDAO cotacaoDao = CotacaoDAO.getInstance();
+	
+	private ConfigBC configBC = ConfigBC.getInstance();
+
+	
+	
+	public static Config config;
+	public static String[] acoes;
+	public static Boolean random;
 
 	private static List<Agente> agents;
 	private static Thread time;
-
 	
 
 	private GameBC(int iterations) {
@@ -34,6 +42,11 @@ public class GameBC {
 	}
 
 	public Game newGame(String user) {
+		config = configBC.getConfig();
+		acoes = config.getAcoes().trim().split(" ");
+		random = config.getRandom();
+		
+		
 		Game n = new Game();
 		n.setCarteira(100000);
 		n.setUser(user);
@@ -46,7 +59,7 @@ public class GameBC {
 	}
 	
 	public void buy(Game game) {
-		Cotacao cotacaoD = cotacaoDao.getCotacao(game.getAcao().getNomeres(), game.getFrom() - 20);
+		Cotacao cotacaoD = cotacaoDao.getCotacao(game.getAcao().getNomeres(), game.getFrom() - config.getStop());
 		buy(game, game.getCarteira(), cotacaoD);
 	}
 
@@ -70,7 +83,7 @@ public class GameBC {
 	}
 	
 	public void sell(Game game) {
-		Cotacao cotacaoD = cotacaoDao.getCotacao(game.getAcao().getNomeres(), game.getFrom() - 20);
+		Cotacao cotacaoD = cotacaoDao.getCotacao(game.getAcao().getNomeres(), game.getFrom() - config.getStop());
 		sell(game, game.getCarteira(), cotacaoD);
 	}
 

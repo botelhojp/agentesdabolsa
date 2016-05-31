@@ -3,16 +3,14 @@ app.controller('ConfigController', [ '$window', '$http', '$scope', '$route', '$r
 
 function($window, $http, $scope, $route, $rootScope, $location, ConfigService, DataService, NAV_DATA, GameService ) {
 	
-	$scope.config = {}; 
-
-    $scope.load();
+	$scope.cfg = {}; 
 
 
-	
 	$scope.load = function () {
         ConfigService.get().then(
             function (data) {
-                $scope.config = data;
+                console.log(data);
+                $scope.cfg = data;
             },
             function (error) {
                 console.log(error);                 
@@ -22,10 +20,9 @@ function($window, $http, $scope, $route, $rootScope, $location, ConfigService, D
 	
 
     $scope.save = function () {                 
-        AgenteService.save($scope.config).then(
+        ConfigService.save($scope.cfg).then(
             function (data) {
-                $scope.new();
-                $scope.refreshGrid();
+                $scope.cfg = data;
             },
             function (error) {
                 console.log(error);                 
@@ -34,6 +31,7 @@ function($window, $http, $scope, $route, $rootScope, $location, ConfigService, D
     };  
 
 
+$scope.load();
 	
 	
 }]);

@@ -14,6 +14,7 @@ import javax.ws.rs.core.Response;
 
 import com.sun.jersey.api.NotFoundException;
 
+import agentesdabolsa.business.ConfigBC;
 import agentesdabolsa.business.GameBC;
 import agentesdabolsa.commons.AppUtils;
 import agentesdabolsa.dao.AcaoDAO;
@@ -31,6 +32,7 @@ public class GameREST {
 
 	private AcaoDAO dao = AcaoDAO.getInstance();
 	private CotacaoDAO ctDao = CotacaoDAO.getInstance();
+	private ConfigBC configBC = ConfigBC.getInstance();
 
 	@GET
 	@Path("start")
@@ -40,12 +42,12 @@ public class GameREST {
 
 	@GET
 	@Path("play")
-	public Response getRandom(@QueryParam("game") String user) throws NotFoundException {
+	public Response getRandom(@QueryParam("game") String user, @QueryParam("iteration") Integer iteration) throws NotFoundException {
 		
 		Game game = GameBC.getInstance().getGame(user);
-		game.setAcao(dao.getRandom());
+		game.setAcao(dao.getRandom(GameBC.acoes));
 		StringBuffer sf = new StringBuffer();
-		List<Cotacao> cotacoes = ctDao.findByAcaoRandomResult(game);
+		List<Cotacao> cotacoes = ctDao.findByAcaoRandomResult(game, GameBC.random, iteration);
 		
 		game.setCotacao(cotacoes.get(0));
 		
@@ -91,7 +93,8 @@ public class GameREST {
 		AgenteDAO agenteDao = AgenteDAO.getInstance();
 		GameBC.configure(rounds);
 		GameBC game = GameBC.getInstance();
-		for(Agente agente : agenteDao.list()){
+		List<Agente> l = agenteDao.list();
+		for(Agente agente : l){
 			if (agente.getEnabled() && agente.getClones() != null && agente.getClones() > 0){
 				for (int i = 0; i < agente.getClones(); i++) {
 					Agente clone = (Agente) AppUtils.cloneObject(agente);

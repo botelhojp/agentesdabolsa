@@ -2,19 +2,24 @@
   <h1>Configurações <small>Gerais</small></h1>
 </div>
 <div class="row" class="form-group" data-ng-controller="ConfigController">
-	<div class="col-md-10">	       
+	<div class="col-md-8">	       
 		<fieldset class="form-group">
 		 	<label for="nome">Lista de ações utilizadas na simulação</label>
-		  <textarea ng-model="config.acoes" class="form-control code" rows="10" style="resize:none" ></textarea> 
+		  <textarea ng-model="cfg.acoes" class="form-control code" rows="10" style="resize:none" ></textarea> 
 		</fieldset>
 	</div>
 	<div class="col-md-2">
 		<fieldset class="form-group">
-		  <label for="clones">Manter simulador fixo?</label>
-		  <input type="checkbox" name="input" class="form-control" ng-model="config.enabled">
+		  <label for="clones">Stop</label>
+		  <input type="number" name="input" class="form-control" ng-model="cfg.stop">
+		</fieldset>
+	</div>
+	<div class="col-md-2">
+		<fieldset class="form-group">
+		  <label for="clones">Aleatório?</label>
+		  <input type="checkbox" name="input" class="form-control" ng-model="cfg.random">
 		</fieldset>
 	</div>	
-
 	 <div class="row" >
 		 <div class="btn-group col-md-12" role="group" >	
 		 	<div>	 				

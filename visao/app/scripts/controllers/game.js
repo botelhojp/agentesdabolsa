@@ -9,6 +9,7 @@ function($window, $http, $scope, $route, $rootScope, $location, GameService, Use
 	var maxCandlesticks = 100;
 	
 	$scope.dia = "";
+	$scope.iteration = 1;
 	
 	
 	$scope.buy = function () {
@@ -51,7 +52,10 @@ function($window, $http, $scope, $route, $rootScope, $location, GameService, Use
 					}
 				);
 		}else{
-			GameService.play($scope.game).then(
+
+			$scope.iteration += 1;
+
+			GameService.play($scope.game, $scope.iteration).then(
 				function (data) {
 					$scope.ativoAtual = data.acao;
 					$scope.cotacoes = data.cotecoes;

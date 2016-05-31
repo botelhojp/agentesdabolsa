@@ -44,7 +44,7 @@ public class CotacaoDAO extends GenericDAO<Cotacao> {
 		return super.list(jsonResult);
 	}
 
-	public List<Cotacao> findByAcaoRandomResult(Game game) {
+	public List<Cotacao> findByAcaoRandomResult(Game game, Boolean random, int iteration) {
 		Acao acao = acaoDao.findByName(game.getAcao().getNomeres());
 		if (acao == null) {
 			throw new AppException(Status.NOT_FOUND, "detalhe", "Ação [" + game.getAcao().getNomeres() + "] não encontrada");
@@ -64,7 +64,15 @@ public class CotacaoDAO extends GenericDAO<Cotacao> {
 				throw new AppException("erro no parse json", e);
 			}
 		}
-		long from = Math.round((total - SIZE) * Math.random());
+		
+		//pega o primeiro
+		long from = (total - SIZE) - iteration;
+		
+		//pega aleatorio
+		if (random){
+			from = Math.round((total - SIZE) * Math.random());
+		}
+		
 		game.setFrom(from);
 
 		String filtro = "{ \"from\" : " + from + ", \"size\" : " + SIZE + ",  \"sort\" : [{ \"datapre\" : \"desc\" }]}";
