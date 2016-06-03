@@ -45,6 +45,7 @@ public class GameREST {
 	public Response getRandom(@QueryParam("game") String user, @QueryParam("iteration") Integer iteration) throws NotFoundException {
 		
 		Game game = GameBC.getInstance().getGame(user);
+		game.setIteration(iteration);
 		game.setAcao(dao.getRandom(GameBC.acoes));
 		StringBuffer sf = new StringBuffer();
 		List<Cotacao> cotacoes = ctDao.findByAcaoRandomResult(game, GameBC.random, iteration);

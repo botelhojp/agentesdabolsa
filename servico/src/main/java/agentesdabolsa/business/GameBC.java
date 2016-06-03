@@ -13,7 +13,7 @@ import agentesdabolsa.entity.Game;
 public class GameBC {
 	private static GameBC instance;
 
-	private Hashtable<String, Game> games = new Hashtable<String, Game>();
+	private static Hashtable<String, Game> games = new Hashtable<String, Game>();
 	
 	private CotacaoDAO cotacaoDao = CotacaoDAO.getInstance();
 	
@@ -32,6 +32,7 @@ public class GameBC {
 	private GameBC(int iterations) {
 		agents = new ArrayList<Agente>();
 		time = new Thread(new Time(agents, iterations));
+		games.clear();
 	}
 
 	public static GameBC getInstance() {
@@ -59,7 +60,7 @@ public class GameBC {
 	}
 	
 	public void buy(Game game) {
-		Cotacao cotacaoD = cotacaoDao.getCotacao(game.getAcao().getNomeres(), game.getFrom() - config.getStop());
+		Cotacao cotacaoD = cotacaoDao.getCotacao(game.getAcao().getNomeres(), game.getFrom() - config.getStop() - 1);
 		buy(game, game.getCarteira(), cotacaoD);
 	}
 

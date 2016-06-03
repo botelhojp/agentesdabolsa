@@ -1,6 +1,6 @@
 'use strict';
-app.controller('GameController', [ '$window', '$http', '$scope', '$route', '$rootScope', '$location', 'GameService', 'UserService',
-function($window, $http, $scope, $route, $rootScope, $location, GameService, UserService ) {
+app.controller('GameController', [ '$window',  '$timeout', '$http', '$scope', '$route', '$rootScope', '$location', 'GameService', 'UserService',
+function($window, $timeout, $http, $scope, $route, $rootScope, $location, GameService, UserService ) {
 	
 	
 	var chart;
@@ -9,19 +9,20 @@ function($window, $http, $scope, $route, $rootScope, $location, GameService, Use
 	var maxCandlesticks = 100;
 	
 	$scope.dia = "";
-	$scope.iteration = 1;
+	$scope.iteration = 0;
+
 	
-	
-	$scope.buy = function () {
+	$scope.buy = function () {		
 		GameService.buy($scope.game).then(
 				function (data) {
 					$scope.game = data;
 					$scope.play();
+					
 				},
 				function (error) {
 					console.log(error);					
 				}
-			);
+			);	
 	};
 	
 	$scope.sell = function () {
@@ -35,13 +36,14 @@ function($window, $http, $scope, $route, $rootScope, $location, GameService, Use
 				}
 			);
 	};
-	
+
+
 	$scope.help = function () {
 		$scope.getAtivoRandom();
 	};
 	
 	$scope.play = function () {
-		if ($scope.game == undefined){
+		if ($scope.game == undefined){		
 			GameService.start(UserService.getUser().email).then(
 					function (data) {
 						$scope.game = data;

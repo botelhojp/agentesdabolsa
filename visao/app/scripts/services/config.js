@@ -38,5 +38,18 @@ app.service('ConfigService', ['$http', '$q', '$window', 'DataService', 'NAV_DATA
 		return deferred.promise;
 	};
 
+	services.cleanDB = function() {
+		var deferred = $q.defer();
+		$http({
+			url : '/api/configuracoes/clean-db',
+			method : "GET",
+		}).success(function(data) {
+			deferred.resolve(data);
+		}).error(function(data, status) {
+			deferred.reject([ data, status ]);
+		});
+		return deferred.promise;
+	};
+
 	return services;
 }]);

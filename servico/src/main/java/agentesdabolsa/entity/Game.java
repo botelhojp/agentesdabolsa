@@ -6,6 +6,7 @@ public class Game {
 	private Acao acao;
 	private Cotacao cotacao;
 	private Cotacao novaCotacao;
+	private long iteration;
 	private long from;
 	private boolean resultado;
 	private Acao acaoAnterior;
@@ -84,4 +85,13 @@ public class Game {
 	public void setDiff(double diff) {
 		this.diff = diff;
 	}
+
+	public long getIteration() {
+		return iteration;
+	}
+
+	public void setIteration(long iteration) {
+		this.iteration = iteration;
+	}
+	
 }

@@ -39,7 +39,7 @@ public class CotacaoDAO extends GenericDAO<Cotacao> {
 	}
 
 	private List<Cotacao> findByAcao(long idAcao) {
-		String filtro = "{ \"from\" : 0, \"size\" : 600,  \"sort\" : [{ \"datapre\" : \"desc\" }]}";
+		String filtro = "{ \"from\" : 0, \"size\" : 2000,  \"sort\" : [{ \"datapre\" : \"desc\" }]}";
 		String jsonResult = http(getResouce() + "/_search?q=idAcao:" + idAcao, "POST", filtro);
 		return super.list(jsonResult);
 	}
@@ -77,7 +77,28 @@ public class CotacaoDAO extends GenericDAO<Cotacao> {
 
 		String filtro = "{ \"from\" : " + from + ", \"size\" : " + SIZE + ",  \"sort\" : [{ \"datapre\" : \"desc\" }]}";
 		String jsonResult = http(getResouce() + "/_search?q=idAcao:" + acao.getId(), "POST", filtro);
-		return super.list(jsonResult);
+		
+		List<Cotacao> r = super.list(jsonResult);
+		removeDuplicates(r);
+		
+		return r;
+	}
+
+	private void removeDuplicates(List<Cotacao> r) {
+		for (int i = 0; i < r.size(); i++) {
+			int next = i + 1;
+			if (next >= r.size()){
+				break;
+			}
+			Cotacao c = r.get(i);
+			Cotacao k = r.get(next);
+			if (c.getDatapre().equals(k.getDatapre())){
+				delete(k.getId());
+				r.remove(next);
+				i--;
+			}
+		}
+		
 	}
 
 	public Cotacao getCotacao(String _acao, long from) {

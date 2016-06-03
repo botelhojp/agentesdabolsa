@@ -17,6 +17,18 @@ function($window, $http, $scope, $route, $rootScope, $location, ConfigService, D
             }
         );
     };  
+
+    $scope.cleanDB = function () {
+        ConfigService.cleanDB().then(
+            function (data) {
+                console.log(data);
+                $scope.cfg = data;
+            },
+            function (error) {
+                console.log(error);                 
+            }
+        );
+    }; 
 	
 
     $scope.save = function () {                 

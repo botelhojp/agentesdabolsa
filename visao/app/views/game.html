@@ -4,20 +4,20 @@
 
 <div data-ng-controller="GameController">
 
-
 <h1>{{ativoAtual.nomeres}} <small> {{ativoAtual.nomefull}} em {{dia}} {{game.carteira | currency:"R$"}}</small></h1>
 
+{{game.showActions}}
 <div class="row" class="form-group">
-	<div class="col-md-2">
+	<div class="col-md-2" >
 		<button type="button" ng-click="buy()" class="btn btn-default">Comprar</button>	
 	</div>
-	<div class="col-md-2">
+	<div class="col-md-2" >
 		<button type="button" ng-click="sell()" class="btn btn-default">Vender</button>	
 	</div>
 	<div class="col-md-2" ng-show="false">
 		<button type="button" ng-click="help()" class="btn btn-default">Pedir Ajuda</button>	
 	</div>
-	<div class="col-md-6" ng-show="game.cotacao != undefined" >
+	<div class="col-md-4" ng-show="game.cotacao != undefined" >
 		<b>{{game.acao.nomeres}}</b>: 
 		<b>{{game.cotacao.preult}}</b> em {{game.cotacao.datapre}}  e <b>{{game.novaCotacao.preult}}</b> em {{game.novaCotacao.datapre}} Variação:  <b>{{game.diff | percentage:2}}</b>
 		<div class="tab-pane" ng-show="game.resultado == true" style="color: #00FF00;">Parabéns</div>

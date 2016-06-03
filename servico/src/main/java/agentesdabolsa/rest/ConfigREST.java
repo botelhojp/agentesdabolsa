@@ -16,7 +16,9 @@ import javax.ws.rs.core.Response.Status;
 
 import com.sun.jersey.api.NotFoundException;
 
+import agentesdabolsa.dao.AcaoDAO;
 import agentesdabolsa.dao.ConfigDAO;
+import agentesdabolsa.dao.CotacaoDAO;
 import agentesdabolsa.entity.Config;
 import agentesdabolsa.exception.AppException;
 
@@ -36,6 +38,14 @@ public class ConfigREST {
 			return Response.ok().build();
 		}
 		
+	}
+	
+	@GET
+	@Path("clean-db")
+	public Response cleanDB() throws NotFoundException {
+		AcaoDAO.getInstance().deleteAll();
+		CotacaoDAO.getInstance().deleteAll();
+		return Response.ok().build();
 	}
 
 	@POST

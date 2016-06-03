@@ -26,7 +26,6 @@ public class ContacaoREST {
 	@GET
 	public Response getCotacoes(@QueryParam("acao") String acao) {
 		StringBuffer sf = new StringBuffer();
-		System.out.println(acao);
 
 		List<Cotacao> cotacoes = null;
 		cotacoes = dao.listCotacoes(acao);
