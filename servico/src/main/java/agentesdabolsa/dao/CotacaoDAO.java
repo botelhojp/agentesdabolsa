@@ -14,7 +14,7 @@ import agentesdabolsa.exception.AppException;
 
 public class CotacaoDAO extends GenericDAO<Cotacao> {
 	
-	private static long SIZE = 100;
+	private static long SIZE = 15;
 	private static CotacaoDAO dao = new CotacaoDAO();
 	private static Hashtable<Long, Long> cacheTotal = new Hashtable<Long, Long>();
 

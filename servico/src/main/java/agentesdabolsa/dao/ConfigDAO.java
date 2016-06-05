@@ -17,6 +17,6 @@ public class ConfigDAO extends GenericDAO<Config> {
 
 	@Override
 	protected String getOrder() {
-		return "acoes";
+		return null;
 	}
 }

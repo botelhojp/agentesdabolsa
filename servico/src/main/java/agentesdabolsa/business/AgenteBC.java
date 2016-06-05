@@ -22,6 +22,8 @@ public class AgenteBC {
 	private CotacaoDAO cotacaoDao = CotacaoDAO.getInstance();
 	private CotacaoDAO ctDao = CotacaoDAO.getInstance();
 	private GameBC gameBC = GameBC.getInstance();
+	private ConfigBC configBC = ConfigBC.getInstance();
+
 
 	private static AgenteBC instance = new AgenteBC();
 
@@ -37,8 +39,8 @@ public class AgenteBC {
 		List<Cotacao> cotacoes = ctDao.findByAcaoRandomResult(game, GameBC.random, iteration);
 		
 		
-		Cotacao cotacaoD = cotacaoDao.getCotacao(game.getAcao().getNomeres(), game.getFrom() - 20);
-		game.setCotacao(cotacoes.get(cotacoes.size() - 1));
+		Cotacao cotacaoD = cotacaoDao.getCotacao(game.getAcao().getNomeres(), game.getFrom() - configBC.getConfig().getStop());
+		game.setCotacao(cotacoes.get(0));
 
 		Interpreter i = new Interpreter();
 		try {
