@@ -15,6 +15,8 @@ import agentesdabolsa.exception.AppException;
 public abstract class GenericDAO<T extends JSONBean> extends ELKDAO<T> {
 
 	protected abstract String getResouce();
+	
+	protected abstract String getOrder();
 
 	private Class<T> clazz;
 
@@ -64,9 +66,11 @@ public abstract class GenericDAO<T extends JSONBean> extends ELKDAO<T> {
 	}
 	
 	public List<T> list(){
-		return list(get(getResouce() + "/_search"));
+		if ( getOrder() == null){
+			return list(get(getResouce() + "/_search"));
+		}
+		return list(get(getResouce() + "/_search", "{\"sort\" : [{ \"" + getOrder()+ "\" : {\"order\" : \"asc\"}}]}"));		
 	}
-	
 	
 	public List<T> listOrderDesc(String field){
 		String filtro = "{ \"sort\" : [{ \""+field+"\" : \"desc\" }]}";

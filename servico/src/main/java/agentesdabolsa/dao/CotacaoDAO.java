@@ -112,4 +112,9 @@ public class CotacaoDAO extends GenericDAO<Cotacao> {
 		return super.list(jsonResult).get(0);		
 	}
 
+	@Override
+	protected String getOrder() {
+		return null;
+	}
+
 }

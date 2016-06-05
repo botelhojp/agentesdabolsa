@@ -14,4 +14,9 @@ public class AgenteDAO extends GenericDAO<Agente> {
 	public static AgenteDAO getInstance() {
 		return dao;
 	}
+
+	@Override
+	protected String getOrder() {
+		return "name";
+	}
 }

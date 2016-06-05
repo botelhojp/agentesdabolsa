@@ -14,4 +14,9 @@ public class ConfigDAO extends GenericDAO<Config> {
 	public static ConfigDAO getInstance() {
 		return dao;
 	}
+
+	@Override
+	protected String getOrder() {
+		return "acoes";
+	}
 }

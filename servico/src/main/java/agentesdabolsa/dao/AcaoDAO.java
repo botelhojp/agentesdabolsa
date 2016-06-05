@@ -26,6 +26,11 @@ public class AcaoDAO extends GenericDAO<Acao>{
 		
 		return findByName(acoes[(int) from]);
 	}
+
+	@Override
+	protected String getOrder() {
+		return "nomeres";
+	}
 	
 	
 }

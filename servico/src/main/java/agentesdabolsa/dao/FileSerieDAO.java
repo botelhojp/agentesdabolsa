@@ -14,4 +14,9 @@ public class FileSerieDAO extends GenericDAO<Agente> {
 	public static FileSerieDAO getInstance() {
 		return dao;
 	}
+
+	@Override
+	protected String getOrder() {
+		return null;
+	}
 }

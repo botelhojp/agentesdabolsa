@@ -36,6 +36,10 @@ public class ELKDAO<T extends JSONBean> {
 	public String get(String resouce) {
 		return httpGet(resouce);
 	}
+	
+	public String get(String resouce, String order) {
+		return http(resouce, "POST", order);
+	}
 
 	public String insert(String resouce, T bean) {
 		return http(resouce + "/" + bean.getId(), "POST", bean.toString());
