@@ -36,7 +36,7 @@ public class AgenteBC {
 		Game game = getGame(client);
 		game.setAcao(agenteDao.getRandom(GameBC.acoes));
 		
-		List<Cotacao> cotacoes = ctDao.findByAcaoRandomResult(game, GameBC.random, iteration);
+		List<Cotacao> cotacoes = ctDao.getCotacoes(game, GameBC.random, iteration * configBC.getConfig().getStop());
 		
 		
 		Cotacao cotacaoD = cotacaoDao.getCotacao(game.getAcao().getNomeres(), game.getFrom() - configBC.getConfig().getStop());

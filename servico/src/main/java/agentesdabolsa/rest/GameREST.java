@@ -48,7 +48,7 @@ public class GameREST {
 		game.setIteration(iteration);
 		game.setAcao(dao.getRandom(GameBC.acoes));
 		StringBuffer sf = new StringBuffer();
-		List<Cotacao> cotacoes = ctDao.findByAcaoRandomResult(game, GameBC.random, iteration);
+		List<Cotacao> cotacoes = ctDao.getCotacoes(game, GameBC.random, iteration * configBC.getConfig().getStop());
 		
 		game.setCotacao(cotacoes.get(0));
 		

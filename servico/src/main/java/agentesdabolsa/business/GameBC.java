@@ -60,7 +60,7 @@ public class GameBC {
 	}
 	
 	public void buy(Game game) {
-		Cotacao cotacaoD = cotacaoDao.getCotacao(game.getAcao().getNomeres(), game.getFrom() - config.getStop() - 1);
+		Cotacao cotacaoD = cotacaoDao.getCotacao(game.getAcao().getNomeres(), game.getFrom() - config.getStop());
 		buy(game, game.getCarteira(), cotacaoD);
 	}
 
