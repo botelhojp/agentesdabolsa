@@ -23,6 +23,7 @@ import agentesdabolsa.dao.CotacaoDAO;
 import agentesdabolsa.entity.Agente;
 import agentesdabolsa.entity.Cotacao;
 import agentesdabolsa.entity.Game;
+import agentesdabolsa.trust.ITrust;
 import jade.core.AID;
 
 @Path("game")
@@ -90,17 +91,22 @@ public class GameREST {
 	
 	@GET
 	@Path("simulate_start")
-	public Response add(@QueryParam("rounds") int rounds ) throws NotFoundException {
+	@SuppressWarnings("unchecked")
+	public Response add(@QueryParam("rounds") int rounds, @QueryParam("trust") String trustClassName ) throws NotFoundException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+		Class<ITrust> clazz = (Class<ITrust>) Class.forName(trustClassName);
 		AgenteDAO agenteDao = AgenteDAO.getInstance();
 		GameBC.configure(rounds);
-		GameBC game = GameBC.getInstance();
+		GameBC gameBC = GameBC.getInstance();
 		List<Agente> l = agenteDao.list();
 		for(Agente agente : l){
 			if (agente.getEnabled() && agente.getClones() != null && agente.getClones() > 0){
 				for (int i = 0; i < agente.getClones(); i++) {
 					Agente clone = (Agente) AppUtils.cloneObject(agente);
 					clone.setAID(new AID(clone.getName()+ "_" +i, true));
-					game.add(clone);
+					ITrust instance = clazz.newInstance();
+					instance.setAgent(clone);
+					clone.setTrust(instance);
+					gameBC.add(clone);
 				}
 			}
 		}

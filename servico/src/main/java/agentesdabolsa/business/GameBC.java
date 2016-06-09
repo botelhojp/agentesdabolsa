@@ -12,22 +12,15 @@ import agentesdabolsa.entity.Game;
 
 public class GameBC {
 	private static GameBC instance;
-
 	private static Hashtable<String, Game> games = new Hashtable<String, Game>();
-	
 	private CotacaoDAO cotacaoDao = CotacaoDAO.getInstance();
-	
 	private ConfigBC configBC = ConfigBC.getInstance();
-
-	
-	
 	public static Config config;
 	public static String[] acoes;
 	public static Boolean random;
 
 	private static List<Agente> agents;
 	private static Thread time;
-	
 
 	private GameBC(int iterations) {
 		agents = new ArrayList<Agente>();
@@ -36,36 +29,39 @@ public class GameBC {
 	}
 
 	public static GameBC getInstance() {
-		if (instance == null){
+		if (instance == null) {
 			configure(0);
 		}
 		return instance;
 	}
 
 	public Game newGame(String user) {
-		config = configBC.getConfig();
-		acoes = config.getAcoes().trim().split(" ");
-		random = config.getRandom();
-		
-		
-		Game n = new Game();
-		n.setCarteira(100000);
-		n.setUser(user);
-		games.put(user, n);
-		return n;
+		try {
+			config = configBC.getConfig();
+			acoes = config.getAcoes().trim().split(" ");
+			random = config.getRandom();
+
+			Game newGame = new Game();
+			newGame.setCarteira(100000);
+			newGame.setUser(user);
+			games.put(user, newGame);
+			return newGame;
+		} catch (Exception e) {
+			throw new RuntimeException("Erro ao criar novo jogo", e);
+		}
 	}
 
 	public Game getGame(String user) {
 		return games.get(user);
 	}
-	
+
 	public void buy(Game game) {
 		Cotacao cotacaoD = cotacaoDao.getCotacao(game.getAcao().getNomeres(), game.getFrom() - config.getStop());
 		buy(game, game.getCarteira(), cotacaoD);
 	}
 
 	public void buy(Game game, Double value, Cotacao cotacaoD) {
-		if (value == null){
+		if (value == null) {
 			value = game.getCarteira();
 		}
 		game.setAcaoAnterior(game.getAcao());
@@ -82,19 +78,18 @@ public class GameBC {
 			game.setCarteira((game.getCarteira() - value) + (value * (1 - diff)));
 		}
 	}
-	
+
 	public void sell(Game game) {
 		Cotacao cotacaoD = cotacaoDao.getCotacao(game.getAcao().getNomeres(), game.getFrom() - config.getStop());
 		sell(game, game.getCarteira(), cotacaoD);
 	}
 
 	public void sell(Game game, Double value, Cotacao cotacaoD) {
-		if (value == null){
+		if (value == null) {
 			value = game.getCarteira();
 		}
 		game.setAcaoAnterior(game.getAcao());
-		
-		
+
 		game.setNovaCotacao(cotacaoD);
 		Float antes = game.getCotacao().getPreult();
 		Float depois = cotacaoD.getPreult();

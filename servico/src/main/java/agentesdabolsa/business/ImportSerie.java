@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Hashtable;
+import java.util.List;
 
 import org.omg.CORBA.portable.ApplicationException;
 
@@ -76,22 +77,27 @@ public class ImportSerie {
 				acao.setNomefull(nomefull);
 				acaoDao.insert(acao);
 			}
-			Cotacao cotacao = new Cotacao();
-			cotacao.setDatapre(AppUtils.makeData(AppUtils.makeData(linha.substring(02, 10))));
-			cotacao.setPreabe(AppUtils.makeFloat(linha.substring(56, 69)) / 100);
-			cotacao.setPremax(AppUtils.makeFloat(linha.substring(69, 82)) / 100);
-			cotacao.setPremin(AppUtils.makeFloat(linha.substring(82, 95)) / 100);
-			cotacao.setPremed(AppUtils.makeFloat(linha.substring(95, 108)) / 100);
-			cotacao.setPreult(AppUtils.makeFloat(linha.substring(108, 121)) / 100);
-			cotacao.setPreofc(AppUtils.makeFloat(linha.substring(121, 134)) / 100);
-			cotacao.setPreofv(AppUtils.makeFloat(linha.substring(134, 147)) / 100);
-			cotacao.setTotneg(AppUtils.makeLong(linha.substring(147, 152)));
-			cotacao.setQuatot(AppUtils.makeLong(linha.substring(152, 170)));
-			cotacao.setVotot(AppUtils.makeLong(linha.substring(170, 188)));
-			cotacao.setIdAcao(acao.getId());
-			
-			cotacaoDao.insert(cotacao);
-			currentStatus.put("value", cotacao.getDatapre() + " itens:" + cont);
+
+			String dt = AppUtils.makeData(AppUtils.makeData(linha.substring(02, 10)));
+
+			List<Cotacao> r = cotacaoDao.findByField("idAcao", "" + acao.getId(), "datapre", dt);
+			if (r.size() == 0) {
+				Cotacao cotacao = new Cotacao();
+				cotacao.setDatapre(AppUtils.makeData(AppUtils.makeData(linha.substring(02, 10))));
+				cotacao.setPreabe(AppUtils.makeFloat(linha.substring(56, 69)) / 100);
+				cotacao.setPremax(AppUtils.makeFloat(linha.substring(69, 82)) / 100);
+				cotacao.setPremin(AppUtils.makeFloat(linha.substring(82, 95)) / 100);
+				cotacao.setPremed(AppUtils.makeFloat(linha.substring(95, 108)) / 100);
+				cotacao.setPreult(AppUtils.makeFloat(linha.substring(108, 121)) / 100);
+				cotacao.setPreofc(AppUtils.makeFloat(linha.substring(121, 134)) / 100);
+				cotacao.setPreofv(AppUtils.makeFloat(linha.substring(134, 147)) / 100);
+				cotacao.setTotneg(AppUtils.makeLong(linha.substring(147, 152)));
+				cotacao.setQuatot(AppUtils.makeLong(linha.substring(152, 170)));
+				cotacao.setVotot(AppUtils.makeLong(linha.substring(170, 188)));
+				cotacao.setIdAcao(acao.getId());
+				cotacaoDao.insert(cotacao);
+			}
+			currentStatus.put("value", dt + " itens:" + cont);
 		}
 	}
 

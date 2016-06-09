@@ -15,23 +15,24 @@ public class TrustData implements Serializable {
 	protected List<Rating> ratings = new ArrayList<Rating>();
 	protected Hashtable<Integer, Rating> hash = new Hashtable<Integer, Rating>();
 	protected HashMap<AID, TrustData> data;
+	private double sum = 0.0;
 
 	public TrustData() {
 	}
-
-	/**
-	 * Adiciona o avalicao
-	 * 
-	 * @param rating
-	 */
+	
 	public void addRating(Rating rating) {
 		if (true){		
 			ratings.add(rating);	
 			hash.put(rating.getRound(), rating);
+			sum += Double.parseDouble(rating.getValue());
 		}		
 	}
 
 	public List<Rating> getRatings() {
 		return ratings;
+	}
+	
+	public double getSum(){
+		return sum;
 	}
 }

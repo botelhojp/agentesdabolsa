@@ -25,9 +25,9 @@ app.service('GameService', ['$http', '$window', '$q', function($http, $window, $
 	};
 	
 	
-	services.simulate = function(rounds) {
+	services.simulate = function(rounds, trust) {
 		var deferred = $q.defer();
-		$http.get('/api/game/simulate_start?rounds=' + rounds).success(function(data) {
+		$http.get('/api/game/simulate_start?rounds=' + rounds + '&trust=' + trust).success(function(data) {
 			deferred.resolve(data);
 		}).error(function(data, status) {
 			deferred.reject([ data, status ]);

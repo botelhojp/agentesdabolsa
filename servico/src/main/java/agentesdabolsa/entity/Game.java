@@ -92,6 +92,5 @@ public class Game {
 
 	public void setIteration(long iteration) {
 		this.iteration = iteration;
-	}
-	
+	}	
 }

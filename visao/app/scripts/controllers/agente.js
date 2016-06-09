@@ -27,19 +27,14 @@ function($window, $http, $scope, $route, $rootScope, $location, AgenteService, D
     editorResponseHelp.session.setMode("ace/mode/java");     
     editorResponseHelp.$blockScrolling = Infinity;
 
-
-    
-
-    
-
-
-
-
-	
-	
 	$scope.new = function () {	
         modal.style.display = "block";	
 		$scope.agente = {};
+        editorActionBefore.setValue("");
+        editorActionBefore.setValue("");
+        editorActionAfter.setValue("");
+        editorRequestHelp.setValue("");
+        editorResponseHelp.setValue("");
 	};
 
     $scope.close = function () {  
@@ -51,9 +46,7 @@ function($window, $http, $scope, $route, $rootScope, $location, AgenteService, D
         $scope.agente.actionAfter = editorActionAfter.getValue(); 
         $scope.agente.requestHelp = editorRequestHelp.getValue(); 
         $scope.agente.responseHelp = editorResponseHelp.getValue(); 
-        
-
-                
+                       
 		AgenteService.save($scope.agente).then(
 			function (data) {
 				$scope.new();

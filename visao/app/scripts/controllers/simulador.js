@@ -4,11 +4,13 @@ function($window, $http, $scope, $route, $rootScope, $location, GameService, NAV
 	
 	$scope.rounds = 1;	
 
+	$scope.trust = "";
+
 	$scope.startGame = function () {		
 		
 		$window.document.getElementById("messageArea").value = "";		
 		
-		GameService.simulate($scope.rounds).then(
+		GameService.simulate($scope.rounds, $scope.trust).then(
 				function (data) {
 					console.log(data);		
 				},

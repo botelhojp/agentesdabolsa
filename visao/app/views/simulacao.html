@@ -11,15 +11,15 @@
 				<input type="number" name="input" class="form-control" placeholder="Clones" ng-model="rounds" min="0" max="1000" required>
 			</fieldset>
 		</div>
-		<div class="col-md-2">
+		<div class="col-md-4">
 			<fieldset class="form-group">
 				<label for="nome" >Confiança</label>
-				<select class="form-control" class="btn btn-default">
-				  <option>Direta</option>
-				  <option>Indireta</option>
-				  <option>Dossie</option>
-				  <option>TrustNet</option>
-				  <option>Marsh</option>
+				<select class="form-control" class="btn btn-default" ng-model="trust" >
+				  <option value = "agentesdabolsa.trust.WithoutModel">Sem Confiança</option>
+				  <option value = "agentesdabolsa.trust.MARSHModel">Modelo Direto</option>
+				  <option value = "agentesdabolsa.trust.MARSHModel">Modelo Dossie</option>
+				  <option value = "agentesdabolsa.trust.MARSHModel">Modelo TrustNet</option>
+				  <option value = "agentesdabolsa.trust.MARSHModel">Modelo Marsh</option>
 				</select>
 			</fieldset>
 		</div>

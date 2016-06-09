@@ -1,7 +1,7 @@
 package agentesdabolsa.entity;
 
 import agentesdabolsa.commons.AppUtils;
-import agentesdabolsa.trust.MARSHModel;
+import agentesdabolsa.trust.ITrust;
 import jade.core.AID;
 
 public class Agente extends JSONBean {
@@ -21,17 +21,9 @@ public class Agente extends JSONBean {
 	private String responseHelp;
 	
 	private Boolean enabled;
-	
-	private MARSHModel trust;
-	
-	public MARSHModel getTrust() {
-		return trust;
-	}
 
-	public void setTrust(MARSHModel trust) {
-		this.trust = trust;
-	}
-
+	private ITrust trust;
+	
 	public Agente(){
 	}
 	
@@ -121,5 +113,13 @@ public class Agente extends JSONBean {
 
 	public void setAID(AID aid) {
 		this.aid = aid;
+	}
+
+	public void setTrust(ITrust trust) {
+		this.trust = trust;
+	}
+
+	public ITrust getTrust() {
+		return trust;
 	}
 }

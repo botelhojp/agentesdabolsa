@@ -2,18 +2,17 @@ package agentesdabolsa.business;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
 
 import agentesdabolsa.dao.AcaoDAO;
 import agentesdabolsa.dao.CotacaoDAO;
 import agentesdabolsa.entity.Action;
-import agentesdabolsa.entity.Advice;
 import agentesdabolsa.entity.Agente;
 import agentesdabolsa.entity.Cotacao;
 import agentesdabolsa.entity.Game;
-import agentesdabolsa.trust.MARSHModel;
 import bsh.Interpreter;
+import jade.core.AID;
 import openjade.ontology.Rating;
 
 public class AgenteBC {
@@ -32,7 +31,7 @@ public class AgenteBC {
 	}
 
 	public void play(Agente client, int iteration) {
-		List<Advice> advices = new ArrayList<Advice>();
+		//List<Advice> advices = new ArrayList<Advice>();
 		Game game = getGame(client);
 		game.setAcao(agenteDao.getRandom(GameBC.acoes));
 		
@@ -51,26 +50,27 @@ public class AgenteBC {
 			i.set("_cotacoes", cotacoes);
 			i.set("_cotacaoD", cotacaoD);			
 			i.set("_iteration", iteration);
-			i.set("_advice", advices);
-			i.set("_trust", client.getTrust());
+//			i.set("_trust", game.getTrust());
 			//pedir ajuda			
 			if (client.getRequestHelp() != null && !client.getRequestHelp().isEmpty()) {
 				i.eval(client.getRequestHelp());
 				Action action = (Action) i.get("_request");
 				if (action != null && action.equals(Action.REQUEST_ALL)){
+					Hashtable<AID, Action> advices = new Hashtable<AID, Action>();
+					
 					for (Agente server : GameBC.getAgents()){
-						if (server.getId() != client.getId() && server.getResponseHelp() != null && !server.getResponseHelp().isEmpty()){
+						if (!server.getAID().equals(client.getAID()) && server.getResponseHelp() != null && !server.getResponseHelp().isEmpty()){
 							i.eval(server.getResponseHelp());
 							Action advice = (Action) i.get("_return");
 							if (advice != null){
-								
 								Rating rt = makeRating(client, server, iteration, cotacoes, cotacaoD, advice);
-								
 								client.getTrust().addRating(rt);
-								advices.add(new Advice(advice, server));
+								advices.put(server.getAID(), advice);
 							}
 						}
 					}
+					AID best = client.getTrust().getBest();
+					i.set("_advice", advices.get(best));
 				}
 			}
 			
@@ -108,7 +108,7 @@ public class AgenteBC {
 	}
 
 	private Rating makeRating(Agente client, Agente server, int iteration, List<Cotacao> cotacoes, Cotacao cotacaoD, Action advice) {
-		Cotacao cotacao = cotacoes.get(cotacoes.size()-1);		
+		Cotacao cotacao = cotacoes.get(0);		
 		boolean subiu = (cotacao.compareTo(cotacaoD) <= 0);
 		boolean desceu = !subiu;		
 		boolean acertou =  ( (subiu && advice.equals(Action.BUY)) || (desceu && advice.equals(Action.SELL)) );
@@ -124,10 +124,9 @@ public class AgenteBC {
 	}
 
 	private Game getGame(Agente agente) {
-		Game game = gameBC.getGame(agente.getId() + "");
+		Game game = gameBC.getGame(agente.getAID().getLocalName());
 		if (game == null) {
-			agente.setTrust(new MARSHModel(agente));
-			game = gameBC.newGame(agente.getId() + "");
+			game = gameBC.newGame(agente.getAID().getLocalName());
 		}
 		return game;
 	}

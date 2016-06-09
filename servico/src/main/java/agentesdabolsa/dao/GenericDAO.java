@@ -123,13 +123,14 @@ public abstract class GenericDAO<T extends JSONBean> extends ELKDAO<T> {
 	}
 	
 	public List<T> findByField(String... params) {
-		String consult = "";
+		String consult = "q=";
 		for (int i = 0; i < params.length; i= i + 2) {
-			consult += "q=" + params[0] + ":" + params[1];
+			consult += "+" + params[i] + ":" + params[i+1];
 			if (i + 2 < params.length){
-				consult += "&";
+				consult += "%20";
 			}
 		}
+		consult+="&default_operator=AND";
 		ArrayList<T> rl = new ArrayList<T>();
 		String r = get(getResouce() + "/_search?" + consult +  "&pretty=true");
 		try {
