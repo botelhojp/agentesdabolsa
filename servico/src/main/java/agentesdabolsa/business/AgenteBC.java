@@ -46,6 +46,7 @@ public class AgenteBC {
 			rule.set("_cotacoes", cotacoes);
 			rule.set("_cotacaoD", cotacaoD);
 			rule.set("_iteration", iteration);
+			rule.set("_advice", null);
 			if (client.getRequestHelp() != null && !client.getRequestHelp().isEmpty()) {
 				rule.eval(client.getRequestHelp());
 				Agente server = (Agente) rule.get("_request");
