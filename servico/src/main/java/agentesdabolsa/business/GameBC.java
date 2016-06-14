@@ -9,6 +9,7 @@ import agentesdabolsa.entity.Agente;
 import agentesdabolsa.entity.Config;
 import agentesdabolsa.entity.Cotacao;
 import agentesdabolsa.entity.Game;
+import jade.core.AID;
 
 public class GameBC {
 	private static GameBC instance;
@@ -20,10 +21,12 @@ public class GameBC {
 	public static Boolean random;
 
 	private static List<Agente> agents;
+	private static Hashtable<AID, Agente> agentsAID;
 	private static Thread time;
 
 	private GameBC(int iterations) {
 		agents = new ArrayList<Agente>();
+		agentsAID = new Hashtable<AID, Agente>();
 		time = new Thread(new Time(agents, iterations));
 		games.clear();
 	}
@@ -111,6 +114,7 @@ public class GameBC {
 
 	public void add(Agente agente) {
 		agents.add(agente);
+		agentsAID.put(agente.getAID(), agente);
 	}
 
 	public static List<Agente> getAgents() {
@@ -127,5 +131,9 @@ public class GameBC {
 
 	public static void start() {
 		time.start();
+	}
+
+	public static Agente getAgent(AID best) {
+		return agentsAID.get(best);
 	}
 }

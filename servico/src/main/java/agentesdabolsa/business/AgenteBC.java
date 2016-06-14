@@ -2,7 +2,6 @@ package agentesdabolsa.business;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.Hashtable;
 import java.util.List;
 
 import agentesdabolsa.dao.AcaoDAO;
@@ -12,7 +11,6 @@ import agentesdabolsa.entity.Agente;
 import agentesdabolsa.entity.Cotacao;
 import agentesdabolsa.entity.Game;
 import bsh.Interpreter;
-import jade.core.AID;
 import openjade.ontology.Rating;
 
 public class AgenteBC {
@@ -23,7 +21,6 @@ public class AgenteBC {
 	private GameBC gameBC = GameBC.getInstance();
 	private ConfigBC configBC = ConfigBC.getInstance();
 
-
 	private static AgenteBC instance = new AgenteBC();
 
 	public static AgenteBC getInstance() {
@@ -31,54 +28,43 @@ public class AgenteBC {
 	}
 
 	public void play(Agente client, int iteration) {
-		//List<Advice> advices = new ArrayList<Advice>();
+		// List<Advice> advices = new ArrayList<Advice>();
 		Game game = getGame(client);
 		game.setAcao(agenteDao.getRandom(GameBC.acoes));
-		
+
 		List<Cotacao> cotacoes = ctDao.getCotacoes(game, GameBC.random, iteration * configBC.getConfig().getStop());
-		
-		
+
 		Cotacao cotacaoD = cotacaoDao.getCotacao(game.getAcao().getNomeres(), game.getFrom() - configBC.getConfig().getStop());
 		game.setCotacao(cotacoes.get(0));
 
-		Interpreter i = new Interpreter();
+		Interpreter rule = new Interpreter();
 		try {
-			i.set("_agente", client);
-			i.set("_game", game);
-			i.set("_acao", game.getAcao());
-			i.set("_carteira", game.getCarteira());
-			i.set("_cotacoes", cotacoes);
-			i.set("_cotacaoD", cotacaoD);			
-			i.set("_iteration", iteration);
-//			i.set("_trust", game.getTrust());
-			//pedir ajuda			
+			rule.set("_this", client);
+			rule.set("_game", game);
+			rule.set("_acao", game.getAcao());
+			rule.set("_carteira", game.getCarteira());
+			rule.set("_cotacoes", cotacoes);
+			rule.set("_cotacaoD", cotacaoD);
+			rule.set("_iteration", iteration);
 			if (client.getRequestHelp() != null && !client.getRequestHelp().isEmpty()) {
-				i.eval(client.getRequestHelp());
-				Action action = (Action) i.get("_request");
-				if (action != null && action.equals(Action.REQUEST_ALL)){
-					Hashtable<AID, Action> advices = new Hashtable<AID, Action>();
-					
-					for (Agente server : GameBC.getAgents()){
-						if (!server.getAID().equals(client.getAID()) && server.getResponseHelp() != null && !server.getResponseHelp().isEmpty()){
-							i.eval(server.getResponseHelp());
-							Action advice = (Action) i.get("_return");
-							if (advice != null){
-								Rating rt = makeRating(client, server, iteration, cotacoes, cotacaoD, advice);
-								client.getTrust().addRating(rt);
-								advices.put(server.getAID(), advice);
-							}
-						}
+				rule.eval(client.getRequestHelp());
+				Agente server = (Agente) rule.get("_request");
+				if (server != null) { 
+					rule.eval(server.getResponseHelp());
+					Action advice = (Action) rule.get("_return");
+					if (advice != null) {
+						Rating rt = makeRating(client, server, iteration, cotacoes, cotacaoD, advice);
+						client.getTrust().addRating(rt);
 					}
-					AID best = client.getTrust().getBest();
-					i.set("_advice", advices.get(best));
+					rule.set("_advice", advice);
 				}
 			}
-			
-			//joga
+
+			// joga
 			if (client.getActionBefore() != null && !client.getActionBefore().isEmpty()) {
-				i.eval(client.getActionBefore());
-				Action action = (Action) i.get("_return");
-				Double value = (Double) i.get("_value");
+				rule.eval(client.getActionBefore());
+				Action action = (Action) rule.get("_return");
+				Double value = (Double) rule.get("_value");
 				if (action != null && value != null) {
 					switch (action) {
 					case BUY:
@@ -96,9 +82,11 @@ public class AgenteBC {
 				}
 			}
 			if (client.getActionAfter() != null && !client.getActionAfter().isEmpty()) {
-				i.eval(client.getActionAfter());
+				rule.eval(client.getActionAfter());
 			}
-		} catch (Exception e) {
+		} catch (
+
+		Exception e) {
 			StringWriter sw = new StringWriter();
 			PrintWriter pw = new PrintWriter(sw);
 			e.printStackTrace(pw);
@@ -108,13 +96,13 @@ public class AgenteBC {
 	}
 
 	private Rating makeRating(Agente client, Agente server, int iteration, List<Cotacao> cotacoes, Cotacao cotacaoD, Action advice) {
-		Cotacao cotacao = cotacoes.get(0);		
+		Cotacao cotacao = cotacoes.get(0);
 		boolean subiu = (cotacao.compareTo(cotacaoD) <= 0);
-		boolean desceu = !subiu;		
-		boolean acertou =  ( (subiu && advice.equals(Action.BUY)) || (desceu && advice.equals(Action.SELL)) );
+		boolean desceu = !subiu;
+		boolean acertou = ((subiu && advice.equals(Action.BUY)) || (desceu && advice.equals(Action.SELL)));
 		Float valor = Math.abs((cotacaoD.getPreult() - cotacao.getPreult()) / cotacao.getPreult());
-		valor = (acertou) ? valor : valor * - 1;
-		
+		valor = (acertou) ? valor : valor * -1;
+
 		Rating rt = new Rating();
 		rt.setClient(client.getAID());
 		rt.setServer(server.getAID());

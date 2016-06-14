@@ -3,27 +3,38 @@ package agentesdabolsa.trust;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import agentesdabolsa.business.GameBC;
 import agentesdabolsa.entity.Agente;
 import jade.core.AID;
 import openjade.ontology.Rating;
 
-public class MARSHModel implements ITrust {
+public class MARSHModel extends AbstractTrust {
 	
 	private static final long serialVersionUID = 1L;
-
 	protected HashMap<AID, TrustData> data;
-	
-	private Agente myAgent;
-	
+	private long count = 0;
+
 	public MARSHModel() {
 		data = new HashMap<AID, TrustData>();
 	}
 
-	public MARSHModel(Agente agente) {
-		this();
-		myAgent = agente;
-	}
 	
+	/**
+	 * selecionar o melhor agente, porem precisa interagir com outros
+	 * agente para montar seu modelo
+	 */
+	@Override
+	public Agente select() {
+		count++;
+		if (count < 10 || count % 10 == 0){
+			return super.select();	
+		}	
+		return GameBC.getAgent(getBest());
+	}
+
+	/**
+	 * Melhor agente local 
+	 */
 	public AID getBest() {
 		AID rt = null;
 		double aux = Double.MIN_VALUE;
