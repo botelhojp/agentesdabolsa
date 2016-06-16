@@ -16,6 +16,7 @@ import com.sun.jersey.api.NotFoundException;
 
 import agentesdabolsa.business.ConfigBC;
 import agentesdabolsa.business.GameBC;
+import agentesdabolsa.business.Random;
 import agentesdabolsa.commons.AppUtils;
 import agentesdabolsa.dao.AcaoDAO;
 import agentesdabolsa.dao.AgenteDAO;
@@ -38,6 +39,7 @@ public class GameREST {
 	@GET
 	@Path("start")
 	public Response start(@QueryParam("user") String user) throws NotFoundException {
+		Random.reset();
 		return Response.ok().entity(GameBC.getInstance().newGame(user)).build();
 	}
 
@@ -93,6 +95,7 @@ public class GameREST {
 	@Path("simulate_start")
 	@SuppressWarnings("unchecked")
 	public Response add(@QueryParam("rounds") int rounds, @QueryParam("trust") String trustClassName ) throws NotFoundException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+		Random.reset();
 		Class<ITrust> clazz = (Class<ITrust>) Class.forName(trustClassName);
 		AgenteDAO agenteDao = AgenteDAO.getInstance();
 		GameBC.configure(rounds);

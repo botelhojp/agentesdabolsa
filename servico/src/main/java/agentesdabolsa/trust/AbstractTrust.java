@@ -1,29 +1,52 @@
 package agentesdabolsa.trust;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Iterator;
 
-import agentesdabolsa.business.GameBC;
 import agentesdabolsa.entity.Agente;
+import jade.core.AID;
+import openjade.ontology.Rating;
 
 public abstract class AbstractTrust implements ITrust {
 
 	private static final long serialVersionUID = 1L;
 
 	protected Agente myAgent;
+	protected HashMap<AID, TrustData> data;
+
+	public AbstractTrust() {
+		data = new HashMap<AID, TrustData>();
+	}
+
+
 
 	/**
-	 * seleciona um agente aleatoriamente
+	 * Melhor agente na visao local dele
 	 */
-	public Agente select() {
-		List<Agente> agents = GameBC.getAgents();
-		for (int i = 0; i < 10; i++) {
-			int index = (int) Math.round((agents.size() - 1) * Math.random());
-			Agente select = agents.get(index);
-			if (!select.getAID().equals(myAgent.getAID()) && select.getResponseHelp() != null && !select.getResponseHelp().isEmpty()) {
-				return select;
+	public AID getBestByMe() {
+		AID rt = null;
+		double aux = Double.MIN_VALUE;
+		Iterator<AID> it = data.keySet().iterator();
+		while (it.hasNext()) {
+			AID aid = (AID) it.next();
+			TrustData d = data.get(aid);
+			if (d.getSum() > aux) {
+				rt = aid;
 			}
 		}
-		return null;
+		return rt;
+	}
+
+	/**
+	 * Adicionar avaliacoes localmente
+	 */
+	public void addRating(Rating rating) {
+		if (data.containsKey(rating.getServer())) {
+			data.get(rating.getServer()).addRating(rating);
+		} else {
+			data.put(rating.getServer(), new TrustData());
+			data.get(rating.getServer()).addRating(rating);
+		}
 	}
 
 	public void setAgent(Agente agente) {

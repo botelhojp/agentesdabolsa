@@ -7,6 +7,7 @@ import javax.ws.rs.core.Response.Status;
 
 import org.codehaus.jettison.json.JSONArray;
 
+import agentesdabolsa.business.Random;
 import agentesdabolsa.entity.Acao;
 import agentesdabolsa.entity.Cotacao;
 import agentesdabolsa.entity.Game;
@@ -70,7 +71,7 @@ public class CotacaoDAO extends GenericDAO<Cotacao> {
 		
 		//pega aleatorio
 		if (random){
-			from = Math.round((total - SIZE) * Math.random());
+			from = Math.round((total - SIZE) * Random.getNumer());
 		}
 		
 

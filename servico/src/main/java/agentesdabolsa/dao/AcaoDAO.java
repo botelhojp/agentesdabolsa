@@ -1,6 +1,7 @@
 package agentesdabolsa.dao;
 
 import agentesdabolsa.business.GameBC;
+import agentesdabolsa.business.Random;
 import agentesdabolsa.entity.Acao;
 
 public class AcaoDAO extends GenericDAO<Acao>{
@@ -22,7 +23,7 @@ public class AcaoDAO extends GenericDAO<Acao>{
 
 	public Acao getRandom(String[] acoes) {
 		
-		long from = (GameBC.random)? Math.round(acoes.length * Math.random()) : 0;
+		long from = (GameBC.random)? Math.round(acoes.length * Random.getNumer()) : 0;
 		
 		return findByName(acoes[(int) from]);
 	}
