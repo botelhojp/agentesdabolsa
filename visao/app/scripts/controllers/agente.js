@@ -119,8 +119,8 @@ function($window, $http, $scope, $route, $rootScope, $location, AgenteService, D
     $scope.totalServerItems = 0;
 
     $scope.pagingOptions = {
-        pageSizes: [5,10],
-        pageSize: 5,
+        pageSizes: [10],
+        pageSize: 10,
         currentPage: 1
     };	
 

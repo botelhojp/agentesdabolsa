@@ -1,11 +1,10 @@
 package agentesdabolsa.trust;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Iterator;
 
 import agentesdabolsa.business.GameBC;
-import agentesdabolsa.business.Random;
 import agentesdabolsa.entity.Agente;
+import jade.core.AID;
 import openjade.ontology.Rating;
 
 /**
@@ -15,9 +14,9 @@ import openjade.ontology.Rating;
  */
 public class DossieModel extends AbstractTrust {
 	
-	List<Rating> dossie = new ArrayList<Rating>();
-
 	private static final long serialVersionUID = 1L;
+	
+	protected TrustData dossie = new TrustData(10);
 	
 	/**
 	 * selecionar o melhor agente, porem precisa interagir com outros agente
@@ -27,25 +26,25 @@ public class DossieModel extends AbstractTrust {
 
 	@Override
 	public Agente select() {
-		count++;
-		if (count < 10 || count % 10 == 0) {
+		if (++count < 10 || count % 10 == 0) {
 			return ramdon();
 		}
 		return GameBC.getAgent(getBestByMe());
 	}
 	
-	private Agente ramdon() {
-		List<Agente> agents = GameBC.getAgents();
-		for (int i = 0; i < 10; i++) {
-			int index = (int) Math.round((agents.size() - 1) * Random.getNumer());
-			Agente select = agents.get(index);
-			if (!select.getAID().equals(myAgent.getAID()) && select.getResponseHelp() != null && !select.getResponseHelp().isEmpty()) {
-				return select;
+	public AID getBestByMe() {
+		AID rt = null;
+		double aux = -999999.99;
+		Iterator<AID> it = data.keySet().iterator();
+		while (it.hasNext()) {
+			AID aid = (AID) it.next();
+			double sum = ((DossieModel) GameBC.getAgent(aid).getTrust()).getDossie();
+			if (sum > aux) {
+				rt = aid;
 			}
 		}
-		return null;
+		return rt;
 	}
-	
 	@Override
 	public void addRating(Rating rating) {
 		super.addRating(rating);
@@ -57,8 +56,12 @@ public class DossieModel extends AbstractTrust {
 	 * Obtem uma avaliacao como feedback
 	 */
 	public void sendFeedback(Rating rating){
-		if (dossie.size() > 100){
-			dossie.remove(0);
-		}
+		dossie.addRating(rating);
 	}
+	
+	public double getDossie(){
+		return dossie.getSum();
+	}
+	
+	
 }
