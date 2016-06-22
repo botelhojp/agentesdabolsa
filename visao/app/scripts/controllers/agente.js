@@ -57,6 +57,29 @@ function($window, $http, $scope, $route, $rootScope, $location, AgenteService, D
 			}
 		);
 	};	
+    
+
+     $scope.invert = function (id) {
+        console.log(id);
+        AgenteService.get(id).then(
+                function (data) {
+                    $scope.agente = data;
+                    $scope.agente.enabled = !$scope.agente.enabled;
+                    AgenteService.save($scope.agente).then(
+                                function (data) {                                   
+                                    $scope.refreshGrid();
+                                },
+                                function (error) {
+                                    console.log(error);                 
+                                }
+                            );                    
+                },
+                function (error) {
+                    console.log(error);                 
+                }
+            );        
+
+     }
 
     $scope.load = function (id) {
         modal.style.display = "block";
@@ -173,9 +196,9 @@ function($window, $http, $scope, $route, $rootScope, $location, AgenteService, D
 
     $scope.labelBoolean = function(value){
         if (value){
-            return 'sim';
+            return 'YES';
         }
-        return 'não';
+        return 'NO';
     }
 
         
@@ -191,7 +214,7 @@ function($window, $http, $scope, $route, $rootScope, $location, AgenteService, D
                     {
                         field: 'enabled', 
                         displayName: 'Ativo', 
-                        cellTemplate: '<div  ng-click="load(row.entity.id)" ng-bind="labelBoolean(row.getProperty(col.field))"></div>',
+                        cellTemplate: '<div  ng-click="invert(row.entity.id)" ng-bind="labelBoolean(row.getProperty(col.field))"><span class="glyphicon glyphicon-music">oo</span>r</div>',
                         width: "10%"
                     },
  	                {

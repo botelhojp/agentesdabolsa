@@ -85,9 +85,7 @@ public class AgenteBC {
 			if (client.getActionAfter() != null && !client.getActionAfter().isEmpty()) {
 				rule.eval(client.getActionAfter());
 			}
-		} catch (
-
-		Exception e) {
+		} catch (Exception e) {
 			StringWriter sw = new StringWriter();
 			PrintWriter pw = new PrintWriter(sw);
 			e.printStackTrace(pw);
@@ -101,8 +99,9 @@ public class AgenteBC {
 		boolean subiu = (cotacao.compareTo(cotacaoD) <= 0);
 		boolean desceu = !subiu;
 		boolean acertou = ((subiu && advice.equals(Action.BUY)) || (desceu && advice.equals(Action.SELL)));
-		Float valor = Math.abs((cotacaoD.getPreult() - cotacao.getPreult()) / cotacao.getPreult());
+		Float valor = Math.abs(cotacaoD.getPreult() - cotacao.getPreult()) / cotacao.getPreult();
 		valor = (acertou) ? valor : valor * -1;
+		//valor = (acertou) ? 1.0F : -1.0F;
 
 		Rating rt = new Rating();
 		rt.setClient(client.getAID());

@@ -21,8 +21,6 @@ public abstract class AbstractTrust implements ITrust {
 		data = new HashMap<AID, TrustData>();
 	}
 
-
-
 	/**
 	 * Melhor agente na visao local dele
 	 */
@@ -35,6 +33,7 @@ public abstract class AbstractTrust implements ITrust {
 			TrustData d = data.get(aid);
 			if (d.getSum() > aux) {
 				rt = aid;
+				aux = d.getSum();
 			}
 		}
 		return rt;
@@ -47,7 +46,7 @@ public abstract class AbstractTrust implements ITrust {
 		if (data.containsKey(rating.getServer())) {
 			data.get(rating.getServer()).addRating(rating);
 		} else {
-			data.put(rating.getServer(), new TrustData());
+			data.put(rating.getServer(), new TrustData(rating.getServer()));
 			data.get(rating.getServer()).addRating(rating);
 		}
 	}

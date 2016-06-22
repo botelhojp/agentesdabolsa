@@ -3,6 +3,7 @@ package agentesdabolsa.trust;
 import java.util.Iterator;
 
 import agentesdabolsa.business.GameBC;
+import agentesdabolsa.business.Log;
 import agentesdabolsa.entity.Agente;
 import jade.core.AID;
 import openjade.ontology.Rating;
@@ -16,7 +17,11 @@ public class DossieModel extends AbstractTrust {
 	
 	private static final long serialVersionUID = 1L;
 	
-	protected TrustData dossie = new TrustData(10);
+	private static final int DOSSIE_SIZE = 10;
+	protected TrustData dossie;
+	
+	public DossieModel() {
+	}
 	
 	/**
 	 * selecionar o melhor agente, porem precisa interagir com outros agente
@@ -33,6 +38,7 @@ public class DossieModel extends AbstractTrust {
 	}
 	
 	public AID getBestByMe() {
+		//String de = "";
 		AID rt = null;
 		double aux = -999999.99;
 		Iterator<AID> it = data.keySet().iterator();
@@ -41,8 +47,11 @@ public class DossieModel extends AbstractTrust {
 			double sum = ((DossieModel) GameBC.getAgent(aid).getTrust()).getDossie();
 			if (sum > aux) {
 				rt = aid;
+				aux = sum;
 			}
+			//de += ":::" + aid.getName() + " sum: " + sum + "\n";
 		}
+		//Log.info(de + "--" + myAgent.getName() + " best: " + rt.getLocalName());
 		return rt;
 	}
 	@Override
@@ -60,8 +69,12 @@ public class DossieModel extends AbstractTrust {
 	}
 	
 	public double getDossie(){
-		return dossie.getSum();
+		return dossie.getSum()/dossie.size();
 	}
 	
-	
+	@Override
+	public void setAgent(Agente agente) {
+		super.setAgent(agente);
+		this.dossie = new TrustData(agente.getAID(), DOSSIE_SIZE);
+	}
 }
