@@ -14,6 +14,7 @@ import javax.ws.rs.core.Response;
 
 import com.sun.jersey.api.NotFoundException;
 
+import agentesdabolsa.business.AgenteBC;
 import agentesdabolsa.business.ConfigBC;
 import agentesdabolsa.business.GameBC;
 import agentesdabolsa.business.Random;
@@ -117,5 +118,13 @@ public class GameREST {
 		return Response.ok().build();
 	}
 	
+	
+	@GET
+	@Path("result")
+	public Response start() throws NotFoundException {
+		Hashtable<String, String> result =  new Hashtable<String, String>();
+		result.put("result", AgenteBC.getInstance().getResult());
+		return Response.ok().entity(result).build();
+	}
 	
 }

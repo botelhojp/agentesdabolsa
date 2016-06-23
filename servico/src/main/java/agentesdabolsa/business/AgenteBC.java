@@ -20,6 +20,15 @@ public class AgenteBC {
 	private CotacaoDAO ctDao = CotacaoDAO.getInstance();
 	private GameBC gameBC = GameBC.getInstance();
 	private ConfigBC configBC = ConfigBC.getInstance();
+	public String getResult() {
+		return result;
+	}
+
+	public void setResult(String result) {
+		this.result = result;
+	}
+
+	private String result;
 
 	private static AgenteBC instance = new AgenteBC();
 
@@ -111,7 +120,7 @@ public class AgenteBC {
 		return rt;
 	}
 
-	private Game getGame(Agente agente) {
+	public Game getGame(Agente agente) {
 		Game game = gameBC.getGame(agente.getAID().getLocalName());
 		if (game == null) {
 			game = gameBC.newGame(agente.getAID().getLocalName());

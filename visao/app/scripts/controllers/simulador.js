@@ -6,24 +6,37 @@ function($window, $http, $scope, $route, $rootScope, $location, GameService, NAV
 
 	$scope.trust = "";
 
-	$scope.startGame = function () {		
-		
+	$scope.startGame = function () {
+
 		$window.document.getElementById("messageArea").value = "";		
 		
 		GameService.simulate($scope.rounds, $scope.trust).then(
-				function (data) {
-					console.log(data);		
-				},
-				function (error) {
-					console.log(error);					
-				}
-			);
+			function (data) {
+				console.log(data);		
+			},
+			function (error) {
+				console.log(error);					
+			}
+		);
 	};		
 
 
 
 	if ($rootScope.mySocket === undefined){
-		 $rootScope.mySocket = new WebSocket(ENV.wsEndpoint);
+		$rootScope.mySocket = new WebSocket(ENV.wsEndpoint);
+	}
+
+	$scope.result = function(){
+		GameService.result().then(
+			function (data) {
+				
+
+				$window.document.getElementById("messageArea").value += data.result + "\n";	
+			},
+			function (error) {
+				console.log(error);					
+			}
+		);
 	}
 	
    

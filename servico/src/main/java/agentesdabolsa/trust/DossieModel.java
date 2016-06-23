@@ -3,7 +3,6 @@ package agentesdabolsa.trust;
 import java.util.Iterator;
 
 import agentesdabolsa.business.GameBC;
-import agentesdabolsa.business.Log;
 import agentesdabolsa.entity.Agente;
 import jade.core.AID;
 import openjade.ontology.Rating;

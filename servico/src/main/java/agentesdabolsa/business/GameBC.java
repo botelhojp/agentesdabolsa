@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 
+import agentesdabolsa.config.AppConfig;
 import agentesdabolsa.dao.CotacaoDAO;
 import agentesdabolsa.entity.Agente;
 import agentesdabolsa.entity.Config;
@@ -22,12 +23,12 @@ public class GameBC {
 
 	private static List<Agente> agents;
 	private static Hashtable<AID, Agente> agentsAID;
-	private static Thread time;
+	private static Thread thread;
 
 	private GameBC(int iterations) {
 		agents = new ArrayList<Agente>();
 		agentsAID = new Hashtable<AID, Agente>();
-		time = new Thread(new Time(agents, iterations));
+		thread = new Thread(new Time(agents, iterations));
 		games.clear();
 	}
 
@@ -45,7 +46,7 @@ public class GameBC {
 			random = config.getRandom();
 
 			Game newGame = new Game();
-			newGame.setCarteira(100000);
+			newGame.setCarteira(AppConfig.INITIAL_VALUE);
 			newGame.setUser(user);
 			games.put(user, newGame);
 			return newGame;
@@ -130,7 +131,7 @@ public class GameBC {
 	}
 
 	public static void start() {
-		time.start();
+		thread.start();
 	}
 
 	public static Agente getAgent(AID best) {

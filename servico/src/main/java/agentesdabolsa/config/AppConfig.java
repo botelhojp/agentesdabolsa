@@ -9,6 +9,8 @@ public class AppConfig {
 	
 	private static AppConfig instance;
 	
+	public static int INITIAL_VALUE = 100000;
+	
 	private Properties prop;
 	
 	private AppConfig(){

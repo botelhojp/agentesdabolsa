@@ -34,8 +34,18 @@ app.service('GameService', ['$http', '$window', '$q', function($http, $window, $
 		});
 		return deferred.promise;
 	};
-	
-	
+
+
+	services.result = function(rounds, trust) {
+		var deferred = $q.defer();
+		$http.get('/api/game/result').success(function(data) {
+			deferred.resolve(data);
+		}).error(function(data, status) {
+			deferred.reject([ data, status ]);
+		});
+		return deferred.promise;
+	};
+
 	
 	services.buy = function(game) {
 		var deferred = $q.defer();
