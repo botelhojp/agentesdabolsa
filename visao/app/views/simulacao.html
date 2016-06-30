@@ -40,12 +40,6 @@
 				<label for="nome" >&nbsp;</label>		
 				<button type="button" ng-click="startGame()" class="btn btn-default">Iniciar</button>
 			</fieldset>			
-		</div>		
-		<div class="col-md-1">			
-			<fieldset class="form-group">
-				<label for="nome" >&nbsp;</label>		
-				<button type="button" ng-click="result()" class="btn btn-default">Resultado</button>
-			</fieldset>			
 		</div>
 		<div class="col-md-1">			
 			<fieldset class="form-group">
@@ -61,8 +55,17 @@
 		</div>				
 	</div>
 	<div class="row" class="form-group">
-		<div class="col-md-12">
-			<textarea id="messageArea" rows="20" cols="120" ></textarea>
+		<div class="col-md-6">
+			<fieldset class="form-group">
+				<label>Mensagens do Sistema</label>
+				<textarea id="messageArea" rows="20" cols="60" ></textarea>
+			</fieldset>
 		</div>
+		<div class="col-md-6">
+			<fieldset class="form-group">
+				<label>Mensagens do Agentes</label>
+				<textarea id="flowArea" rows="20" cols="60" ></textarea>
+			</fieldset>
+		</div>		
 	</div>    
 </div>

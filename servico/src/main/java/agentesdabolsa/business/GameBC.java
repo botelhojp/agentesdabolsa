@@ -158,10 +158,9 @@ public class GameBC {
 		}else{
 			resultValues.get(iteration-1).put(trustName, value);
 		}
-		
-
 	}
 
+	@SuppressWarnings("rawtypes")
 	public static Hashtable<String, List> getResult() {
 		Hashtable<String, List> rs = new Hashtable<String, List>();
 		rs.put("keys", resultKeys);

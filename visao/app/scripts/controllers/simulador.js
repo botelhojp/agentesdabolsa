@@ -2,14 +2,14 @@
 app.controller('SimuladorController', [ '$window', '$http', '$scope', '$route', '$rootScope', '$location', 'GameService', 'NAV_DATA', 'AUTH_EVENTS', 'ENV',
 function($window, $http, $scope, $route, $rootScope, $location, GameService, NAV_DATA, AUTH_EVENTS, ENV ) {
 	
-	$scope.rounds = 1;	
-
+	$scope.rounds = 1;
 	$scope.trust = "";
+	$scope.start = false;
 
 	$scope.startGame = function () {
-
+		$scope.start = true;
+		$scope.result();
 		$window.document.getElementById("messageArea").value = "";		
-		
 		GameService.simulate($scope.rounds, $scope.trust).then(
 			function (data) {
 				console.log(data);		
@@ -18,28 +18,27 @@ function($window, $http, $scope, $route, $rootScope, $location, GameService, NAV
 				console.log(error);					
 			}
 		);
-	};	
-
+	};
 
 	$scope.clean = function () {
+		$scope.start = false;
 		$window.document.getElementById("messageArea").value = "";			
 		GameService.clean().then(
 			function (data) {
-				console.log(data);		
+				console.log(data);	
 			},
 			function (error) {
-				console.log(error);					
+				console.log(error);
 			}
 		);
-	};	
+	};
 
 	var chart = c3.generate({
 	  data: {
 	    json: []
 	  },
 	  axis: {
-	    x: {
-	    }
+	    x: { }
 	  }
 	});
 
@@ -58,18 +57,15 @@ function($window, $http, $scope, $route, $rootScope, $location, GameService, NAV
 					    value: keys
 					  }
 					});	
-
-				$scope.result()	;
+					if ($scope.start == true){
+						$scope.result()	;
+					}
 				}, 1000); 
 			},
 			function (error) {
 				console.log(error);					
 			}
 		);
-
-         	
-
-
 	}
 	
    
@@ -106,9 +102,4 @@ function($window, $http, $scope, $route, $rootScope, $location, GameService, NAV
 		});
 		return deferred.promise;
 	};
-
-
 }]);
-
-
-	
