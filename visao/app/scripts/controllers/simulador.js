@@ -18,9 +18,30 @@ function($window, $http, $scope, $route, $rootScope, $location, GameService, NAV
 				console.log(error);					
 			}
 		);
-	};		
+	};	
 
 
+	$scope.clean = function () {
+		$window.document.getElementById("messageArea").value = "";			
+		GameService.clean().then(
+			function (data) {
+				console.log(data);		
+			},
+			function (error) {
+				console.log(error);					
+			}
+		);
+	};	
+
+	var chart = c3.generate({
+	  data: {
+	    json: []
+	  },
+	  axis: {
+	    x: {
+	    }
+	  }
+	});
 
 	if ($rootScope.mySocket === undefined){
 		$rootScope.mySocket = new WebSocket(ENV.wsEndpoint);
@@ -29,14 +50,26 @@ function($window, $http, $scope, $route, $rootScope, $location, GameService, NAV
 	$scope.result = function(){
 		GameService.result().then(
 			function (data) {
-				
+				var keys =  data.keys;
+				setTimeout(function () {        
+					chart.load({
+					  json: data.values,
+					  keys: {
+					    value: keys
+					  }
+					});	
 
-				$window.document.getElementById("messageArea").value += data.result + "\n";	
+				$scope.result()	;
+				}, 1000); 
 			},
 			function (error) {
 				console.log(error);					
 			}
 		);
+
+         	
+
+
 	}
 	
    
@@ -59,6 +92,22 @@ function($window, $http, $scope, $route, $rootScope, $location, GameService, NAV
     $rootScope.mySocket.onerror = function(evt) {
     	 console.log("Erro…");
     };
+
+
+	$scope.getSeries = function() {
+		var deferred = $q.defer();
+		$http({
+			url : '/api/game/result_keys',
+			method : "GET",
+		}).success(function(data) {
+			deferred.resolve(data);
+		}).error(function(data, status) {
+			deferred.reject([ data, status ]);
+		});
+		return deferred.promise;
+	};
+
+
 }]);
 
 

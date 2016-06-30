@@ -10,6 +10,7 @@ import agentesdabolsa.entity.Action;
 import agentesdabolsa.entity.Agente;
 import agentesdabolsa.entity.Cotacao;
 import agentesdabolsa.entity.Game;
+import agentesdabolsa.trust.ITrust;
 import bsh.Interpreter;
 import openjade.ontology.Rating;
 
@@ -20,15 +21,7 @@ public class AgenteBC {
 	private CotacaoDAO ctDao = CotacaoDAO.getInstance();
 	private GameBC gameBC = GameBC.getInstance();
 	private ConfigBC configBC = ConfigBC.getInstance();
-	public String getResult() {
-		return result;
-	}
-
-	public void setResult(String result) {
-		this.result = result;
-	}
-
-	private String result;
+	private ITrust trust = null;
 
 	private static AgenteBC instance = new AgenteBC();
 
@@ -37,7 +30,7 @@ public class AgenteBC {
 	}
 
 	public void play(Agente client, int iteration) {
-		// List<Advice> advices = new ArrayList<Advice>();
+		trust = client.getTrust();
 		Game game = getGame(client);
 		game.setAcao(agenteDao.getRandom(GameBC.acoes));
 
@@ -127,5 +120,8 @@ public class AgenteBC {
 		}
 		return game;
 	}
-
+	
+	public ITrust getTrust(){
+		return this.trust;
+	}
 }

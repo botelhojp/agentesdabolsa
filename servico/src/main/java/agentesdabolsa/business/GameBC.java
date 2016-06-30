@@ -24,6 +24,9 @@ public class GameBC {
 	private static List<Agente> agents;
 	private static Hashtable<AID, Agente> agentsAID;
 	private static Thread thread;
+	
+	private static ArrayList<Hashtable<String, Double>> resultValues = new ArrayList<Hashtable<String, Double>>();
+	private static ArrayList<String> resultKeys = new ArrayList<String>();
 
 	private GameBC(int iterations) {
 		agents = new ArrayList<Agente>();
@@ -136,5 +139,33 @@ public class GameBC {
 
 	public static Agente getAgent(AID best) {
 		return agentsAID.get(best);
+	}
+
+	public static void cleanResults() {
+		resultValues.clear();
+		resultKeys.clear();
+	}
+
+	public static void putResult(String trustName, double value, int iteration) {
+		if (trustName == null) return;
+		if (!resultKeys.contains(trustName)){
+			resultKeys.add(trustName);
+		}			
+		if (resultValues.size() == iteration-1){
+			Hashtable<String, Double> vl = new Hashtable<String, Double>();
+			vl.put(trustName, value);
+			resultValues.add(vl);
+		}else{
+			resultValues.get(iteration-1).put(trustName, value);
+		}
+		
+
+	}
+
+	public static Hashtable<String, List> getResult() {
+		Hashtable<String, List> rs = new Hashtable<String, List>();
+		rs.put("keys", resultKeys);
+		rs.put("values", resultValues);
+		return rs;
 	}
 }
