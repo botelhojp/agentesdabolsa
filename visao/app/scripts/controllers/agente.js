@@ -207,13 +207,13 @@ function($window, $http, $scope, $route, $rootScope, $location, AgenteService, D
         columnDefs: [
                      {
                     	 field: 'name', 
-                    	 displayName: 'Agente', 
+                    	 displayName: 'Agent', 
                     	 cellTemplate: '<div  ng-click="load(row.entity.id)" ng-bind="row.getProperty(col.field) "></div>',
                     	 width: "80%"
                     },
                     {
                         field: 'enabled', 
-                        displayName: 'Ativo', 
+                        displayName: 'Enabled', 
                         cellTemplate: '<div  ng-click="invert(row.entity.id)" ng-bind="labelBoolean(row.getProperty(col.field))"><span class="glyphicon glyphicon-music">oo</span>r</div>',
                         width: "10%"
                     },

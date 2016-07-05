@@ -1,5 +1,5 @@
 <div class="page-header">
-  <h1>Bolsa <small>Séries Históricas</small></h1>
+  <h1>Bourse <small>historical series</small></h1>
 </div>
 
 <div data-ng-controller="BolsaController">
@@ -7,7 +7,7 @@
 	 <div class="row" class="form-group">
 		 <div class="col-md-3">
 			<fieldset class="form-group">
-			  <label for="nome">Cateira Ibovespa</label>
+			  <label for="nome">Bonds</label>
 			    <select ng-model="carteiraIbovespa" ng-change="loadCotacoes()">		    
 			      <option ng-repeat="acao in indiceBovespa" value="{{acao}}">{{acao}}</option>
 			    </select>
@@ -15,7 +15,7 @@
 		 </div>
 		 <div class="col-md-3">
 			<fieldset class="form-group">
-			  <label for="nome">Escolha um outro ativo:</label>
+			  <label for="nome">Bonds:</label>
 			    <input type="text" id="exampleInput" ng-model="acao" name="input"  maxlength="5" size="5" ng-change="change()" />
 			</fieldset>
 		 </div>

@@ -2,7 +2,7 @@
 app.controller('SimuladorController', [ '$window', '$http', '$scope', '$route', '$rootScope', '$location', 'GameService', 'NAV_DATA', 'AUTH_EVENTS', 'ENV',
 function($window, $http, $scope, $route, $rootScope, $location, GameService, NAV_DATA, AUTH_EVENTS, ENV ) {
 	
-	$scope.rounds = 1;
+	$scope.rounds = 20;
 	$scope.trust = "";
 	$scope.start = false;
 

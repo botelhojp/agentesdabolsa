@@ -1,5 +1,5 @@
 <div class="page-header">
-  <h1>Agentes <small>Configuração</small></h1>
+  <h1>Agents <small>Configuration</small></h1>
 </div>
 
 <div data-ng-controller="AgenteController">
@@ -14,19 +14,19 @@
 	<div class="row" class="form-group">
 		<div class="col-md-8">
 			<fieldset class="form-group">
-			  <label for="nome">Agente</label>
-			  <input type="text" class="form-control" id="nome" ng-model="agente.name" placeholder="Nome do agente">
+			  <label for="nome">Agent Name</label>
+			  <input type="text" class="form-control" id="nome" ng-model="agente.name" placeholder="Agent Name">
 			</fieldset>
 		</div>
 		<div class="col-md-2">
 			<fieldset class="form-group">
-			  <label for="clones">Número de Clones</label>
+			  <label for="clones">Clone number</label>
 			  <input type="number" name="input" class="form-control" placeholder="Clones" ng-model="agente.clones" min="1" max="99" required>
 			</fieldset>
 		</div>
 		<div class="col-md-2">
 			<fieldset class="form-group">
-			  <label for="clones">Ativo</label>
+			  <label for="clones">Enabled</label>
 			  <input type="checkbox" name="input" class="form-control" ng-model="agente.enabled">
 			</fieldset>
 		</div>		
@@ -34,10 +34,10 @@
 
 	<div class="row">
 		<ul class="nav nav-pills">
-		  <li role="presentation" data-ng-class="{'active': view_tab == 'tab1'}"><a data-ng-click="changeTab('tab1')">Jogar</a></li>
-		  <li role="presentation" data-ng-class="{'active': view_tab == 'tab2'}"><a data-ng-click="changeTab('tab2')">Resultado</a></li>
-		  <li role="presentation" data-ng-class="{'active': view_tab == 'tab3'}"><a data-ng-click="changeTab('tab3')">Solicitar Ajuda</a></li>
-		  <li role="presentation" data-ng-class="{'active': view_tab == 'tab4'}"><a data-ng-click="changeTab('tab4')">Forcecer Ajuda</a></li>
+		  <li role="presentation" data-ng-class="{'active': view_tab == 'tab1'}"><a data-ng-click="changeTab('tab1')">Game Action</a></li>
+		  <li role="presentation" data-ng-class="{'active': view_tab == 'tab2'}"><a data-ng-click="changeTab('tab2')">Result Action</a></li>
+		  <li role="presentation" data-ng-class="{'active': view_tab == 'tab3'}"><a data-ng-click="changeTab('tab3')">Ask Help Action </a></li>
+		  <li role="presentation" data-ng-class="{'active': view_tab == 'tab4'}"><a data-ng-click="changeTab('tab4')">Help Action</a></li>
 		</ul>
 	    <div>
 	        <div class="tab-pane" ng-show="view_tab == 'tab1'" style="height: 300px;">
@@ -69,19 +69,18 @@
 
 		 <div class="btn-group col-md-6" role="group" >	
 		 	<div style="text-align: right;">	 				
-				<button type="button" ng-click="save()" class="btn btn-default" >Salvar</button>			
-				<button type="button" ng-click="close()" class="btn btn-default" >Cancelar</button>	
-				<a  ng-href="#/simular" class="btn btn-default" >Jogar</a>
+				<button type="button" ng-click="save()" class="btn btn-default" >Save</button>			
+				<button type="button" ng-click="close()" class="btn btn-default" >Back</button>			
 			</div>		
 		</div>
 		<div class="btn-group col-md-6" role="group" >		 				
-			<button type="button" ng-click="delete()" class="btn" style="float: right;">Excluir</button>
+			<button type="button" ng-click="delete()" class="btn" style="float: right;">Delete</button>
 		</div>
 	</div>
   </div>
 </div>
 
-<button type="button" ng-click="new()" class="btn btn-default">Novo</button>
+<button type="button" ng-click="new()" class="btn btn-default">New</button>
 <div data-ng-grid="gridOptions"></div>
 	
 </div>

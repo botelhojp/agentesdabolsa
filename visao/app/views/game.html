@@ -1,27 +1,24 @@
 <div class="page-header">
-  <h1>Game <small>Jogue, ajude ou peça ajuda</small></h1>
+  <h1>Game <small>Play, help or get help</small></h1>
 </div>
 
 <div data-ng-controller="GameController">
 
-<h1>{{ativoAtual.nomeres}} <small> {{ativoAtual.nomefull}} em {{dia}} {{game.carteira | currency:"R$"}}</small></h1>
+<h1>{{ativoAtual.nomeres}} <small> {{ativoAtual.nomefull}} in {{dia}} {{game.carteira | currency:"R$"}}</small></h1>
 
 {{game.showActions}}
 <div class="row" class="form-group">
 	<div class="col-md-2" >
-		<button type="button" ng-click="buy()" class="btn btn-default">Comprar</button>	
+		<button type="button" ng-click="buy()" class="btn btn-default">Buy</button>	
 	</div>
 	<div class="col-md-2" >
-		<button type="button" ng-click="sell()" class="btn btn-default">Vender</button>	
+		<button type="button" ng-click="sell()" class="btn btn-default">Sell</button>	
 	</div>
-	<div class="col-md-2" ng-show="false">
-		<button type="button" ng-click="help()" class="btn btn-default">Pedir Ajuda</button>	
-	</div>
-	<div class="col-md-4" ng-show="game.cotacao != undefined" >
+	<div class="col-md-8" ng-show="game.cotacao != undefined" >
 		<b>{{game.acao.nomeres}}</b>: 
-		<b>{{game.cotacao.preult}}</b> em {{game.cotacao.datapre}}  e <b>{{game.novaCotacao.preult}}</b> em {{game.novaCotacao.datapre}} Variação:  <b>{{game.diff | percentage:2}}</b>
-		<div class="tab-pane" ng-show="game.resultado == true" style="color: #00FF00;">Parabéns</div>
-		<div class="tab-pane" ng-show="game.resultado == false" style="color: rgb(255,0,0);">Errou</div>
+		<b>{{game.cotacao.preult}}</b> in {{game.cotacao.datapre}}  and <b>{{game.novaCotacao.preult}}</b> in {{game.novaCotacao.datapre}} Variation:  <b>{{game.diff | percentage:2}}</b>
+		<div class="tab-pane" ng-show="game.resultado == true" style="color: #00FF00;"><b>Congratulations</b></div>
+		<div class="tab-pane" ng-show="game.resultado == false" style="color: rgb(255,0,0);">You missed</div>
 	</div>
 </div>
 

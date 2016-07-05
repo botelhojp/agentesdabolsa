@@ -1,5 +1,5 @@
 <div class="page-header">
-  <h1>Simulação <small>Jogo dos agentes</small></h1>
+  <h1>Simulator <small>Multi-agent</small></h1>
 </div>
 
 <div data-ng-controller="SimuladorController">
@@ -13,24 +13,22 @@
 		</div>
 		<div class="col-md-3">
 			<fieldset class="form-group">
-				<label for="nome" >Confiança</label>
+				<label for="nome" >Trust Model</label>
 				<select class="form-control" class="btn btn-default" ng-model="trust" >
-				  <option value = "agentesdabolsa.trust.WithoutModel">Sem Confiança</option>
-				  <option value = "agentesdabolsa.trust.MARSHModel">Modelo Direto</option>
-				  <option value = "agentesdabolsa.trust.DossieModel">Modelo Dossie</option>
-				  <option value = "agentesdabolsa.trust.MARSHModel">Modelo TrustNet</option>
-				  <option value = "agentesdabolsa.trust.MARSHModel">Modelo Marsh</option>
+				  <option value = "agentesdabolsa.trust.WithoutModel">Without</option>
+				  <option value = "agentesdabolsa.trust.MARSHModel">MARSHModel (Direct)</option>
+				  <option value = "agentesdabolsa.trust.DossieModel">Dossie</option>
 				</select>
 			</fieldset>
 		</div>
 
 		<div class="col-md-2">
 			<fieldset class="form-group">
-				<label for="nome" >Métricas</label>
+				<label for="nome" >Metrics</label>
 				<select class="form-control" class="btn btn-default">
-				  <option>Média</option>
-				  <option>Utilidade Total</option>
-				  <option>Percentual de Erro</option>
+				  <option>Average</option>
+				  <option>Total utility</option>
+				  <option>Error Percent</option>
 				</select>
 			</fieldset>
 		</div>
@@ -38,17 +36,16 @@
 		<div class="col-md-1">			
 			<fieldset class="form-group">
 				<label for="nome" >&nbsp;</label>		
-				<button type="button" ng-click="startGame()" class="btn btn-default">Iniciar</button>
+				<button type="button" ng-click="startGame()" class="btn btn-default">Start</button>
 			</fieldset>			
 		</div>
 		<div class="col-md-1">			
 			<fieldset class="form-group">
 				<label for="nome" >&nbsp;</label>		
-				<button type="button" ng-click="clean()" class="btn btn-default">Parar</button>
+				<button type="button" ng-click="clean()" class="btn btn-default">Stop</button>
 			</fieldset>			
 		</div>		
 	</div>
-
 	<div class="row" class="form-group">
 		<div class="col-md-12">
 			<div id="chart"></div>
@@ -57,14 +54,14 @@
 	<div class="row" class="form-group">
 		<div class="col-md-6">
 			<fieldset class="form-group">
-				<label>Mensagens do Sistema</label>
-				<textarea id="messageArea" rows="20" cols="60" ></textarea>
+				<label for="nome" >Log</label>
+				<textarea id="messageArea" rows="20" cols="70" ></textarea>
 			</fieldset>
 		</div>
 		<div class="col-md-6">
 			<fieldset class="form-group">
-				<label>Mensagens do Agentes</label>
-				<textarea id="flowArea" rows="20" cols="60" ></textarea>
+				<label>Mensagens</label>
+				<textarea id="flowArea" rows="20" cols="70" ></textarea>
 			</fieldset>
 		</div>		
 	</div>    
