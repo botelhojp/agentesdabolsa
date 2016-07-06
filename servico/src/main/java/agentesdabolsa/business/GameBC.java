@@ -10,6 +10,7 @@ import agentesdabolsa.entity.Agente;
 import agentesdabolsa.entity.Config;
 import agentesdabolsa.entity.Cotacao;
 import agentesdabolsa.entity.Game;
+import agentesdabolsa.metric.IMetric;
 import jade.core.AID;
 
 public class GameBC {
@@ -17,10 +18,12 @@ public class GameBC {
 	private static Hashtable<String, Game> games = new Hashtable<String, Game>();
 	private CotacaoDAO cotacaoDao = CotacaoDAO.getInstance();
 	private ConfigBC configBC = ConfigBC.getInstance();
+	private IMetric metric;
 	public static Config config;
 	public static String[] acoes;
 	public static Boolean random;
 
+	private static int iterations;
 	private static List<Agente> agents;
 	private static Hashtable<AID, Agente> agentsAID;
 	private static Thread thread;
@@ -28,10 +31,10 @@ public class GameBC {
 	private static ArrayList<Hashtable<String, Double>> resultValues = new ArrayList<Hashtable<String, Double>>();
 	private static ArrayList<String> resultKeys = new ArrayList<String>();
 
-	private GameBC(int iterations) {
+	private GameBC(int _iterations) {
+		iterations = _iterations;
 		agents = new ArrayList<Agente>();
 		agentsAID = new Hashtable<AID, Agente>();
-		thread = new Thread(new Time(agents, iterations));
 		games.clear();
 	}
 
@@ -134,6 +137,7 @@ public class GameBC {
 	}
 
 	public static void start() {
+		thread = new Thread(new Time(agents, iterations));
 		thread.start();
 	}
 
@@ -166,5 +170,13 @@ public class GameBC {
 		rs.put("keys", resultKeys);
 		rs.put("values", resultValues);
 		return rs;
+	}
+
+	public void setMetric(IMetric metric) {
+		this.metric = metric;		
+	}
+
+	public IMetric getMetric() {
+		return metric;
 	}
 }

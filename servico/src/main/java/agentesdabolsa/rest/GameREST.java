@@ -24,6 +24,7 @@ import agentesdabolsa.dao.CotacaoDAO;
 import agentesdabolsa.entity.Agente;
 import agentesdabolsa.entity.Cotacao;
 import agentesdabolsa.entity.Game;
+import agentesdabolsa.metric.IMetric;
 import agentesdabolsa.trust.ITrust;
 import jade.core.AID;
 
@@ -46,15 +47,15 @@ public class GameREST {
 	@GET
 	@Path("play")
 	public Response getRandom(@QueryParam("game") String user, @QueryParam("iteration") Integer iteration) throws NotFoundException {
-		
+
 		Game game = GameBC.getInstance().getGame(user);
 		game.setIteration(iteration);
 		game.setAcao(dao.getRandom(GameBC.acoes));
 		StringBuffer sf = new StringBuffer();
 		List<Cotacao> cotacoes = ctDao.getCotacoes(game, GameBC.random, iteration * configBC.getConfig().getStop());
-		
+
 		game.setCotacao(cotacoes.get(0));
-		
+
 		for (int i = 0; i < cotacoes.size(); i++) {
 			Cotacao cotacao = cotacoes.get(i);
 			sf.append(cotacao.getDatapre()).append(",");
@@ -71,8 +72,7 @@ public class GameREST {
 		rt.put("cotecoes", sf.toString());
 		return Response.ok().entity(rt).build();
 	}
-	
-	
+
 	@GET
 	@Path("buy")
 	public Response buy(@QueryParam("game") String user) throws NotFoundException {
@@ -80,8 +80,7 @@ public class GameREST {
 		GameBC.getInstance().buy(game);
 		return Response.ok().entity(game).build();
 	}
-	
-	
+
 	@GET
 	@Path("sell")
 	public Response sell(@QueryParam("game") String user) throws NotFoundException {
@@ -89,24 +88,26 @@ public class GameREST {
 		GameBC.getInstance().sell(game);
 		return Response.ok().entity(game).build();
 	}
-	
-	
+
 	@GET
 	@Path("simulate_start")
 	@SuppressWarnings("unchecked")
-	public Response add(@QueryParam("rounds") int rounds, @QueryParam("trust") String trustClassName ) throws NotFoundException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+	public Response add(@QueryParam("rounds") int rounds, @QueryParam("trust") String trustClassName, @QueryParam("metric") String metricClassName) throws NotFoundException, ClassNotFoundException, InstantiationException, IllegalAccessException {
 		Random.reset();
-		Class<ITrust> clazz = (Class<ITrust>) Class.forName(trustClassName);
+		Class<ITrust> trustClazz = (Class<ITrust>) Class.forName(trustClassName);
+		Class<IMetric> metricClazz = (Class<IMetric>) Class.forName(metricClassName);
 		AgenteDAO agenteDao = AgenteDAO.getInstance();
+		IMetric metric = metricClazz.newInstance();
 		GameBC.configure(rounds);
-		GameBC gameBC = GameBC.getInstance();
+		GameBC gameBC = GameBC.getInstance();		
+		gameBC.setMetric(metric);
 		List<Agente> l = agenteDao.list();
-		for(Agente agente : l){
-			if (agente.getEnabled() && agente.getClones() != null && agente.getClones() > 0){
+		for (Agente agente : l) {
+			if (agente.getEnabled() && agente.getClones() != null && agente.getClones() > 0) {
 				for (int i = 0; i < agente.getClones(); i++) {
 					Agente clone = (Agente) AppUtils.cloneObject(agente);
-					clone.setAID(new AID(clone.getName()+ "_" +i, true));
-					ITrust instance = clazz.newInstance();
+					clone.setAID(new AID(clone.getName() + "_" + i, true));
+					ITrust instance = trustClazz.newInstance();
 					instance.setAgent(clone);
 					clone.setTrust(instance);
 					gameBC.add(clone);
@@ -116,21 +117,20 @@ public class GameREST {
 		GameBC.start();
 		return Response.ok().build();
 	}
-	
+
 	@GET
 	@Path("clean")
 	public Response clean() throws NotFoundException {
 		GameBC.cleanResults();
 		return Response.ok().build();
 	}
-	
-	
+
 	@GET
 	@Path("result")
 	public Response result() throws NotFoundException {
 		return Response.ok().entity(GameBC.getResult()).build();
 	}
-	
+
 	@GET
 	@Path("result_keys")
 	public Response result_keys() throws NotFoundException {

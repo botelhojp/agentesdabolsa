@@ -5,6 +5,8 @@ public class Config extends JSONBean {
 	private String acoes;
 	
 	private Integer stop;
+	
+	private Integer randomSeed;
 
 	private Boolean random;
 
@@ -31,6 +33,12 @@ public class Config extends JSONBean {
 	public void setStop(Integer stop) {
 		this.stop = stop;
 	}
-	
-	
+
+	public Integer getRandomSeed() {
+		return randomSeed;
+	}
+
+	public void setRandomSeed(Integer randomSeed) {
+		this.randomSeed = randomSeed;
+	}
 }

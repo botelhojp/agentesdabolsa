@@ -10,7 +10,7 @@ function($window, $http, $scope, $route, $rootScope, $location, GameService, NAV
 		$scope.start = true;
 		$scope.result();
 		$window.document.getElementById("messageArea").value = "";		
-		GameService.simulate($scope.rounds, $scope.trust).then(
+		GameService.simulate($scope.rounds, $scope.trust, $scope.metric).then(
 			function (data) {
 				console.log(data);		
 			},

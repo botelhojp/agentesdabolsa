@@ -3,10 +3,12 @@ package agentesdabolsa.business;
 public class Random {
 
 	private static long count = 1;
+	
+	private static ConfigBC config = ConfigBC.getInstance();
 
 	public static double getNumer() {
 		count++;
-		String s = "" + (count / 13.0);
+		String s = "" + (count / (config.getConfig().getRandomSeed()*1.0));
 		return Double.parseDouble("" + s.charAt(s.length()-1) + s.charAt(s.length()-2))/100;
 	}
 	

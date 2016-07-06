@@ -22,13 +22,12 @@
 			</fieldset>
 		</div>
 
-		<div class="col-md-2">
+		<div class="col-md-3">
 			<fieldset class="form-group">
 				<label for="nome" >Metrics</label>
-				<select class="form-control" class="btn btn-default">
-				  <option>Average</option>
-				  <option>Total utility</option>
-				  <option>Error Percent</option>
+				<select class="form-control" class="btn btn-default" ng-model="metric" >
+				  <option value = "agentesdabolsa.metric.AverageTestMetric">Média de Rendimento</option>
+				  <option value = "agentesdabolsa.metric.ErrorTestMetric">Percentual de Erro</option>
 				</select>
 			</fieldset>
 		</div>

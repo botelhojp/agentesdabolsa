@@ -3,12 +3,14 @@ package agentesdabolsa.business;
 import java.util.Iterator;
 import java.util.List;
 
-import agentesdabolsa.config.AppConfig;
 import agentesdabolsa.entity.Agente;
+import agentesdabolsa.metric.AverageTestMetric;
+import agentesdabolsa.metric.IMetric;
 
 public class Time implements Runnable {
 
 	private AgenteBC agenteBC = AgenteBC.getInstance();
+	private GameBC gameBC = GameBC.getInstance();
 
 	private List<Agente> list;
 	private int iteration = 0;
@@ -21,20 +23,20 @@ public class Time implements Runnable {
 
 	@Override
 	public void run() {
+		
 		while (isDone()) {
 			iteration++;
 			try {
 				if (!list.isEmpty()) {
 					String trustName = null;
-					double value = 0.0;
+					IMetric metric = gameBC.getMetric().init();
 					for (Iterator<Agente> it = list.iterator(); it.hasNext();) {
 						Agente agente = it.next();
 						trustName = agente.getTrust().getClass().getSimpleName();
 						agenteBC.play(agente, iteration);
-						value += (agenteBC.getGame(agente).getCarteira() - AppConfig.INITIAL_VALUE) / AppConfig.INITIAL_VALUE;
+						metric.add(agente);
 					}
-					value = value / list.size();
-					GameBC.putResult(trustName, value, iteration);
+					GameBC.putResult(trustName, metric.calc(), iteration);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();

@@ -1,7 +1,8 @@
 <div class="page-header">
   <h1>General <small>Configurations</small></h1>
 </div>
-<div class="row" class="form-group" data-ng-controller="ConfigController">
+<div data-ng-controller="ConfigController">
+<div class="row" class="form-group" >
 	<div class="col-md-8">	       
 		<fieldset class="form-group">
 		 	<label for="nome">Bonds to simulate</label>
@@ -19,12 +20,19 @@
 		  <label for="clones">Random</label>
 		  <input type="checkbox" name="input" class="form-control" ng-model="cfg.random">
 		</fieldset>
-	</div>	
-	 <div class="row" >
-		 <div class="btn-group col-md-12" role="group" >	
-		 	<div>	 				
-				<button type="button" ng-click="save()" class="btn btn-default" >Save</button>			
-			</div>		
-		</div>
 	</div>
+</div>
+<div class="row" class="form-group" >
+	<fieldset class="form-group">
+	  <label for="clones">Random seed</label>
+	  <input type="number" name="input" class="form-control" ng-model="cfg.randomSeed">
+	</fieldset>
+</div>
+<div class="row" class="form-group" >
+	 <div class="btn-group col-md-12" role="group" >	
+	 	<div>	 				
+			<button type="button" ng-click="save()" class="btn btn-default" >Save</button>			
+		</div>		
+	</div>
+</div>
 </div>
