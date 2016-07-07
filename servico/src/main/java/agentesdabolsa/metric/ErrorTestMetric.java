@@ -1,13 +1,12 @@
 package agentesdabolsa.metric;
 
 import agentesdabolsa.business.AgenteBC;
-import agentesdabolsa.config.AppConfig;
 import agentesdabolsa.entity.Agente;
 
 public class ErrorTestMetric implements IMetric {
 
-	private int count;
-	private int error;
+	private double count;
+	private double error;
 	private AgenteBC agenteBC;
 
 	@Override
@@ -22,9 +21,8 @@ public class ErrorTestMetric implements IMetric {
 	public void add(Agente agente) {
 		if (!agente.getName().contains("%")) {
 			count++;
-			double carteira = agenteBC.getGame(agente).getCarteira();
-			double value = (carteira - AppConfig.INITIAL_VALUE) / AppConfig.INITIAL_VALUE;
-			if (value < 0){
+			boolean acertou = agenteBC.getGame(agente).getResultado();
+			if (!acertou){
 				error++;
 			}
 		}
@@ -32,7 +30,7 @@ public class ErrorTestMetric implements IMetric {
 
 	@Override
 	public double calc() {
-		return (double) Math.round(error / count * 1000d) / 1000d;
+		return error / count;
 	}
 
 

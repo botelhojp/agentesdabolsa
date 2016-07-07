@@ -4,7 +4,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import agentesdabolsa.entity.Agente;
-import agentesdabolsa.metric.AverageTestMetric;
 import agentesdabolsa.metric.IMetric;
 
 public class Time implements Runnable {
