@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import agentesdabolsa.business.ConfigBC;
 import agentesdabolsa.business.GameBC;
 import agentesdabolsa.business.Random;
 import agentesdabolsa.entity.Agente;
@@ -17,8 +18,11 @@ public abstract class AbstractTrust implements ITrust {
 	protected Agente myAgent;
 	protected HashMap<AID, TrustData> data;
 	protected Integer iteration;
+	protected Integer startTrust;
+	protected long count = 0;
 
 	public AbstractTrust() {
+		startTrust = ConfigBC.getInstance().getConfig().getStartTrust();
 		data = new HashMap<AID, TrustData>();
 	}
 	

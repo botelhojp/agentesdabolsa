@@ -19,14 +19,13 @@ public class CentralModel extends AbstractTrust {
 
 	protected static HashMap<AID, TrustData> centralData = new HashMap<AID, TrustData>();
 	protected static HashMap<Integer, AID> cacheBest = new HashMap<Integer, AID>();
-	private long count = 0;
-
+	
 	/**
 	 * Seleciona aleatoriamente um agente
 	 */
 	@Override
 	public Agente select() {
-		if (++count < 10 || count % 10 == 0) {
+		if (++count < startTrust || count % startTrust == 0) {
 			return ramdon();
 		}
 		return GameBC.getAgent(getBestByMe());
