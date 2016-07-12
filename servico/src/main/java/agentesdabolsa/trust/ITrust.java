@@ -10,7 +10,10 @@ public interface ITrust extends Serializable {
 	public void addRating(Rating rating);
 	
 	public void setAgent(Agente agente);
+	
+	public void setIteration(Integer iteration);
 
 	public Agente select();
 	
+	public String getName();
 }

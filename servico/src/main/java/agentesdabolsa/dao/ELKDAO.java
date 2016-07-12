@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Hashtable;
 
 import com.google.gson.Gson;
 
@@ -19,6 +20,9 @@ import agentesdabolsa.exception.AppException;
 public class ELKDAO<T extends JSONBean> {
 
 	public static String SERVER = AppConfig.getInstance().getELKServer();
+	
+	private static boolean enableCache = false;
+	private static Hashtable<String, String> cache = new Hashtable<String, String>();
 
 	public static String DB = "agdb";
 
@@ -67,8 +71,18 @@ public class ELKDAO<T extends JSONBean> {
 			} else {
 				url = new URL(SERVER + "/" + resource);
 			}
-			System.out.println(method + " - "+ url);
-			// System.out.println(method + " " +url.toString());
+			
+			if (enableCache){
+				String key = getKey(url,method,content);
+				if (cache.containsKey(key)){
+					//System.out.println("CACHE: "+ key);
+					return cache.get(key);
+				}else{
+					System.out.println(method + " - "+ url);	
+				}
+			}else{
+				System.out.println(method + " - "+ url);	
+			}
 			conn = (HttpURLConnection) url.openConnection();
 			conn.setUseCaches(false);
 			conn.setDoInput(true);
@@ -89,6 +103,11 @@ public class ELKDAO<T extends JSONBean> {
 			while ((output = br.readLine()) != null) {
 				responseBody += output;
 			}
+			
+			if (enableCache){
+				cache.put(getKey(url,method,content), responseBody);
+			}
+			
 			return responseBody;
 		} catch (FileNotFoundException e) {
 			return null;
@@ -105,6 +124,18 @@ public class ELKDAO<T extends JSONBean> {
 				conn.disconnect();
 			}
 		}
+	}
+
+	private String getKey(URL url, String method, String content) {
+		String key = "";
+		key += (url != null) ? url.toString() + "_" : "";
+		key += (method != null) ? method.toString() + "_" : "";
+		key += (content != null) ? "" + content.hashCode() : "";
+		return key;
+	}
+
+	public static void enabledCache(boolean b) {
+		enableCache = b;
 	}
 
 }

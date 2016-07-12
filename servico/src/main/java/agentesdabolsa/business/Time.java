@@ -31,7 +31,7 @@ public class Time implements Runnable {
 					IMetric metric = gameBC.getMetric().init();
 					for (Iterator<Agente> it = list.iterator(); it.hasNext();) {
 						Agente agente = it.next();
-						trustName = agente.getTrust().getClass().getSimpleName();
+						trustName = agente.getTrust().getName();
 						agenteBC.play(agente, iteration);
 						metric.add(agente);
 					}

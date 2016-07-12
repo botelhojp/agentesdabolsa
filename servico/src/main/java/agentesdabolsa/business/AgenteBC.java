@@ -30,7 +30,7 @@ public class AgenteBC {
 	}
 
 	public void play(Agente client, int iteration) {
-		trust = client.getTrust();
+		client.getTrust().setIteration(iteration);
 		Game game = getGame(client);
 		game.setAcao(agenteDao.getRandom(GameBC.acoes));
 
@@ -103,7 +103,6 @@ public class AgenteBC {
 		boolean acertou = ((subiu && advice.equals(Action.BUY)) || (desceu && advice.equals(Action.SELL)));
 		Float valor = Math.abs(cotacaoD.getPreult() - cotacao.getPreult()) / cotacao.getPreult();
 		valor = (acertou) ? valor : valor * -1;
-		//valor = (acertou) ? 1.0F : -1.0F;
 
 		Rating rt = new Rating();
 		rt.setClient(client.getAID());

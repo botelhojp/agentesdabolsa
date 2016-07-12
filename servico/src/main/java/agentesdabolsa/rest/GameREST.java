@@ -21,6 +21,7 @@ import agentesdabolsa.commons.AppUtils;
 import agentesdabolsa.dao.AcaoDAO;
 import agentesdabolsa.dao.AgenteDAO;
 import agentesdabolsa.dao.CotacaoDAO;
+import agentesdabolsa.dao.ELKDAO;
 import agentesdabolsa.entity.Agente;
 import agentesdabolsa.entity.Cotacao;
 import agentesdabolsa.entity.Game;
@@ -96,6 +97,7 @@ public class GameREST {
 		Random.reset();
 		Class<ITrust> trustClazz = (Class<ITrust>) Class.forName(trustClassName);
 		Class<IMetric> metricClazz = (Class<IMetric>) Class.forName(metricClassName);
+		ELKDAO.enabledCache(true);
 		AgenteDAO agenteDao = AgenteDAO.getInstance();
 		IMetric metric = metricClazz.newInstance();
 		GameBC.configure(rounds);
@@ -119,8 +121,9 @@ public class GameREST {
 	}
 
 	@GET
-	@Path("clean")
-	public Response clean() throws NotFoundException {
+	@Path("stop")
+	public Response stop() throws NotFoundException {
+		ELKDAO.enabledCache(false);
 		GameBC.cleanResults();
 		return Response.ok().build();
 	}

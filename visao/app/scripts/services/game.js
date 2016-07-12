@@ -36,9 +36,9 @@ app.service('GameService', ['$http', '$window', '$q', function($http, $window, $
 	};
 
 
-	services.clean = function(rounds, trust) {
+	services.stop = function(rounds, trust) {
 		var deferred = $q.defer();
-		$http.get('/api/game/clean').success(function(data) {
+		$http.get('/api/game/stop').success(function(data) {
 			deferred.resolve(data);
 		}).error(function(data, status) {
 			deferred.reject([ data, status ]);

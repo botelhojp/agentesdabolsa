@@ -62,7 +62,7 @@ public class ConfigREST {
 	@Path("{id}")
 	public Response update(@PathParam("id") Long id, final Config config) {
 		if (dao.findByID(id) == null) {
-			throw new AppException(Status.BAD_REQUEST, "detalhe", "agente n„o encontrado");
+			throw new AppException(Status.BAD_REQUEST, "detalhe", "agente n√£o encontrado");
 		}
 		config.setId(id);
 		dao.update(config);

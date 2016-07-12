@@ -16,9 +16,18 @@ public abstract class AbstractTrust implements ITrust {
 
 	protected Agente myAgent;
 	protected HashMap<AID, TrustData> data;
+	protected Integer iteration;
 
 	public AbstractTrust() {
 		data = new HashMap<AID, TrustData>();
+	}
+	
+	public void setIteration(Integer iteration){
+		this.iteration =  iteration;
+	}
+
+	public Integer getIteration() {
+		return iteration;
 	}
 
 	/**
