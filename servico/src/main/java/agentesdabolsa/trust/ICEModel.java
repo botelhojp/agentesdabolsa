@@ -12,14 +12,14 @@ import openjade.ontology.Rating;
  * 
  * @author VandersonLocal
  */
-public class DossieModel extends AbstractTrust {
+public class ICEModel extends AbstractTrust {
 	
 	private static final long serialVersionUID = 1L;
 	
 	private static final int DOSSIE_SIZE = 10;
 	protected TrustData dossie;
 	
-	public DossieModel() {
+	public ICEModel() {
 	}
 	
 	/**
@@ -37,27 +37,24 @@ public class DossieModel extends AbstractTrust {
 	}
 	
 	public AID getBestByMe() {
-		//String de = "";
 		AID rt = null;
 		double aux = -999999.99;
 		Iterator<AID> it = data.keySet().iterator();
 		while (it.hasNext()) {
 			AID aid = (AID) it.next();
-			double sum = ((DossieModel) GameBC.getAgent(aid).getTrust()).getDossie();
+			double sum = ((ICEModel) GameBC.getAgent(aid).getTrust()).getDossie();
 			if (sum > aux) {
 				rt = aid;
 				aux = sum;
 			}
-			//de += ":::" + aid.getName() + " sum: " + sum + "\n";
 		}
-		//Log.info(de + "--" + myAgent.getName() + " best: " + rt.getLocalName());
 		return rt;
 	}
 	@Override
 	public void addRating(Rating rating) {
 		super.addRating(rating);
 		Agente server = GameBC.getAgent(rating.getServer());
-		((DossieModel)server.getTrust()).sendFeedback(rating);
+		((ICEModel)server.getTrust()).sendFeedback(rating);
 	}
 	
 	/**
@@ -75,5 +72,10 @@ public class DossieModel extends AbstractTrust {
 	public void setAgent(Agente agente) {
 		super.setAgent(agente);
 		this.dossie = new TrustData(agente.getAID(), DOSSIE_SIZE);
+	}
+
+	@Override
+	public String getName() {
+		return "ICE (Dossie)";
 	}
 }

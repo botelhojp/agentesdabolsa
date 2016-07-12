@@ -24,6 +24,11 @@ public class MARSHModel extends AbstractTrust {
 		}
 		return GameBC.getAgent(getBestByMe());
 	}
+
+	@Override
+	public String getName() {
+		return "MARSH (Direct)";
+	}
 	
 
 }

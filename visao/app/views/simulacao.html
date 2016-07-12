@@ -15,9 +15,13 @@
 			<fieldset class="form-group">
 				<label for="nome" >Trust Model</label>
 				<select class="form-control" class="btn btn-default" ng-model="trust" >
-				  <option value = "agentesdabolsa.trust.WithoutModel">Without</option>
-				  <option value = "agentesdabolsa.trust.MARSHModel">MARSHModel (Direct)</option>
-				  <option value = "agentesdabolsa.trust.DossieModel">Dossie</option>
+				  <option value = "agentesdabolsa.trust.LessModel">Less (No Trust)</option>
+				  <option value = "agentesdabolsa.trust.MARSHModel">MARSH (Direct)</option>
+				  <option value = "agentesdabolsa.trust.ICEModel">ICE (Dossie)</option>
+				  <option value = "agentesdabolsa.trust.FIREModel">FIRE (Witness)</option>
+				  <option value = "agentesdabolsa.trust.RegretModel">Regret (Certificate)</option>
+				  <option value = "agentesdabolsa.trust.TrustNetModel">TrustNet (Social)</option>
+				  <option value = "agentesdabolsa.trust.CentralModel">Central</option>
 				</select>
 			</fieldset>
 		</div>
@@ -42,7 +46,7 @@
 		<div class="col-md-1">			
 			<fieldset class="form-group">
 				<label for="nome" >&nbsp;</label>		
-				<button type="button" ng-click="clean()" class="btn btn-default">Stop</button>
+				<button type="button" ng-click="stop()" class="btn btn-default">Stop</button>
 			</fieldset>			
 		</div>		
 	</div>
@@ -54,14 +58,14 @@
 	<div class="row" class="form-group">
 		<div class="col-md-6">
 			<fieldset class="form-group">
-				<label for="nome" >Log</label>
-				<textarea id="messageArea" rows="20" cols="70" ></textarea>
+				<label for="nome" >Logs do Sistema</label>
+				<textarea id="messageArea" rows="10" cols="70" ></textarea>
 			</fieldset>
 		</div>
 		<div class="col-md-6">
 			<fieldset class="form-group">
-				<label>Mensagens</label>
-				<textarea id="flowArea" rows="20" cols="70" ></textarea>
+				<label>Mensagens dos Agentes</label>
+				<textarea id="flowArea" rows="10" cols="70" ></textarea>
 			</fieldset>
 		</div>		
 	</div>    

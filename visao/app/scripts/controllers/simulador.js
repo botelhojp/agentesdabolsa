@@ -20,12 +20,12 @@ function($window, $http, $scope, $route, $rootScope, $location, GameService, NAV
 		);
 	};
 
-	$scope.clean = function () {
+	$scope.stop = function () {
 		$scope.start = false;
 		$window.document.getElementById("messageArea").value = "";			
-		GameService.clean().then(
+		GameService.stop().then(
 			function (data) {
-				console.log(data);	
+				console.log(data);
 			},
 			function (error) {
 				console.log(error);
