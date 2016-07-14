@@ -14,26 +14,16 @@ import openjade.ontology.Rating;
  */
 public class ICEModel extends AbstractTrust {
 	
-	private static final long serialVersionUID = 1L;
-	
 	private static final int DOSSIE_SIZE = 10;
 	protected TrustData dossie;
 	
 	public ICEModel() {
 	}
 	
-	@Override
-	public Agente select() {
-		if (++count < startTrust || count % startTrust == 0) {
-			return ramdon();
-		}
-		return GameBC.getAgent(getBestByMe());
-	}
-	
 	public AID getBestByMe() {
 		AID rt = null;
 		double aux = -999999.99;
-		Iterator<AID> it = data.keySet().iterator();
+		Iterator<AID> it = localData.keySet().iterator();
 		while (it.hasNext()) {
 			AID aid = (AID) it.next();
 			double sum = ((ICEModel) GameBC.getAgent(aid).getTrust()).getDossie();

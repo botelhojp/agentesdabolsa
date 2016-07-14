@@ -8,14 +8,12 @@ import agentesdabolsa.entity.Agente;
  */
 public class LessModel extends AbstractTrust {
 
-	private static final long serialVersionUID = 1L;
-
 	/**
 	 * Seleciona aleatoriamente um agente
 	 */
 	@Override
 	public Agente select() {
-		return ramdon();
+		return getRamdonAgent();
 	}
 
 	@Override

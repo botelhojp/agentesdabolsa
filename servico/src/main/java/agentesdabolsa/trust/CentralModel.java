@@ -1,10 +1,7 @@
 package agentesdabolsa.trust;
 
 import java.util.HashMap;
-import java.util.Iterator;
 
-import agentesdabolsa.business.GameBC;
-import agentesdabolsa.entity.Agente;
 import jade.core.AID;
 import openjade.ontology.Rating;
 
@@ -15,21 +12,8 @@ import openjade.ontology.Rating;
  */
 public class CentralModel extends AbstractTrust {
 
-	private static final long serialVersionUID = 1L;
-
 	protected static HashMap<AID, TrustData> centralData = new HashMap<AID, TrustData>();
 	protected static HashMap<Integer, AID> cacheBest = new HashMap<Integer, AID>();
-	
-	/**
-	 * Seleciona aleatoriamente um agente
-	 */
-	@Override
-	public Agente select() {
-		if (++count < startTrust || count % startTrust == 0) {
-			return ramdon();
-		}
-		return GameBC.getAgent(getBestByMe());
-	}
 
 	/**
 	 * Adicionar avaliacoes localmente
@@ -50,17 +34,7 @@ public class CentralModel extends AbstractTrust {
 		if (cacheBest.containsKey(getIteration())) {
 			return cacheBest.get(getIteration());
 		}
-		AID rt = null;
-		double aux = -99999999.99;
-		Iterator<AID> it = centralData.keySet().iterator();
-		while (it.hasNext()) {
-			AID aid = (AID) it.next();
-			TrustData d = centralData.get(aid);
-			if (d.getSum() > aux) {
-				rt = aid;
-				aux = d.getSum();
-			}
-		}
+		AID rt = super.getBestByMe(centralData);
 		if (rt != null) {
 			cacheBest.put(getIteration(), rt);
 		}

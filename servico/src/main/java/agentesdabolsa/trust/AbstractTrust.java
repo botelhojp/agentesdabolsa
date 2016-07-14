@@ -13,17 +13,15 @@ import openjade.ontology.Rating;
 
 public abstract class AbstractTrust implements ITrust {
 
-	private static final long serialVersionUID = 1L;
-
 	protected Agente myAgent;
-	protected HashMap<AID, TrustData> data;
+	protected HashMap<AID, TrustData> localData;
 	protected Integer iteration;
 	protected Integer startTrust;
 	protected long count = 0;
 
 	public AbstractTrust() {
 		startTrust = ConfigBC.getInstance().getConfig().getStartTrust();
-		data = new HashMap<AID, TrustData>();
+		localData = new HashMap<AID, TrustData>();
 	}
 	
 	public void setIteration(Integer iteration){
@@ -38,29 +36,41 @@ public abstract class AbstractTrust implements ITrust {
 	 * Melhor agente na visao local dele
 	 */
 	public AID getBestByMe() {
-		AID rt = null;
-		double aux = -99999999.99;
-		Iterator<AID> it = data.keySet().iterator();
-		while (it.hasNext()) {
-			AID aid = (AID) it.next();
-			TrustData d = data.get(aid);
-			if (d.getSum() > aux) {
-				rt = aid;
-				aux = d.getSum();
+		return getBestByMe(localData);
+	}
+	
+	protected AID getBestByMe(HashMap<AID, TrustData> _trustData) {
+		AID _return = null;
+		double auxValue = -99999999.99;
+		Iterator<AID> agents = _trustData.keySet().iterator();
+		while (agents.hasNext()) {
+			AID agentAID = (AID) agents.next();
+			TrustData data = _trustData.get(agentAID);
+			if (data.getSum() > auxValue) {
+				_return = agentAID;
+				auxValue = data.getSum();
 			}
 		}
-		return rt;
+		return _return;
+	}
+	
+	@Override
+	public Agente select() {
+		if (++count < startTrust || count % startTrust == 0) {
+			return getRamdonAgent();
+		}
+		return GameBC.getAgent(getBestByMe());
 	}
 
 	/**
 	 * Adicionar avaliacoes localmente
 	 */
 	public void addRating(Rating rating) {
-		if (data.containsKey(rating.getServer())) {
-			data.get(rating.getServer()).addRating(rating);
+		if (localData.containsKey(rating.getServer())) {
+			localData.get(rating.getServer()).addRating(rating);
 		} else {
-			data.put(rating.getServer(), new TrustData(rating.getServer()));
-			data.get(rating.getServer()).addRating(rating);
+			localData.put(rating.getServer(), new TrustData(rating.getServer()));
+			localData.get(rating.getServer()).addRating(rating);
 		}
 	}
 
@@ -68,9 +78,9 @@ public abstract class AbstractTrust implements ITrust {
 		this.myAgent = agente;
 	}
 	
-	protected Agente ramdon() {
+	protected Agente getRamdonAgent() {
 		List<Agente> agents = GameBC.getAgents();
-		for (int i = 0; i < 50; i++) {
+		for (int i = 0; i < 100; i++) {
 			int index = (int) Math.round((agents.size() - 1) * Random.getNumer());
 			Agente select = agents.get(index);
 			if (!select.getAID().equals(myAgent.getAID()) && select.getResponseHelp() != null && !select.getResponseHelp().isEmpty()) {
