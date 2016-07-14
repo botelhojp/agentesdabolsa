@@ -33,7 +33,7 @@ public class CotacaoDAO extends GenericDAO<Cotacao> {
 	public List<Cotacao> listCotacoes(String _acao) {
 		Acao acao = acaoDao.findByName(_acao);
 		if (acao == null) {
-			throw new AppException(Status.NOT_FOUND, "detalhe", "Ação [" + _acao + "] não encontrada");
+			throw new AppException(Status.NOT_FOUND, "detalhe", "Aï¿½ï¿½o [" + _acao + "] nï¿½o encontrada");
 		}
 		List<Cotacao> rt = findByAcao(acao.getId());
 		return rt;
@@ -48,7 +48,7 @@ public class CotacaoDAO extends GenericDAO<Cotacao> {
 	public List<Cotacao> getCotacoes(Game game, Boolean random, int iteration) {
 		Acao acao = acaoDao.findByName(game.getAcao().getNomeres());
 		if (acao == null) {
-			throw new AppException(Status.NOT_FOUND, "detalhe", "Ação [" + game.getAcao().getNomeres() + "] não encontrada");
+			throw new AppException(Status.NOT_FOUND, "detalhe", "Aï¿½ï¿½o [" + game.getAcao().getNomeres() + "] nï¿½o encontrada");
 		}
 		
 		long total = 0;
@@ -106,7 +106,7 @@ public class CotacaoDAO extends GenericDAO<Cotacao> {
 	public Cotacao getCotacao(String _acao, long from) {
 		Acao acao = acaoDao.findByName(_acao);
 		if (acao == null) {
-			throw new AppException(Status.NOT_FOUND, "detalhe", "Ação [" + _acao + "] não encontrada");
+			throw new AppException(Status.NOT_FOUND, "detalhe", "Aï¿½ï¿½o [" + _acao + "] nï¿½o encontrada");
 		}
 		from = (from < 0)? 0 : from;
 		String filtro = "{ \"from\" : " + from + ", \"size\" : " + SIZE + ",  \"sort\" : [{ \"datapre\" : \"desc\" }]}";

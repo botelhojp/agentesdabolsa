@@ -41,7 +41,7 @@ public class GameREST {
 	@GET
 	@Path("start")
 	public Response start(@QueryParam("user") String user) throws NotFoundException {
-		Random.reset();
+		Random.initSeed(configBC.getConfig().getRandomSeed());
 		return Response.ok().entity(GameBC.getInstance().newGame(user)).build();
 	}
 
@@ -94,7 +94,7 @@ public class GameREST {
 	@Path("simulate_start")
 	@SuppressWarnings("unchecked")
 	public Response add(@QueryParam("rounds") int rounds, @QueryParam("trust") String trustClassName, @QueryParam("metric") String metricClassName) throws NotFoundException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-		Random.reset();
+		Random.initSeed(configBC.getConfig().getRandomSeed());
 		Class<ITrust> trustClazz = (Class<ITrust>) Class.forName(trustClassName);
 		Class<IMetric> metricClazz = (Class<IMetric>) Class.forName(metricClassName);
 		ELKDAO.enabledCache(true);

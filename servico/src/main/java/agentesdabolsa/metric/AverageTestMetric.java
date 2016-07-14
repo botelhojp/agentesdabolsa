@@ -6,7 +6,7 @@ import agentesdabolsa.entity.Agente;
 
 public class AverageTestMetric implements IMetric {
 
-	private int count;
+	private double count;
 	private double sum;
 	private AgenteBC agenteBC;
 
@@ -22,15 +22,13 @@ public class AverageTestMetric implements IMetric {
 	public void add(Agente agente) {
 		if (!agente.getName().contains("%")) {
 			count++;
-			double carteira = agenteBC.getGame(agente).getCarteira();
-			double value = (carteira - AppConfig.INITIAL_VALUE) / AppConfig.INITIAL_VALUE;
-			sum += value;
+			sum += agenteBC.getGame(agente).getCarteira() - AppConfig.INITIAL_VALUE;
 		}
 	}
 
 	@Override
 	public double calc() {
-		return (double) Math.round(sum / count * 1000d) / 1000d;
+		return sum / count;
 	}
 
 }

@@ -2,27 +2,20 @@ package agentesdabolsa.business;
 
 public class Random {
 
-	private static long count = 1;
-	
-	private static ConfigBC config = ConfigBC.getInstance();
+	private static java.util.Random rm;
 
 	public static double getNumer() {
-		count++;
-		String s = "" + (count / (config.getConfig().getRandomSeed()*1.0));
-		return Double.parseDouble("" + s.charAt(s.length()-1) + s.charAt(s.length()-2))/100;
+		return rm.nextDouble();
 	}
-	
-	public static void reset() {
-		count = 1;
+
+	public static void initSeed(int seed) {
+		rm = new java.util.Random(seed);
 	}
 
 	public static void main(String[] args) {
+		Random.initSeed(7);
 		for (int i = 0; i < 3000; i++) {
-			System.out.println("--" + i);
-			System.out.println(Math.random());
-			System.out.println(Random.getNumer());
+			System.out.println(i + ": " + Random.getNumer());
 		}
-
 	}
-
 }
