@@ -11,6 +11,8 @@ public class Config extends JSONBean {
 	private Integer randomSeed;
 
 	private Boolean random;
+	
+	private Boolean malice;
 
 	public String getAcoes() {
 		return acoes;
@@ -51,4 +53,13 @@ public class Config extends JSONBean {
 	public void setStartTrust(Integer startTrust) {
 		this.startTrust = startTrust;
 	}
+
+	public Boolean getMalice() {
+		return malice;
+	}
+
+	public void setMalice(Boolean malice) {
+		this.malice = malice;
+	}
+	
 }

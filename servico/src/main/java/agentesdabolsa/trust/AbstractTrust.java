@@ -18,9 +18,11 @@ public abstract class AbstractTrust implements ITrust {
 	protected Integer iteration;
 	protected Integer startTrust;
 	protected long count = 0;
+	protected boolean malice;
 
 	public AbstractTrust() {
 		startTrust = ConfigBC.getInstance().getConfig().getStartTrust();
+		malice = ConfigBC.getInstance().getConfig().getMalice();
 		localData = new HashMap<AID, TrustData>();
 	}
 	
