@@ -24,8 +24,8 @@ public abstract class AbstractTrust implements ITrust {
 		localData = new HashMap<AID, TrustData>();
 	}
 	
-	public void setIteration(Integer iteration){
-		this.iteration =  iteration;
+	public void setIteration(Integer _iteration){
+		this.iteration =  _iteration;
 	}
 
 	public Integer getIteration() {

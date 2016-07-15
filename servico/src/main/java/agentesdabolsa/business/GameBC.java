@@ -141,8 +141,8 @@ public class GameBC {
 		thread.start();
 	}
 
-	public static Agente getAgent(AID best) {
-		return agentsAID.get(best);
+	public static Agente getAgent(AID agentAID) {
+		return agentsAID.get(agentAID);
 	}
 
 	public static void cleanResults() {

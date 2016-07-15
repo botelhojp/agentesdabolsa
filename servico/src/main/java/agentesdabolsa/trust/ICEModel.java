@@ -20,6 +20,14 @@ public class ICEModel extends AbstractTrust {
 	public ICEModel() {
 	}
 	
+	@Override
+	public Agente select() {
+		if (++count < startTrust || count % startTrust == 0) {
+			return getRamdonAgent();
+		}
+		return GameBC.getAgent(getBestByMe());
+	}
+	
 	public AID getBestByMe() {
 		AID rt = null;
 		double aux = -999999.99;
