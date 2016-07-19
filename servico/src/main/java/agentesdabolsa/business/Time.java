@@ -27,6 +27,7 @@ public class Time implements Runnable {
 			iteration++;
 			try {
 				if (!list.isEmpty()) {
+					Log.info("Iteration >> " + iteration + " <<");
 					String trustName = null;
 					IMetric metric = gameBC.getMetric().init();
 					for (Iterator<Agente> it = list.iterator(); it.hasNext();) {

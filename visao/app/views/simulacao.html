@@ -25,7 +25,7 @@
 			</fieldset>
 		</div>
 
-		<div class="col-md-3">
+		<div class="col-md-2">
 			<fieldset class="form-group">
 				<label for="nome" >Metrics</label>
 				<select class="form-control" class="btn btn-default" ng-model="metric" >
@@ -42,18 +42,42 @@
 				<button type="button" ng-click="startGame()" class="btn btn-default">Start</button>
 			</fieldset>			
 		</div>
+
+		<div class="col-md-1">			
+			<fieldset class="form-group">
+				<label for="nome" >&nbsp;</label>		
+				<button type="button" ng-click="result()" class="btn btn-default">Result</button>
+			</fieldset>			
+		</div>
+
+		<div class="col-md-1">
+			<fieldset class="form-group">
+			  <label for="clones">Auto</label>
+			  <input type="checkbox" name="input" class="form-control" ng-model="refresh">
+			</fieldset>
+		</div>	
+
 		<div class="col-md-1">			
 			<fieldset class="form-group">
 				<label for="nome" >&nbsp;</label>		
 				<button type="button" ng-click="stop()" class="btn btn-default">Stop</button>
 			</fieldset>			
 		</div>		
+		<div class="col-md-1">			
+			<fieldset class="form-group">
+				<label for="nome" >&nbsp;</label>		
+				<button type="button" ng-click="csv()" class="btn btn-default">CSV</button>
+			</fieldset>			
+		</div>	
 	</div>
+
 	<div class="row" class="form-group">
 		<div class="col-md-12">
 			<div id="chart"></div>
 		</div>				
 	</div>
+
+
 	<div class="row" class="form-group">
 		<div class="col-md-6">
 			<fieldset class="form-group">

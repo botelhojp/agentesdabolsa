@@ -46,9 +46,9 @@ app.service('GameService', ['$http', '$window', '$q', function($http, $window, $
 		return deferred.promise;
 	};
 
-	services.result = function(rounds, trust) {
+	services.result = function() {
 		var deferred = $q.defer();
-		$http.get('/api/game/result').success(function(data) {
+		$http.get('/api/game/result/json').success(function(data) {
 			deferred.resolve(data);
 		}).error(function(data, status) {
 			deferred.reject([ data, status ]);
@@ -56,7 +56,16 @@ app.service('GameService', ['$http', '$window', '$q', function($http, $window, $
 		return deferred.promise;
 	};
 
-	
+	services.csv = function() {
+		var deferred = $q.defer();
+		$http.get('/api/game/result/csv').success(function(data) {
+			deferred.resolve(data);
+		}).error(function(data, status) {
+			deferred.reject([ data, status ]);
+		});
+		return deferred.promise;
+	};
+
 	services.buy = function(game) {
 		var deferred = $q.defer();
 		$http.get('/api/game/buy?game=' + game.user).success(function(data) {

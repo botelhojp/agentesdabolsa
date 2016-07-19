@@ -20,7 +20,7 @@ import agentesdabolsa.exception.AppException;
 public class ELKDAO<T extends JSONBean> {
 
 	public static String SERVER = AppConfig.getInstance().getELKServer();
-	
+
 	private static boolean enableCache = false;
 	private static Hashtable<String, String> cache = new Hashtable<String, String>();
 
@@ -40,7 +40,7 @@ public class ELKDAO<T extends JSONBean> {
 	public String get(String resouce) {
 		return httpGet(resouce);
 	}
-	
+
 	public String get(String resouce, String order) {
 		return http(resouce, "POST", order);
 	}
@@ -71,17 +71,17 @@ public class ELKDAO<T extends JSONBean> {
 			} else {
 				url = new URL(SERVER + "/" + resource);
 			}
-			
-			if (enableCache){
-				String key = getKey(url,method,content);
-				if (cache.containsKey(key)){
-					//System.out.println("CACHE: "+ key);
+
+			if (enableCache) {
+				String key = getKey(url, method, content);
+				if (cache.containsKey(key)) {
+					// System.out.println("CACHE: "+ key);
 					return cache.get(key);
-				}else{
-					System.out.println(method + " - "+ url);	
+				} else {
+					System.out.println(method + " - " + url);
 				}
-			}else{
-				System.out.println(method + " - "+ url);	
+			} else {
+				System.out.println(method + " - " + url);
 			}
 			conn = (HttpURLConnection) url.openConnection();
 			conn.setUseCaches(false);
@@ -96,19 +96,27 @@ public class ELKDAO<T extends JSONBean> {
 				wr.flush();
 				wr.close();
 			}
-			is = new BufferedInputStream(conn.getInputStream());
-			BufferedReader br = new BufferedReader(new InputStreamReader((is)));
-			String responseBody = "";
-			String output;
-			while ((output = br.readLine()) != null) {
-				responseBody += output;
+
+			if (conn.getResponseCode() == 200) {
+				is = new BufferedInputStream(conn.getInputStream());
+				BufferedReader br = new BufferedReader(new InputStreamReader((is)));
+				String responseBody = "";
+				String output;
+				while ((output = br.readLine()) != null) {
+					responseBody += output;
+				}
+				if (enableCache) {
+					cache.put(getKey(url, method, content), responseBody);
+				}
+				return responseBody;
 			}
 			
-			if (enableCache){
-				cache.put(getKey(url,method,content), responseBody);
+			if (conn.getResponseCode() == 400) {
+				System.out.println("----");
+				System.out.println("----");
 			}
-			
-			return responseBody;
+			throw new AppException("Erro no conexao ao servidor");
+
 		} catch (FileNotFoundException e) {
 			return null;
 		} catch (Exception e) {

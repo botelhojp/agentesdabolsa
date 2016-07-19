@@ -4,10 +4,9 @@ function($window, $http, $scope, $route, $rootScope, $location, GameService, NAV
 	
 	$scope.rounds = 20;
 	$scope.trust = "";
-	$scope.start = false;
+	$scope.refresh = true;
 
 	$scope.startGame = function () {
-		$scope.start = true;
 		$scope.result();
 		$window.document.getElementById("messageArea").value = "";		
 		GameService.simulate($scope.rounds, $scope.trust, $scope.metric).then(
@@ -21,17 +20,42 @@ function($window, $http, $scope, $route, $rootScope, $location, GameService, NAV
 	};
 
 	$scope.stop = function () {
-		$scope.start = false;
+		$scope.refresh = false;
 		$window.document.getElementById("messageArea").value = "";			
 		GameService.stop().then(
 			function (data) {
 				console.log(data);
+				$scope.result();
 			},
 			function (error) {
 				console.log(error);
 			}
 		);
 	};
+
+	function getFormattedDate() {
+    	var date = new Date();
+    	var str = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + "_" +  date.getHours() + "-" + date.getMinutes() + "-" + date.getSeconds();
+	    return str;
+	}
+
+	$scope.csv = function () {		
+		GameService.csv().then(
+			function (data) {
+				console.log(data.result);
+				var blob = new Blob([data.result], { type:"application/csv;charset=utf-8;" });			
+				var downloadLink = angular.element('<a></a>');
+				downloadLink.attr('href',window.URL.createObjectURL(blob));
+		        downloadLink.attr('download', 'result_'+ getFormattedDate()  + '.csv');
+				downloadLink[0].click();
+			},
+			function (error) {
+				console.log(error);
+			}
+		);
+	};
+
+
 
 	var chart = c3.generate({
 	  data: {
@@ -57,7 +81,7 @@ function($window, $http, $scope, $route, $rootScope, $location, GameService, NAV
 					    value: keys
 					  }
 					});	
-					if ($scope.start == true){
+					if ($scope.refresh == true){
 						$scope.result()	;
 					}
 				}, 1000); 
@@ -74,12 +98,16 @@ function($window, $http, $scope, $route, $rootScope, $location, GameService, NAV
     };
     
     $rootScope.mySocket.onmessage = function(evt) {
-    	$window.document.getElementById("messageArea").value += evt.data + "\n";
-		
-		//rola para a ultima linha
-		var obj = $window.document.getElementById("messageArea");
-		var currentScrollHeight = obj.scrollHeight;
-		obj.scrollTop = (obj.scrollTop + 100000); 
+
+    	if ($scope.refresh == true){
+
+	    	$window.document.getElementById("messageArea").value += evt.data + "\n";
+			
+			//rola para a ultima linha
+			var obj = $window.document.getElementById("messageArea");
+			var currentScrollHeight = obj.scrollHeight;
+			obj.scrollTop = (obj.scrollTop + 100000); 
+		}
 		
     };
     $rootScope.mySocket.onclose = function(evt) {

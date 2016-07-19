@@ -2,6 +2,7 @@ package agentesdabolsa.rest;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -129,14 +130,40 @@ public class GameREST {
 	}
 
 	@GET
-	@Path("result")
-	public Response result() throws NotFoundException {
+	@Path("result/json")
+	public Response resultJson() throws NotFoundException {
 		return Response.ok().entity(GameBC.getResult()).build();
 	}
-
+	
 	@GET
-	@Path("result_keys")
-	public Response result_keys() throws NotFoundException {
-		return Response.ok().entity("upload,download").build();
+	@Path("result/csv")
+	@SuppressWarnings("all")
+	public Response resultCSV() throws NotFoundException {
+		String csv = "";
+		Hashtable<String, List> rs = GameBC.getResult();
+		List<String> columns = rs.get("keys");
+		ArrayList<Hashtable<String, Double>> values = (ArrayList<Hashtable<String, Double>>) rs.get("values");
+		if (columns.isEmpty() || values.isEmpty()) 
+			return Response.ok().build();
+		//cabeçalho
+		for(String column: columns){
+			csv += column + ";";
+		}
+		csv = newLine(csv);
+		//linhas
+		for(Hashtable<String, Double> line: values){
+			for(String column: columns){
+				csv += line.get(column).toString().replace('.', ',') + ";";
+			}
+			csv = newLine(csv);
+		}
+		Hashtable<String, String> r = new Hashtable<String, String>();
+		r.put("result", csv);
+		return Response.ok(r).build();
 	}
+
+	private String newLine(String line) {
+		return line.substring(0, line.length()-1) + "\n";
+	}
+
 }
