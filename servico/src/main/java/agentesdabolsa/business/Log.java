@@ -1,5 +1,7 @@
 package agentesdabolsa.business;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.net.URI;
 
 import agentesdabolsa.servlet.WebsocketClientEndpoint;
@@ -39,5 +41,13 @@ public class Log {
 	public static void configure(boolean value) {
 		local = value;
 		
+	}
+
+	public static void error(Throwable e) {
+		StringWriter sw = new StringWriter();
+		PrintWriter pw = new PrintWriter(sw);
+		e.printStackTrace(pw);
+		sw.toString();
+		Log.info("\n"+ sw.toString());
 	}
 }

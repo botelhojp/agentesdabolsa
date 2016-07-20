@@ -3,7 +3,6 @@ package agentesdabolsa.dao;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -75,7 +74,6 @@ public class ELKDAO<T extends JSONBean> {
 			if (enableCache) {
 				String key = getKey(url, method, content);
 				if (cache.containsKey(key)) {
-					// System.out.println("CACHE: "+ key);
 					return cache.get(key);
 				} else {
 					System.out.println(method + " - " + url);
@@ -110,17 +108,9 @@ public class ELKDAO<T extends JSONBean> {
 				}
 				return responseBody;
 			}
-			
-			if (conn.getResponseCode() == 400) {
-				System.out.println("----");
-				System.out.println("----");
-			}
-			throw new AppException("Erro no conexao ao servidor");
-
-		} catch (FileNotFoundException e) {
-			return null;
+			throw new AppException("Connection error, code: " + conn.getResponseCode());
 		} catch (Exception e) {
-			throw new AppException("Erro no conexao ao servidor", e);
+			throw new AppException(e);
 		} finally {
 			if (is != null) {
 				try {

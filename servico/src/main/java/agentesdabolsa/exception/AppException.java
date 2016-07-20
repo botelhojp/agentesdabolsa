@@ -11,6 +11,10 @@ public class AppException extends RuntimeException {
 	private Hashtable<String, String> entity = new Hashtable<String, String>();
 	private Status status;
 	
+	public AppException(Exception e) {
+		super(e);
+	}
+	
 	public AppException(String msg, Exception e) {
 		super(msg, e);
 	}

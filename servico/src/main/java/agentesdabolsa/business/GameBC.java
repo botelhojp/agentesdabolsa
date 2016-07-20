@@ -30,6 +30,7 @@ public class GameBC {
 	
 	private static ArrayList<Hashtable<String, Double>> resultValues = new ArrayList<Hashtable<String, Double>>();
 	private static ArrayList<String> resultKeys = new ArrayList<String>();
+	private static Time time;
 
 	private GameBC(int _iterations) {
 		iterations = _iterations;
@@ -137,8 +138,11 @@ public class GameBC {
 	}
 
 	public static void start() {
-		thread = new Thread(new Time(agents, iterations));
-		thread.start();
+		if (thread == null || !thread.isAlive()) {
+			time = new Time(agents, iterations);
+			thread = new Thread(time);
+			thread.start();
+		}
 	}
 
 	public static Agente getAgent(AID agentAID) {
@@ -178,5 +182,11 @@ public class GameBC {
 
 	public IMetric getMetric() {
 		return metric;
+	}
+
+	public static void stop() {
+		if (thread != null && thread.isAlive()){
+			time.finish();
+		}
 	}
 }

@@ -1,34 +1,38 @@
 package agentesdabolsa.metric;
 
 import agentesdabolsa.business.AgenteBC;
-import agentesdabolsa.config.AppConfig;
 import agentesdabolsa.entity.Agente;
 
-public class AverageTestMetric implements IMetric {
+public class ErrorMetric extends AbstractMetric {
 
 	private double count;
-	private double sum;
+	private double error;
 	private AgenteBC agenteBC;
 
 	@Override
-	public IMetric init() {
+	public IMetric init(int iteration) {
 		count = 0;
-		sum = 0.0;
+		error = 0;
 		agenteBC = AgenteBC.getInstance();
 		return this;
 	}
 
 	@Override
 	public void add(Agente agente) {
-		if (!agente.getName().contains("%")) {
+		if (!agente.getName().contains(agentPattern)) {
 			count++;
-			sum += agenteBC.getGame(agente).getCarteira() - AppConfig.INITIAL_VALUE;
+			boolean acertou = agenteBC.getGame(agente).getResultado();
+			if (!acertou){
+				error++;
+			}
 		}
 	}
 
 	@Override
 	public double calc() {
-		return sum / count;
+		return error / count;
 	}
+
+
 
 }

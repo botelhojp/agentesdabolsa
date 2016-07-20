@@ -125,6 +125,7 @@ public class GameREST {
 	@Path("stop")
 	public Response stop() throws NotFoundException {
 		ELKDAO.enabledCache(false);
+		GameBC.stop();
 		GameBC.cleanResults();
 		return Response.ok().build();
 	}

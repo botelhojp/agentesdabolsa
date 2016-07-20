@@ -8,7 +8,7 @@
 		<div class="col-md-2">
 			<fieldset class="form-group">
 				<label for="nome" >Rounds</label>
-				<input type="number" name="input" class="form-control" placeholder="Clones" ng-model="rounds" min="0" max="1000" required>
+				<input type="number" name="input" class="form-control" ng-model="rounds" min="0" max="1000" required>
 			</fieldset>
 		</div>
 		<div class="col-md-3">
@@ -29,9 +29,10 @@
 			<fieldset class="form-group">
 				<label for="nome" >Metrics</label>
 				<select class="form-control" class="btn btn-default" ng-model="metric" >
-				  <option value = "agentesdabolsa.metric.AverageTestMetric">Average Profit</option>
-				  <option value = "agentesdabolsa.metric.ErrorTestMetric">Error Percentage</option>
-				  <option value = "agentesdabolsa.metric.MemoryMetric">Memory Used (Mb)</option>
+				  <option value = "agentesdabolsa.metric.AverageMetric">Average Profit</option>
+				  <option value = "agentesdabolsa.metric.ErrorMetric">Error Percentage</option>
+				  <option value = "agentesdabolsa.metric.GlobalErrorMetric">Global Error</option>
+				  <option value = "agentesdabolsa.metric.PrequentialMetric">Prequential</option>
 				</select>
 			</fieldset>
 		</div>

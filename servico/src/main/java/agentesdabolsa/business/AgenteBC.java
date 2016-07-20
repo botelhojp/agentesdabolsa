@@ -1,7 +1,5 @@
 package agentesdabolsa.business;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.List;
 
 import agentesdabolsa.dao.AcaoDAO;
@@ -88,11 +86,7 @@ public class AgenteBC {
 				rule.eval(client.getActionAfter());
 			}
 		} catch (Exception e) {
-			StringWriter sw = new StringWriter();
-			PrintWriter pw = new PrintWriter(sw);
-			e.printStackTrace(pw);
-			sw.toString();
-			Log.info(">>>>>> Error interno <<<<<<<<<\n" + sw.toString());
+			Log.error(e);
 		}
 	}
 

@@ -33,7 +33,7 @@ public class CotacaoDAO extends GenericDAO<Cotacao> {
 	public List<Cotacao> listCotacoes(String _acao) {
 		Acao acao = acaoDao.findByName(_acao);
 		if (acao == null) {
-			throw new AppException(Status.NOT_FOUND, "detalhe", "A��o [" + _acao + "] n�o encontrada");
+			throw new AppException(Status.NOT_FOUND, "detalhe", "Ação [" + _acao + "] não encontrada");
 		}
 		List<Cotacao> rt = findByAcao(acao.getId());
 		return rt;
@@ -48,7 +48,7 @@ public class CotacaoDAO extends GenericDAO<Cotacao> {
 	public List<Cotacao> getCotacoes(Game game, Boolean random, int iteration) {
 		Acao acao = acaoDao.findByName(game.getAcao().getNomeres());
 		if (acao == null) {
-			throw new AppException(Status.NOT_FOUND, "detalhe", "A��o [" + game.getAcao().getNomeres() + "] n�o encontrada");
+			throw new AppException(Status.NOT_FOUND, "detalhe", "Ação [" + game.getAcao().getNomeres() + "] não encontrada");
 		}
 		
 		long total = 0;

@@ -1,10 +1,19 @@
 'use strict';
-app.controller('SimuladorController', [ '$window', '$http', '$scope', '$route', '$rootScope', '$location', 'GameService', 'NAV_DATA', 'AUTH_EVENTS', 'ENV',
-function($window, $http, $scope, $route, $rootScope, $location, GameService, NAV_DATA, AUTH_EVENTS, ENV ) {
+app.controller('SimuladorController', [ '$window', '$http', '$scope', '$route', '$rootScope', '$location', 'GameService', 'ConfigService', 'NAV_DATA', 'AUTH_EVENTS', 'ENV',
+function($window, $http, $scope, $route, $rootScope, $location, GameService, ConfigService, NAV_DATA, AUTH_EVENTS, ENV ) {
 	
-	$scope.rounds = 20;
 	$scope.trust = "";
 	$scope.refresh = true;
+
+    ConfigService.get().then(
+        function (data) {
+            console.log(data);
+            $scope.rounds = data.iterationTotal;
+        },
+        function (error) {
+            console.log(error);                 
+        }
+    );    
 
 	$scope.startGame = function () {
 		$scope.result();
@@ -99,15 +108,15 @@ function($window, $http, $scope, $route, $rootScope, $location, GameService, NAV
     
     $rootScope.mySocket.onmessage = function(evt) {
 
-    	if ($scope.refresh == true){
+    	//if ($scope.refresh == true){
 
-	    	$window.document.getElementById("messageArea").value += evt.data + "\n";
+	    	$window.document.getElementById("messageArea").value += evt.data;
 			
 			//rola para a ultima linha
 			var obj = $window.document.getElementById("messageArea");
 			var currentScrollHeight = obj.scrollHeight;
 			obj.scrollTop = (obj.scrollTop + 100000); 
-		}
+		//}
 		
     };
     $rootScope.mySocket.onclose = function(evt) {

@@ -14,6 +14,7 @@ public class Time implements Runnable {
 	private List<Agente> list;
 	private int iteration = 0;
 	private long maxIterations = 0;
+	private boolean done = false;
 
 	public Time(List<Agente> list, int maxIterations) {
 		this.maxIterations = maxIterations;
@@ -23,13 +24,13 @@ public class Time implements Runnable {
 	@Override
 	public void run() {
 		
-		while (isDone()) {
+		while (!isDone()) {
 			iteration++;
 			try {
 				if (!list.isEmpty()) {
-					Log.info("Iteration >> " + iteration + " <<");
+					Log.info( (iteration % 10 == 0) ? "[" + iteration + "]" : ".");
 					String trustName = null;
-					IMetric metric = gameBC.getMetric().init();
+					IMetric metric = gameBC.getMetric().init(iteration);
 					for (Iterator<Agente> it = list.iterator(); it.hasNext();) {
 						Agente agente = it.next();
 						trustName = agente.getTrust().getName();
@@ -38,14 +39,18 @@ public class Time implements Runnable {
 					}
 					GameBC.putResult(trustName, metric.calc(), iteration);
 				}
-			} catch (Exception e) {
-				e.printStackTrace();
+			} catch (Throwable e) {
+				Log.error(e);
 			}
 		}
 	}
 
 	private boolean isDone() {
-		return (iteration < maxIterations);
+		return (iteration >= maxIterations || done);
+	}
+	
+	public void finish() {
+		done = true;
 	}
 
 }
