@@ -17,6 +17,7 @@ import com.sun.jersey.api.NotFoundException;
 
 import agentesdabolsa.business.ConfigBC;
 import agentesdabolsa.business.GameBC;
+import agentesdabolsa.business.Log;
 import agentesdabolsa.business.Random;
 import agentesdabolsa.commons.AppUtils;
 import agentesdabolsa.dao.AcaoDAO;
@@ -33,7 +34,7 @@ import jade.core.AID;
 @Path("game")
 @Produces(APPLICATION_JSON)
 @Consumes(APPLICATION_JSON)
-public class GameREST {
+public class GameREST extends AbstractREST{
 
 	private AcaoDAO dao = AcaoDAO.getInstance();
 	private CotacaoDAO ctDao = CotacaoDAO.getInstance();
@@ -95,6 +96,8 @@ public class GameREST {
 	@Path("simulate_start")
 	@SuppressWarnings("unchecked")
 	public Response add(@QueryParam("rounds") int rounds, @QueryParam("trust") String trustClassName, @QueryParam("metric") String metricClassName) throws NotFoundException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+		Log.info("start\n");
+		System.gc();
 		Random.initSeed(configBC.getConfig().getRandomSeed());
 		Class<ITrust> trustClazz = (Class<ITrust>) Class.forName(trustClassName);
 		Class<IMetric> metricClazz = (Class<IMetric>) Class.forName(metricClassName);
@@ -124,7 +127,6 @@ public class GameREST {
 	@GET
 	@Path("stop")
 	public Response stop() throws NotFoundException {
-		ELKDAO.enabledCache(false);
 		GameBC.stop();
 		GameBC.cleanResults();
 		return Response.ok().build();
@@ -133,6 +135,7 @@ public class GameREST {
 	@GET
 	@Path("result/json")
 	public Response resultJson() throws NotFoundException {
+		ELKDAO.enabledCache(true);
 		return Response.ok().entity(GameBC.getResult()).build();
 	}
 	

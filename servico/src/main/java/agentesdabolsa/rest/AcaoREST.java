@@ -15,7 +15,7 @@ import agentesdabolsa.dao.AcaoDAO;
 @Path("acoes")
 @Produces(APPLICATION_JSON)
 @Consumes(APPLICATION_JSON)
-public class AcaoREST {
+public class AcaoREST extends AbstractREST {
 
 	private AcaoDAO dao = AcaoDAO.getInstance();
 

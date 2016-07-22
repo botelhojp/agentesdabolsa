@@ -18,5 +18,11 @@ public abstract class AbstractMetric implements IMetric {
 	public abstract double calc();
 
 	public abstract IMetric init(int iteration);
+	
+	public void afterPlay() {
+	}
+	
+	public void beforePlay() {
+	}
 
 }

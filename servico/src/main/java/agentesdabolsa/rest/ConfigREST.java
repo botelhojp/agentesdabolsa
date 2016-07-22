@@ -25,7 +25,7 @@ import agentesdabolsa.exception.AppException;
 @Path("configuracoes")
 @Produces(APPLICATION_JSON)
 @Consumes(APPLICATION_JSON)
-public class ConfigREST {
+public class ConfigREST extends AbstractREST{
 
 	private ConfigDAO dao = ConfigDAO.getInstance();
 

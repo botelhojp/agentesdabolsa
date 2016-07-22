@@ -17,7 +17,7 @@ import agentesdabolsa.dao.AgenteDAO;
 @Path("app")
 @Produces(APPLICATION_JSON)
 @Consumes(APPLICATION_JSON)
-public class AppREST {
+public class AppREST extends AbstractREST{
 	
 	private AgenteDAO dao = AgenteDAO.getInstance();
 

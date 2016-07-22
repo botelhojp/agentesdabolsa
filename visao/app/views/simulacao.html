@@ -8,7 +8,7 @@
 		<div class="col-md-2">
 			<fieldset class="form-group">
 				<label for="nome" >Rounds</label>
-				<input type="number" name="input" class="form-control" ng-model="rounds" min="0" max="1000" required>
+				<input type="number" name="input"  disabled class="form-control" ng-model="rounds" min="0" max="1000" required>
 			</fieldset>
 		</div>
 		<div class="col-md-3">
@@ -31,8 +31,9 @@
 				<select class="form-control" class="btn btn-default" ng-model="metric" >
 				  <option value = "agentesdabolsa.metric.AverageMetric">Average Profit</option>
 				  <option value = "agentesdabolsa.metric.ErrorMetric">Error Percentage</option>
-				  <option value = "agentesdabolsa.metric.GlobalErrorMetric">Global Error</option>
 				  <option value = "agentesdabolsa.metric.PrequentialMetric">Prequential</option>
+				  <option value = "agentesdabolsa.metric.CPUTimeAVGMetric">AVG CPU Time (milis)</option>
+				  <option value = "agentesdabolsa.metric.CPUTimeSumMetric">Sum CPU Time (milis)</option>
 				</select>
 			</fieldset>
 		</div>

@@ -34,7 +34,9 @@ public class Time implements Runnable {
 					for (Iterator<Agente> it = list.iterator(); it.hasNext();) {
 						Agente agente = it.next();
 						trustName = agente.getTrust().getName();
+						metric.beforePlay();
 						agenteBC.play(agente, iteration);
+						metric.afterPlay();
 						metric.add(agente);
 					}
 					GameBC.putResult(trustName, metric.calc(), iteration);

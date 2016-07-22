@@ -22,7 +22,7 @@ import agentesdabolsa.exception.AppException;
 @Path("agentes")
 @Produces(APPLICATION_JSON)
 @Consumes(APPLICATION_JSON)
-public class AgenteREST {
+public class AgenteREST extends AbstractREST{
 
 	private AgenteDAO dao = AgenteDAO.getInstance();
 
@@ -36,7 +36,7 @@ public class AgenteREST {
 	public Response get(@PathParam("id") Long id) throws Exception {
 		Agente bean = dao.findByID(id);
 		if (bean == null) {
-			throw new AppException(Status.NOT_FOUND, "detalhe", "agente não encontrado");
+			throw new AppException(Status.NOT_FOUND, "detalhe", "agente nï¿½o encontrado");
 		}
 		return Response.ok().entity(dao.findByID(id)).build();
 	}
@@ -46,7 +46,7 @@ public class AgenteREST {
 	public Response delete(@PathParam("id") Long id) throws Exception {
 		Agente bean = dao.findByID(id);
 		if (bean == null) {
-			throw new AppException(Status.NOT_FOUND, "detalhe", "agente não encontrado");
+			throw new AppException(Status.NOT_FOUND, "detalhe", "agente nï¿½o encontrado");
 		}
 		dao.delete(id);
 		return Response.ok().build();
@@ -55,7 +55,7 @@ public class AgenteREST {
 	@POST
 	public Response insert(final Agente agente) {
 		if (agente.getName()== null){
-			throw new AppException(Status.BAD_REQUEST, "detalhe", "agente não possui nome");
+			throw new AppException(Status.BAD_REQUEST, "detalhe", "agente nï¿½o possui nome");
 		}
 		dao.insert(agente);
 		return Response.ok().entity(agente).build();
@@ -65,10 +65,10 @@ public class AgenteREST {
 	@Path("{id}")
 	public Response update(@PathParam("id") Long id, final Agente agente) {
 		if (dao.findByID(id) == null) {
-			throw new AppException(Status.BAD_REQUEST, "detalhe", "agente não encontrado");
+			throw new AppException(Status.BAD_REQUEST, "detalhe", "agente nï¿½o encontrado");
 		}
 		if (agente.getName()== null){
-			throw new AppException(Status.BAD_REQUEST, "detalhe", "agente não possui nome");
+			throw new AppException(Status.BAD_REQUEST, "detalhe", "agente nï¿½o possui nome");
 		}
 		agente.setId(id);
 		dao.update(agente);

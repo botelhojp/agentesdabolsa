@@ -28,7 +28,7 @@ import agentesdabolsa.exception.AppException;
 @Path("serie")
 @Produces(APPLICATION_JSON)
 @Consumes(APPLICATION_JSON)
-public class FileSerieREST {
+public class FileSerieREST extends AbstractREST{
 	
 	@GET
 	@Path("/status")

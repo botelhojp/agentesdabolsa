@@ -19,7 +19,7 @@ import agentesdabolsa.entity.Cotacao;
 @Path("cotacoes")
 @Produces(APPLICATION_JSON)
 @Consumes(APPLICATION_JSON)
-public class ContacaoREST {
+public class ContacaoREST extends AbstractREST{
 
 	private CotacaoDAO dao = CotacaoDAO.getInstance();
 

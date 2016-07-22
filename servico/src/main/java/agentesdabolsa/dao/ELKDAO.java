@@ -132,8 +132,11 @@ public class ELKDAO<T extends JSONBean> {
 		return key;
 	}
 
-	public static void enabledCache(boolean b) {
-		enableCache = b;
+	public static void enabledCache(boolean _enabled) {
+		enableCache = _enabled;
 	}
 
+	public static void cleanCache() {
+		cache.clear();
+	}
 }

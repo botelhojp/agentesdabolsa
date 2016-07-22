@@ -6,6 +6,6 @@ public enum Action {
 	public Action reverse(){
 		if (this.equals(BUY)){ return SELL; }
 		if (this.equals(SELL)){ return BUY; }
-		return null;
+		return this;
 	}
 }
