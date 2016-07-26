@@ -26,6 +26,7 @@ public abstract class GenericDAO<T extends JSONBean> extends ELKDAO<T> {
 
 	public long insert(T bean) {
 		try {
+			ELKDAO.cleanCache();
 			long timeStamp = GregorianCalendar.getInstance().getTimeInMillis();
 			bean.setId(timeStamp);
 			JSONArray jsonArray = new JSONArray("[" + insert(getResouce(), bean) + "]");
@@ -45,6 +46,7 @@ public abstract class GenericDAO<T extends JSONBean> extends ELKDAO<T> {
 	}
 	public long update(T bean) {
 		try {
+			ELKDAO.cleanCache();
 			JSONArray jsonArray = new JSONArray("[" + update(getResouce(), bean) + "]");
 			return jsonArray.getJSONObject(0).getLong("_id");
 		} catch (JSONException e) {

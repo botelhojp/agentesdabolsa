@@ -8,4 +8,5 @@ public interface IMetric {
 	public IMetric init(int iteration);
 	public void beforePlay();
 	public void afterPlay();
+	public String getAgentPattern();
 }

@@ -57,13 +57,29 @@
 	</div>	
 </div>
 
+
 <div class="row" class="form-group" >
-	<div class="col-md-3">
+	<div class="col-md-4">
 		<fieldset class="form-group">
 		  <label for="clones">Total Iterations</label>
 		  <input type="number" name="input" class="form-control" ng-model="cfg.iterationTotal">
 		</fieldset>
 	</div>
+	<div class="col-md-4">
+		<fieldset class="form-group">
+		  <label for="clones">Changes</label>
+		  <input type="number" name="input" class="form-control" ng-model="cfg.changes">
+		</fieldset>
+	</div>
+	<div class="col-md-4">
+		<fieldset class="form-group">
+		  <label for="clones">Type of Change</label>
+				<select class="form-control" class="btn btn-default" ng-model="cfg.changeType" >
+				  <option value = "AB">Abrupt</option>
+				  <option value = "GR">Gradual</option>
+				</select>
+		</fieldset>
+	</div>	
 </div>
 
 <div class="row" class="form-group" >

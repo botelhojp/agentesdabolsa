@@ -16,7 +16,7 @@ public class PrequentialMetric extends AbstractMetric {
 
 	@Override
 	public IMetric init(int iteration) {
-		if (iteration == 1){
+		if (iteration == 1) {
 			agenteBC = AgenteBC.getInstance();
 			fadingFactor = new ArrayList<Double>();
 			sum = 0;
@@ -28,11 +28,9 @@ public class PrequentialMetric extends AbstractMetric {
 
 	@Override
 	public void add(Agente agente) {
-		if (agente.getName().contains(agentPattern)) {
-			count++;
-			if (agenteBC.getGame(agente).getResultado()){
-				acertos++;
-			}
+		count++;
+		if (agenteBC.getGame(agente).getResultado()) {
+			acertos++;
 		}
 	}
 
@@ -41,12 +39,12 @@ public class PrequentialMetric extends AbstractMetric {
 		double avg = acertos / count;
 		sum += avg;
 		fadingFactor.add(avg);
-		if (fadingFactor.size() > super.prequentialFadingFactor){
+		if (fadingFactor.size() > super.prequentialFadingFactor) {
 			sum -= fadingFactor.remove(0);
 		}
-		if (fadingFactor.size() == super.prequentialFadingFactor){
+		if (fadingFactor.size() == super.prequentialFadingFactor) {
 			return sum / super.prequentialFadingFactor;
-		}else{
+		} else {
 			return 0.0;
 		}
 	}

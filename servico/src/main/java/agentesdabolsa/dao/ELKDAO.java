@@ -20,7 +20,7 @@ public class ELKDAO<T extends JSONBean> {
 
 	public static String SERVER = AppConfig.getInstance().getELKServer();
 
-	private static boolean enableCache = false;
+	private static boolean enableCache = true;
 	private static Hashtable<String, String> cache = new Hashtable<String, String>();
 
 	public static String DB = "agdb";
@@ -130,10 +130,6 @@ public class ELKDAO<T extends JSONBean> {
 		key += (method != null) ? method.toString() + "_" : "";
 		key += (content != null) ? "" + content.hashCode() : "";
 		return key;
-	}
-
-	public static void enabledCache(boolean _enabled) {
-		enableCache = _enabled;
 	}
 
 	public static void cleanCache() {

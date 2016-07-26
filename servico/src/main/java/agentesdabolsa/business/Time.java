@@ -37,7 +37,9 @@ public class Time implements Runnable {
 						metric.beforePlay();
 						agenteBC.play(agente, iteration);
 						metric.afterPlay();
-						metric.add(agente);
+						if (agente.getName().contains(metric.getAgentPattern())) {
+							metric.add(agente);
+						}
 					}
 					GameBC.putResult(trustName, metric.calc(), iteration);
 				}

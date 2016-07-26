@@ -24,6 +24,7 @@ public class GameBC {
 	public static Boolean random;
 
 	private static int iterations;
+	private static int currentIteration;
 	private static List<Agente> agents;
 	private static Hashtable<AID, Agente> agentsAID;
 	private static Thread thread;
@@ -189,4 +190,13 @@ public class GameBC {
 			time.finish();
 		}
 	}
+
+	public void setCurrentIteration(int iteration) {
+		currentIteration = iteration;
+	}
+
+	public static int getCurrentIteration() {
+		return currentIteration;
+	}
+	
 }

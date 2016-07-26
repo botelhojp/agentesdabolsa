@@ -10,6 +10,10 @@ public class Config extends JSONBean {
 
 	private Integer randomSeed;
 	
+	private Integer changes;
+	
+	private String changeType;
+	
 	private Integer iterationTotal;
 
 	private Integer prequentialFadingFactor;
@@ -26,6 +30,22 @@ public class Config extends JSONBean {
 
 	public Integer getIterationTotal() {
 		return iterationTotal;
+	}
+
+	public Integer getChanges() {
+		return changes;
+	}
+
+	public void setChanges(Integer changes) {
+		this.changes = changes;
+	}
+
+	public String getChangeType() {
+		return changeType;
+	}
+
+	public void setChangeType(String changeType) {
+		this.changeType = changeType;
 	}
 
 	public void setIterationTotal(Integer iterationTotal) {

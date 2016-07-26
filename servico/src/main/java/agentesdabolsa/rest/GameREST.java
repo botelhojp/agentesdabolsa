@@ -23,7 +23,6 @@ import agentesdabolsa.commons.AppUtils;
 import agentesdabolsa.dao.AcaoDAO;
 import agentesdabolsa.dao.AgenteDAO;
 import agentesdabolsa.dao.CotacaoDAO;
-import agentesdabolsa.dao.ELKDAO;
 import agentesdabolsa.entity.Agente;
 import agentesdabolsa.entity.Cotacao;
 import agentesdabolsa.entity.Game;
@@ -101,7 +100,6 @@ public class GameREST extends AbstractREST{
 		Random.initSeed(configBC.getConfig().getRandomSeed());
 		Class<ITrust> trustClazz = (Class<ITrust>) Class.forName(trustClassName);
 		Class<IMetric> metricClazz = (Class<IMetric>) Class.forName(metricClassName);
-		ELKDAO.enabledCache(true);
 		AgenteDAO agenteDao = AgenteDAO.getInstance();
 		IMetric metric = metricClazz.newInstance();
 		GameBC.configure(rounds);
@@ -135,7 +133,6 @@ public class GameREST extends AbstractREST{
 	@GET
 	@Path("result/json")
 	public Response resultJson() throws NotFoundException {
-		ELKDAO.enabledCache(true);
 		return Response.ok().entity(GameBC.getResult()).build();
 	}
 	

@@ -5,7 +5,7 @@ import agentesdabolsa.entity.Agente;
 
 public abstract class AbstractMetric implements IMetric {
 	
-	protected String agentPattern;
+	private String agentPattern;
 	protected Integer prequentialFadingFactor;
 	
 	public AbstractMetric(){
@@ -23,6 +23,11 @@ public abstract class AbstractMetric implements IMetric {
 	}
 	
 	public void beforePlay() {
+	}
+	
+	@Override
+	public String getAgentPattern() {
+		return agentPattern;
 	}
 
 }

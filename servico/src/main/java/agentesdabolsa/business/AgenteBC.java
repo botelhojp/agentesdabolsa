@@ -28,6 +28,7 @@ public class AgenteBC {
 	}
 
 	public void play(Agente client, int iteration) {
+		gameBC.setCurrentIteration(iteration);
 		client.getTrust().setIteration(iteration);
 		Game game = getGame(client);
 		game.setAcao(agenteDao.getRandom(GameBC.acoes));
@@ -107,9 +108,9 @@ public class AgenteBC {
 	}
 
 	public Game getGame(Agente agente) {
-		Game game = gameBC.getGame(agente.getAID().getLocalName());
+		Game game = gameBC.getGame(agente.getAID().getName());
 		if (game == null) {
-			game = gameBC.newGame(agente.getAID().getLocalName());
+			game = gameBC.newGame(agente.getAID().getName());
 		}
 		return game;
 	}

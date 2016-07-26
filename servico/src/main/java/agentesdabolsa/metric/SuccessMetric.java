@@ -3,36 +3,34 @@ package agentesdabolsa.metric;
 import agentesdabolsa.business.AgenteBC;
 import agentesdabolsa.entity.Agente;
 
-public class ErrorMetric extends AbstractMetric {
+public class SuccessMetric extends AbstractMetric {
 
 	private double count;
-	private double error;
+	private double hits;
 	private AgenteBC agenteBC;
 
 	@Override
 	public IMetric init(int iteration) {
-		count = 0;
-		error = 0;
-		agenteBC = AgenteBC.getInstance();
+		if (iteration == 1) {
+			count = 0;
+			hits = 0;
+			agenteBC = AgenteBC.getInstance();
+		}
 		return this;
 	}
 
 	@Override
 	public void add(Agente agente) {
-		if (!agente.getName().contains(agentPattern)) {
-			count++;
-			boolean acertou = agenteBC.getGame(agente).getResultado();
-			if (!acertou){
-				error++;
-			}
+		count++;
+		boolean acertou = agenteBC.getGame(agente).getResultado();
+		if (acertou) {
+			hits++;
 		}
 	}
 
 	@Override
 	public double calc() {
-		return error / count;
+		return hits / count;
 	}
-
-
 
 }
