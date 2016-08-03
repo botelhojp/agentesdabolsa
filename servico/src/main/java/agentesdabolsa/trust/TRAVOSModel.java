@@ -6,6 +6,7 @@ import java.util.List;
 
 import agentesdabolsa.business.GameBC;
 import agentesdabolsa.entity.Agente;
+import agentesdabolsa.metric.OperationMetric;
 import jade.core.AID;
 import openjade.ontology.Rating;
 
@@ -26,6 +27,7 @@ public class TRAVOSModel extends AbstractTrust {
 
 	public void addRating(Rating rating) {
 		super.addRating(rating);
+		OperationMetric.count();
 		witnesses.add(rating.getServer());
 	}
 	
@@ -37,6 +39,7 @@ public class TRAVOSModel extends AbstractTrust {
 		double auxValue = -99999999.99;
 		Iterator<AID> agents = localData.keySet().iterator();
 		while (agents.hasNext()) {
+			OperationMetric.count();
 			AID serverAID = (AID) agents.next();
 			TrustData data = localData.get(serverAID);
 			if ((data.getSum() + getValueByWitness(serverAID))  > auxValue) {
@@ -50,6 +53,7 @@ public class TRAVOSModel extends AbstractTrust {
 	private double getValueByWitness(AID serverAID) {
 		double rt = 0;
 		for (AID witnessAID : witnesses) {
+			OperationMetric.count();
 			Agente witnessAgent = GameBC.getAgent(witnessAID);
 			TRAVOSModel witnessFire = ((TRAVOSModel) witnessAgent.getTrust());
 			if (witnessFire.know(serverAID)){
@@ -64,6 +68,7 @@ public class TRAVOSModel extends AbstractTrust {
 	}
 
 	private boolean know(AID serverAID) {
+		OperationMetric.count();
 		return localData.containsKey(serverAID);
 	}
 

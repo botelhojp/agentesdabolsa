@@ -11,6 +11,7 @@ import agentesdabolsa.entity.Config;
 import agentesdabolsa.entity.Cotacao;
 import agentesdabolsa.entity.Game;
 import agentesdabolsa.metric.IMetric;
+import agentesdabolsa.metric.OperationMetric;
 import jade.core.AID;
 
 public class GameBC {
@@ -147,6 +148,7 @@ public class GameBC {
 	}
 
 	public static Agente getAgent(AID agentAID) {
+		OperationMetric.count();
 		return agentsAID.get(agentAID);
 	}
 

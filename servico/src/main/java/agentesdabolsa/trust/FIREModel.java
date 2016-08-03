@@ -4,6 +4,8 @@ import java.util.Iterator;
 
 import agentesdabolsa.business.GameBC;
 import agentesdabolsa.entity.Agente;
+import agentesdabolsa.metric.BandwidthMetric;
+import agentesdabolsa.metric.OperationMetric;
 import jade.core.AID;
 import openjade.ontology.Rating;
 
@@ -33,6 +35,7 @@ public class FIREModel extends AbstractTrust {
 		double aux = -999999.99;
 		Iterator<AID> it = localData.keySet().iterator();
 		while (it.hasNext()) {
+			OperationMetric.count();
 			AID aid = (AID) it.next();
 			double sum = ((FIREModel) GameBC.getAgent(aid).getTrust()).getDossie();
 			if (sum > aux) {
@@ -54,6 +57,8 @@ public class FIREModel extends AbstractTrust {
 	 * Obtem uma avaliacao como feedback
 	 */
 	public void sendFeedback(Rating rating) {
+		OperationMetric.count();
+		BandwidthMetric.count(rating);
 		if (malice) {
 			Double value = Double.parseDouble(rating.getValue());
 			if (value < 0){
@@ -61,11 +66,11 @@ public class FIREModel extends AbstractTrust {
 				  rating.setValue(value.toString());
 			}
 		}
-
 		dossie.addRating(rating);
 	}
 
 	public double getDossie() {
+		OperationMetric.count();
 		return dossie.getSum() / dossie.size();
 	}
 

@@ -8,6 +8,7 @@ import agentesdabolsa.business.ConfigBC;
 import agentesdabolsa.business.GameBC;
 import agentesdabolsa.business.Random;
 import agentesdabolsa.entity.Agente;
+import agentesdabolsa.metric.OperationMetric;
 import jade.core.AID;
 import openjade.ontology.Rating;
 
@@ -25,9 +26,9 @@ public abstract class AbstractTrust implements ITrust {
 		malice = ConfigBC.getInstance().getConfig().getMalice();
 		localData = new HashMap<AID, TrustData>();
 	}
-	
-	public void setIteration(Integer _iteration){
-		this.iteration =  _iteration;
+
+	public void setIteration(Integer _iteration) {
+		this.iteration = _iteration;
 	}
 
 	public Integer getIteration() {
@@ -40,12 +41,13 @@ public abstract class AbstractTrust implements ITrust {
 	public AID getBestByMe() {
 		return getBestByMe(localData);
 	}
-	
+
 	protected AID getBestByMe(HashMap<AID, TrustData> _trustData) {
 		AID _return = null;
 		double auxValue = -99999999.99;
 		Iterator<AID> agents = _trustData.keySet().iterator();
 		while (agents.hasNext()) {
+			OperationMetric.count();
 			AID agentAID = (AID) agents.next();
 			TrustData data = _trustData.get(agentAID);
 			if (data.getSum() > auxValue) {
@@ -55,7 +57,7 @@ public abstract class AbstractTrust implements ITrust {
 		}
 		return _return;
 	}
-	
+
 	@Override
 	public Agente select() {
 		if (++count < startTrust || count % startTrust == 0) {
@@ -79,13 +81,15 @@ public abstract class AbstractTrust implements ITrust {
 	public void setAgent(Agente agente) {
 		this.myAgent = agente;
 	}
-	
+
 	protected Agente getRamdonAgent() {
+		OperationMetric.count();
 		List<Agente> agents = GameBC.getAgents();
 		for (int i = 0; i < 100; i++) {
 			int index = (int) Math.round((agents.size() - 1) * Random.getNumer());
 			Agente select = agents.get(index);
-			if (!select.getAID().equals(myAgent.getAID()) && select.getResponseHelp() != null && !select.getResponseHelp().isEmpty()) {
+			if (!select.getAID().equals(myAgent.getAID()) && select.getResponseHelp() != null
+					&& !select.getResponseHelp().isEmpty()) {
 				return select;
 			}
 		}

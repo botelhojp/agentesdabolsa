@@ -26,7 +26,7 @@ app.config(['$routeProvider', '$httpProvider', 'USER_ROLES', 'cfpLoadingBarProvi
 			data : {
 				requires : [ USER_ROLES.USER ]
 			},
-		})
+		}) 
 		.when('/simular', {
 			templateUrl : 'views/simulacao.html',
 			data : {

@@ -1,10 +1,12 @@
 package agentesdabolsa.commons;
 
 import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.text.Normalizer;
@@ -17,8 +19,10 @@ import java.util.Hashtable;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+import openjade.ontology.Rating;
+
 public class AppUtils {
-	
+
 	public static String normalize(String value) {
 		if (value == null) {
 			return null;
@@ -35,7 +39,7 @@ public class AppUtils {
 			return null;
 		}
 	}
-	
+
 	public static String makeData(Date sData) {
 		SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
 		return formato.format(sData);
@@ -48,31 +52,30 @@ public class AppUtils {
 	public static long makeLong(String string) {
 		return new Long(string).longValue();
 	}
-	
-	public static Hashtable<String, String> getMessage(String key, String value){
+
+	public static Hashtable<String, String> getMessage(String key, String value) {
 		Hashtable<String, String> e = new Hashtable<String, String>();
 		e.put(key, value);
 		return e;
 	}
-	
-	public static String formatMoeda(double value){
+
+	public static String formatMoeda(double value) {
 		return NumberFormat.getCurrencyInstance().format(value);
 	}
-	
-	public static Object cloneObject(Object obj){
-        try{
-            Object clone = obj.getClass().newInstance();
-            for (Field field : obj.getClass().getDeclaredFields()) {
-                field.setAccessible(true);
-                field.set(clone, field.get(obj));
-            }
-            return clone;
-        }catch(Exception e){
-        	e.printStackTrace();
-            return null;
-        }
-    }
-	  
+
+	public static Object cloneObject(Object obj) {
+		try {
+			Object clone = obj.getClass().newInstance();
+			for (Field field : obj.getClass().getDeclaredFields()) {
+				field.setAccessible(true);
+				field.set(clone, field.get(obj));
+			}
+			return clone;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 	public static File descompacta(File _fileZip) {
 		try {
@@ -88,7 +91,8 @@ public class AppUtils {
 				}
 				File tempFile = File.createTempFile(_fileZip.getName(), ".tmp");
 				System.out.println("Descompactando arquivo:" + entry.getName());
-				copyInputStream(zipFile.getInputStream(entry), new BufferedOutputStream(new FileOutputStream(tempFile)));
+				copyInputStream(zipFile.getInputStream(entry),
+						new BufferedOutputStream(new FileOutputStream(tempFile)));
 				zipFile.close();
 				return tempFile;
 			}
@@ -108,5 +112,15 @@ public class AppUtils {
 		out.close();
 	}
 
-	
+	public static byte[] serialize(Rating rating) {
+		try {
+			ByteArrayOutputStream out = new ByteArrayOutputStream();
+			ObjectOutputStream os = new ObjectOutputStream(out);
+			os.writeObject(rating);
+			return out.toByteArray();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 }

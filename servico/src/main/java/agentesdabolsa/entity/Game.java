@@ -8,7 +8,7 @@ public class Game {
 	private Cotacao novaCotacao;
 	private long iteration;
 	private long from;
-	private Boolean resultado;
+	private boolean resultado;
 	private Acao acaoAnterior;
 	private double diff;
 

@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import agentesdabolsa.metric.OperationMetric;
 import jade.core.AID;
 import openjade.ontology.Rating;
 
-public class TrustData implements Comparator<TrustData>  {
+public class TrustData implements Comparator<TrustData> {
 
 	protected List<Rating> ratings = new ArrayList<Rating>();
 	private double sum = 0.0;
@@ -24,6 +25,7 @@ public class TrustData implements Comparator<TrustData>  {
 	}
 
 	public void addRating(Rating rating) {
+		OperationMetric.count();
 		if (ratings.size() == max_size) {
 			Rating r = ratings.remove(0);
 			sum -= Double.parseDouble(r.getValue());
@@ -33,6 +35,7 @@ public class TrustData implements Comparator<TrustData>  {
 	}
 
 	public List<Rating> getRatings() {
+		OperationMetric.count();
 		return ratings;
 	}
 
@@ -45,16 +48,17 @@ public class TrustData implements Comparator<TrustData>  {
 	}
 
 	public int compare(TrustData o1, TrustData o2) {
-		if (o1.getSum() > o1.getSum()){
+		OperationMetric.count();
+		if (o1.getSum() > o1.getSum()) {
 			return 1;
 		}
-		if (o1.getSum() < o1.getSum()){
+		if (o1.getSum() < o1.getSum()) {
 			return -1;
 		}
 		return 0;
 	}
-	
-	public int size(){
+
+	public int size() {
 		return ratings.size();
 	}
 }
