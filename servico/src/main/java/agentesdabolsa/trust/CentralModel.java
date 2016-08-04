@@ -22,6 +22,7 @@ public class CentralModel extends AbstractTrust {
 	 */
 	public void addRating(Rating rating) {
 		BandwidthMetric.count(rating);
+		OperationMetric.count();
 		if (centralData.containsKey(rating.getServer())) {
 			centralData.get(rating.getServer()).addRating(rating);
 		} else {
@@ -35,6 +36,7 @@ public class CentralModel extends AbstractTrust {
 	 */
 	public AID getBestByMe() {
 		OperationMetric.count();
+		BandwidthMetric.count(centralData);
 		if (cacheBest.containsKey(getIteration())) {
 			return cacheBest.get(getIteration());
 		}

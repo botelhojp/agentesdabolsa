@@ -20,6 +20,7 @@ public class FIREModel extends AbstractTrust {
 	protected TrustData dossie;
 
 	public FIREModel() {
+		super();
 	}
 
 	@Override

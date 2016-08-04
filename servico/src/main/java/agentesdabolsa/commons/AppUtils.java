@@ -19,8 +19,6 @@ import java.util.Hashtable;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-import openjade.ontology.Rating;
-
 public class AppUtils {
 
 	public static String normalize(String value) {
@@ -112,11 +110,11 @@ public class AppUtils {
 		out.close();
 	}
 
-	public static byte[] serialize(Rating rating) {
+	public static byte[] serialize(Object obj) {
 		try {
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
 			ObjectOutputStream os = new ObjectOutputStream(out);
-			os.writeObject(rating);
+			os.writeObject(obj);
 			return out.toByteArray();
 		} catch (Exception e) {
 			throw new RuntimeException(e);

@@ -6,10 +6,12 @@ import java.util.List;
 
 import agentesdabolsa.metric.OperationMetric;
 import jade.core.AID;
+import jade.util.leap.Serializable;
 import openjade.ontology.Rating;
 
-public class TrustData implements Comparator<TrustData> {
+public class TrustData implements Comparator<TrustData>, Serializable {
 
+	private static final long serialVersionUID = 1L;
 	protected List<Rating> ratings = new ArrayList<Rating>();
 	private double sum = 0.0;
 	private long max_size = Long.MAX_VALUE;
@@ -22,6 +24,7 @@ public class TrustData implements Comparator<TrustData> {
 	public TrustData(AID aid, int size) {
 		this.aid = aid;
 		this.max_size = size;
+		OperationMetric.count();
 	}
 
 	public void addRating(Rating rating) {

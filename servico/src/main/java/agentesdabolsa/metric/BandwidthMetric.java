@@ -2,7 +2,6 @@ package agentesdabolsa.metric;
 
 import agentesdabolsa.commons.AppUtils;
 import agentesdabolsa.entity.Agente;
-import openjade.ontology.Rating;
 
 public class BandwidthMetric extends AbstractMetric {
 
@@ -37,9 +36,10 @@ public class BandwidthMetric extends AbstractMetric {
 		return this;
 	}
 
-	public static void count(Rating rating) {
+	public static void count(Object obj) {
 		if (BandwidthMetric.ON) {
-			sum += AppUtils.serialize(rating).length;
+			int tam = AppUtils.serialize(obj).length;
+			sum += tam;
 		}
 
 	}

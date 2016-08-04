@@ -6,6 +6,7 @@ import java.util.List;
 
 import agentesdabolsa.business.GameBC;
 import agentesdabolsa.entity.Agente;
+import agentesdabolsa.metric.BandwidthMetric;
 import agentesdabolsa.metric.OperationMetric;
 import jade.core.AID;
 import openjade.ontology.Rating;
@@ -22,6 +23,7 @@ public class TRAVOSModel extends AbstractTrust {
 	private List<AID> witnesses;
 
 	public TRAVOSModel() {
+		super();
 		witnesses = new ArrayList<AID>();
 	}
 
@@ -57,7 +59,9 @@ public class TRAVOSModel extends AbstractTrust {
 			Agente witnessAgent = GameBC.getAgent(witnessAID);
 			TRAVOSModel witnessFire = ((TRAVOSModel) witnessAgent.getTrust());
 			if (witnessFire.know(serverAID)){
-				rt += witnessFire.getValue(serverAID);
+				Double s = witnessFire.getValue(serverAID);
+				BandwidthMetric.count(s);
+				rt += s;
 			}
 		}
 		return rt;
@@ -69,6 +73,7 @@ public class TRAVOSModel extends AbstractTrust {
 
 	private boolean know(AID serverAID) {
 		OperationMetric.count();
+		BandwidthMetric.count(serverAID.toString());
 		return localData.containsKey(serverAID);
 	}
 

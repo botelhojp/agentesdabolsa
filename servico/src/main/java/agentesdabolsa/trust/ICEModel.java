@@ -4,6 +4,7 @@ import java.util.Iterator;
 
 import agentesdabolsa.business.GameBC;
 import agentesdabolsa.entity.Agente;
+import agentesdabolsa.metric.BandwidthMetric;
 import agentesdabolsa.metric.OperationMetric;
 import jade.core.AID;
 import openjade.ontology.Rating;
@@ -19,6 +20,7 @@ public class ICEModel extends AbstractTrust {
 	protected TrustData dossie;
 	
 	public ICEModel() {
+		super();
 	}
 	
 	@Override
@@ -55,11 +57,14 @@ public class ICEModel extends AbstractTrust {
 	 * Obtem uma avaliacao como feedback
 	 */
 	public void sendFeedback(Rating rating){
+		OperationMetric.count();
+		BandwidthMetric.count(rating);
 		dossie.addRating(rating);
 	}
 	
 	public double getDossie(){
 		OperationMetric.count();
+		BandwidthMetric.count(dossie);
 		return dossie.getSum()/dossie.size();
 	}
 	
