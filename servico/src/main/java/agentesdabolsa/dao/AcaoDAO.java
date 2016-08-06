@@ -22,10 +22,14 @@ public class AcaoDAO extends GenericDAO<Acao>{
 
 
 	public Acao getRandom(String[] acoes) {
-		
-		long from = (GameBC.random)? Math.round(acoes.length * Random.getNumer()) : 0;
-		
-		return findByName(acoes[(int) from]);
+		long from = 0;
+		try {
+			from = (GameBC.random) ? Math.round((acoes.length - 1) * Random.getNumer()) : 0;
+			return findByName(acoes[(int) from]);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
 	}
 
 	@Override
