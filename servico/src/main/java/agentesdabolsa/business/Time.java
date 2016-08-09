@@ -9,21 +9,19 @@ import agentesdabolsa.metric.IMetric;
 public class Time implements Runnable {
 
 	private AgenteBC agenteBC = AgenteBC.getInstance();
-	private GameBC gameBC = GameBC.getInstance();
-
-	private List<Agente> list;
 	private int iteration = 0;
 	private long maxIterations = 0;
 	private boolean done = false;
+	private GameBC gameBC;
 
-	public Time(List<Agente> list, int maxIterations) {
+	public Time(int maxIterations, GameBC _gameBC) {
+		gameBC = _gameBC;
 		this.maxIterations = maxIterations;
-		this.list = list;
 	}
 
 	@Override
 	public void run() {
-		
+		List<Agente> list = gameBC.getAgents();
 		while (!isDone()) {
 			iteration++;
 			try {
@@ -35,15 +33,16 @@ public class Time implements Runnable {
 						Agente agente = it.next();
 						trustName = agente.getTrust().getName();
 						metric.beforePlay();
-						agenteBC.play(agente, iteration);
+						agenteBC.play(gameBC.getRunnerId(), agente, iteration);
 						metric.afterPlay();
 						if (agente.getName().contains(metric.getAgentPattern())) {
 							metric.add(agente);
 						}
 					}
-					GameBC.putResult(trustName, metric.calc(), iteration);
+					ResultBC.putResult(trustName, metric.calc(), iteration);
 				}
 			} catch (Throwable e) {
+				done = true;
 				Log.error(e);
 			}
 		}

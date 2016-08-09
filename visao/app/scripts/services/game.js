@@ -35,7 +35,6 @@ app.service('GameService', ['$http', '$window', '$q', function($http, $window, $
 		return deferred.promise;
 	};
 
-
 	services.stop = function(rounds, trust) {
 		var deferred = $q.defer();
 		$http.get('/api/game/stop').success(function(data) {

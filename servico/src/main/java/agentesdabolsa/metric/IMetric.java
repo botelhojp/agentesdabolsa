@@ -1,5 +1,6 @@
 package agentesdabolsa.metric;
 
+import agentesdabolsa.business.GameBC;
 import agentesdabolsa.entity.Agente;
 
 public interface IMetric {
@@ -9,4 +10,5 @@ public interface IMetric {
 	public void beforePlay();
 	public void afterPlay();
 	public String getAgentPattern();
+	public void setGameBC(GameBC gameBC);
 }

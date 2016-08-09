@@ -1,5 +1,6 @@
 package agentesdabolsa.trust;
 
+import agentesdabolsa.business.GameBC;
 import agentesdabolsa.entity.Agente;
 import openjade.ontology.Rating;
 
@@ -14,4 +15,6 @@ public interface ITrust {
 	public Agente select();
 	
 	public String getName();
+	
+	public void setGameBC(GameBC gameBC);
 }

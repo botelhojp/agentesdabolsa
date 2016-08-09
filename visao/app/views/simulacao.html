@@ -11,10 +11,11 @@
 				<input type="number" name="input"  disabled class="form-control" ng-model="rounds" min="0" max="1000" required>
 			</fieldset>
 		</div>
-		<div class="col-md-3">
+		<div class="col-md-2">
 			<fieldset class="form-group">
 				<label for="nome" >Trust Model</label>
 				<select class="form-control" class="btn btn-default" ng-model="trust" >
+				  <option value = "all">All</option>
 				  <option value = "agentesdabolsa.trust.LessModel">Less (No Trust)</option>
 				  <option value = "agentesdabolsa.trust.MARSHModel">MARSH (Direct)</option>
 				  <option value = "agentesdabolsa.trust.TRAVOSModel">TRAVOS (Witness)</option>
@@ -30,7 +31,6 @@
 				<label for="nome" >Metric</label>
 				<select class="form-control" class="btn btn-default" ng-model="metric" >
 				  <option value = "agentesdabolsa.metric.AverageMetric">Average Profit</option>
-				  <option value = "agentesdabolsa.metric.SuccessMetric">Success Percentage</option>
 				  <option value = "agentesdabolsa.metric.PrequentialMetric">Prequential</option>
 				  <option value = "agentesdabolsa.metric.OperationMetric">Operations</option>
 				  <option value = "agentesdabolsa.metric.BandwidthMetric">Bandwidth (kB)</option>

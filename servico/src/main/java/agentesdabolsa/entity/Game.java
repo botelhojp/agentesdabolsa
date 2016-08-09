@@ -11,7 +11,7 @@ public class Game {
 	private boolean resultado;
 	private Acao acaoAnterior;
 	private double diff;
-
+	
 	public Acao getAcaoAnterior() {
 		return acaoAnterior;
 	}

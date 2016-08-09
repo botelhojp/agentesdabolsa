@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import agentesdabolsa.business.GameBC;
 import agentesdabolsa.entity.Agente;
 import agentesdabolsa.metric.BandwidthMetric;
 import agentesdabolsa.metric.OperationMetric;
@@ -56,7 +55,7 @@ public class TRAVOSModel extends AbstractTrust {
 		double rt = 0;
 		for (AID witnessAID : witnesses) {
 			OperationMetric.count();
-			Agente witnessAgent = GameBC.getAgent(witnessAID);
+			Agente witnessAgent = gameBC.getAgent(witnessAID);
 			TRAVOSModel witnessFire = ((TRAVOSModel) witnessAgent.getTrust());
 			if (witnessFire.know(serverAID)){
 				Double s = witnessFire.getValue(serverAID);

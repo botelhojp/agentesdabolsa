@@ -6,7 +6,6 @@ import java.util.List;
 
 import agentesdabolsa.business.ConfigBC;
 import agentesdabolsa.business.GameBC;
-import agentesdabolsa.business.Random;
 import agentesdabolsa.entity.Agente;
 import agentesdabolsa.metric.OperationMetric;
 import jade.core.AID;
@@ -20,11 +19,16 @@ public abstract class AbstractTrust implements ITrust {
 	protected Integer startTrust;
 	protected long count = 0;
 	protected boolean malice;
+	protected GameBC gameBC;
 
 	public AbstractTrust() {
 		startTrust = ConfigBC.getInstance().getConfig().getStartTrust();
 		malice = ConfigBC.getInstance().getConfig().getMalice();
 		localData = new HashMap<AID, TrustData>();
+	}
+	
+	public void setGameBC(GameBC gameBC){
+		this.gameBC = gameBC;
 	}
 
 	public void setIteration(Integer _iteration) {
@@ -63,7 +67,7 @@ public abstract class AbstractTrust implements ITrust {
 		if (++count < startTrust || count % startTrust == 0) {
 			return getRamdonAgent();
 		}
-		return GameBC.getAgent(getBestByMe());
+		return gameBC.getAgent(getBestByMe());
 	}
 
 	/**
@@ -83,10 +87,10 @@ public abstract class AbstractTrust implements ITrust {
 	}
 
 	protected Agente getRamdonAgent() {
-		List<Agente> agents = GameBC.getAgents();
+		List<Agente> agents = gameBC.getAgents();
 		for (int i = 0; i < 100; i++) {
 			OperationMetric.count();
-			int index = (int) Math.round((agents.size() - 1) * Random.getNumer());
+			int index = (int) Math.round((agents.size() - 1) * gameBC.getNumber());
 			Agente select = agents.get(index);
 			if (!select.getAID().equals(myAgent.getAID()) && select.getResponseHelp() != null && !select.getResponseHelp().isEmpty()) {
 				return select;

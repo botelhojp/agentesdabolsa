@@ -3,7 +3,7 @@ app.controller('SimuladorController', [ '$window', '$http', '$scope', '$route', 
 function($window, $http, $scope, $route, $rootScope, $location, GameService, ConfigService, NAV_DATA, AUTH_EVENTS, ENV ) {
 	
 	$scope.trust = "";
-	$scope.refresh = true;
+	$scope.refresh = false;
 
     ConfigService.get().then(
         function (data) {

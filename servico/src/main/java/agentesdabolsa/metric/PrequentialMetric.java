@@ -29,7 +29,7 @@ public class PrequentialMetric extends AbstractMetric {
 	@Override
 	public void add(Agente agente) {
 		count++;
-		if (agenteBC.getGame(agente).getResultado()) {
+		if (agenteBC.getGame(gameBC, agente).getResultado()) {
 			acertos++;
 		}
 	}

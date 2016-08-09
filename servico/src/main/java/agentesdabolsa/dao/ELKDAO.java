@@ -20,7 +20,7 @@ public class ELKDAO<T extends JSONBean> {
 
 	public static String SERVER = AppConfig.getInstance().getELKServer();
 
-	private static boolean enableCache = true;
+	private static boolean enableCache = false;
 	private static Hashtable<String, String> cache = new Hashtable<String, String>();
 
 	public static String DB = "agdb";
@@ -76,10 +76,10 @@ public class ELKDAO<T extends JSONBean> {
 				if (cache.containsKey(key)) {
 					return cache.get(key);
 				} else {
-					System.out.println(method + " - " + url);
+					log(method + " - " + url);
 				}
 			} else {
-				System.out.println(method + " - " + url);
+				log(method + " - " + url);
 			}
 			conn = (HttpURLConnection) url.openConnection();
 			conn.setUseCaches(false);
@@ -122,6 +122,10 @@ public class ELKDAO<T extends JSONBean> {
 				conn.disconnect();
 			}
 		}
+	}
+
+	private void log(String log) {
+		//System.out.println(log);		
 	}
 
 	private String getKey(URL url, String method, String content) {

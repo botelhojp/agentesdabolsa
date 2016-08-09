@@ -1,12 +1,14 @@
 package agentesdabolsa.metric;
 
 import agentesdabolsa.business.ConfigBC;
+import agentesdabolsa.business.GameBC;
 import agentesdabolsa.entity.Agente;
 
 public abstract class AbstractMetric implements IMetric {
 	
 	private String agentPattern;
 	protected Integer prequentialFadingFactor;
+	protected GameBC gameBC;
 	
 	public AbstractMetric(){
 		agentPattern = ConfigBC.getInstance().getConfig().getAgentPattern();
@@ -18,6 +20,10 @@ public abstract class AbstractMetric implements IMetric {
 	public abstract double calc();
 
 	public abstract IMetric init(int iteration);
+	
+	public void setGameBC(GameBC gameBC){
+		this.gameBC = gameBC;
+	}
 	
 	public void afterPlay() {
 	}
