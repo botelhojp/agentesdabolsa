@@ -15,51 +15,49 @@ import agentesdabolsa.metric.OperationMetric;
 import jade.core.AID;
 
 public class GameBC {
-
-	private Hashtable<String, Game> users = new Hashtable<String, Game>();
+	private static GameBC instance;
+	private static Hashtable<String, Game> games = new Hashtable<String, Game>();
 	private CotacaoDAO cotacaoDao = CotacaoDAO.getInstance();
 	private ConfigBC configBC = ConfigBC.getInstance();
 	private IMetric metric;
-	private Config config;
-	private List<Agente> agents;
-	private Hashtable<AID, Agente> agentsAID;
-	private Integer runnerId;
-	private Boolean enabledRandom;
-	private Random random;
-	private int iterations;
-	private int currentIteration;
-	private Thread thread;
-	private Time time;
+	public static Config config;
+	public static String[] acoes;
+	public static Boolean random;
 
-	public GameBC(Integer runnerId) {
-		this.runnerId = runnerId;
-		agentsAID = new Hashtable<AID, Agente>();
-		users.clear();
+	private static int iterations;
+	private static int currentIteration;
+	private static List<Agente> agents;
+	private static Hashtable<AID, Agente> agentsAID;
+	private static Thread thread;
+	
+	private static ArrayList<Hashtable<String, Double>> resultValues = new ArrayList<Hashtable<String, Double>>();
+	private static ArrayList<String> resultKeys = new ArrayList<String>();
+	private static Time time;
+
+	private GameBC(int _iterations) {
+		iterations = _iterations;
 		agents = new ArrayList<Agente>();
-		config = configBC.getConfig();
-		iterations = config.getIterationTotal();
+		agentsAID = new Hashtable<AID, Agente>();
+		games.clear();
 	}
 
-//	public GameBC(String user) {
-//		start(user);
-//	}
+	public static GameBC getInstance() {
+		if (instance == null) {
+			configure(0);
+		}
+		return instance;
+	}
 
-//	public static GameBC getInstance() {
-//		if (instance == null) {
-//			configure(0);
-//		}
-//		return instance;
-//	}
-
-	public Game start(String user) {
+	public Game newGame(String user) {
 		try {
-			enabledRandom = config.getRandom();
-			random = new Random(config.getRandomSeed(), this);
+			config = configBC.getConfig();
+			acoes = config.getAcoes().trim().split(" ");
+			random = config.getRandom();
 
 			Game newGame = new Game();
 			newGame.setCarteira(AppConfig.INITIAL_VALUE);
 			newGame.setUser(user);
-			users.put(user, newGame);
+			games.put(user, newGame);
 			return newGame;
 		} catch (Exception e) {
 			throw new RuntimeException("Erro ao criar novo jogo", e);
@@ -67,7 +65,7 @@ public class GameBC {
 	}
 
 	public Game getGame(String user) {
-		return users.get(user);
+		return games.get(user);
 	}
 
 	public void buy(Game game) {
@@ -119,11 +117,6 @@ public class GameBC {
 		}
 	}
 
-	
-	public Boolean isRandom() {
-		return enabledRandom;
-	}
-
 	public void wait(Game game) {
 		game.setAcaoAnterior(game.getAcao());
 		game.setResultado(false);
@@ -134,21 +127,56 @@ public class GameBC {
 		agentsAID.put(agente.getAID(), agente);
 	}
 
-	public List<Agente> getAgents() {
+	public static List<Agente> getAgents() {
 		return agents;
 	}
 
-	public  void start() {
+	public static void setAgents(List<Agente> agents) {
+		GameBC.agents = agents;
+	}
+
+	public static void configure(int iterations) {
+		instance = new GameBC(iterations);
+	}
+
+	public static void start() {
 		if (thread == null || !thread.isAlive()) {
-			time = new Time(iterations, this);
+			time = new Time(agents, iterations);
 			thread = new Thread(time);
 			thread.start();
 		}
 	}
 
-	public Agente getAgent(AID agentAID) {
+	public static Agente getAgent(AID agentAID) {
 		OperationMetric.count();
 		return agentsAID.get(agentAID);
+	}
+
+	public static void cleanResults() {
+		resultValues.clear();
+		resultKeys.clear();
+	}
+
+	public static void putResult(String trustName, double value, int iteration) {
+		if (trustName == null) return;
+		if (!resultKeys.contains(trustName)){
+			resultKeys.add(trustName);
+		}			
+		if (resultValues.size() == iteration-1){
+			Hashtable<String, Double> vl = new Hashtable<String, Double>();
+			vl.put(trustName, value);
+			resultValues.add(vl);
+		}else{
+			resultValues.get(iteration-1).put(trustName, value);
+		}
+	}
+
+	@SuppressWarnings("rawtypes")
+	public static Hashtable<String, List> getResult() {
+		Hashtable<String, List> rs = new Hashtable<String, List>();
+		rs.put("keys", resultKeys);
+		rs.put("values", resultValues);
+		return rs;
 	}
 
 	public void setMetric(IMetric metric) {
@@ -159,7 +187,7 @@ public class GameBC {
 		return metric;
 	}
 
-	public void stop() {
+	public static void stop() {
 		if (thread != null && thread.isAlive()){
 			time.finish();
 		}
@@ -169,20 +197,8 @@ public class GameBC {
 		currentIteration = iteration;
 	}
 
-	public int getCurrentIteration() {
+	public static int getCurrentIteration() {
 		return currentIteration;
-	}
-
-	public double getNumber() {
-		return random.getNumer();
-	}
-
-	public Integer getRunnerId() {
-		return runnerId;
-	}
-
-	public Random getRandom() {
-		return random;
 	}
 	
 }

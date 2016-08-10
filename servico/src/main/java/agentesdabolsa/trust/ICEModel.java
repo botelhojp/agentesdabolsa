@@ -2,6 +2,7 @@ package agentesdabolsa.trust;
 
 import java.util.Iterator;
 
+import agentesdabolsa.business.GameBC;
 import agentesdabolsa.entity.Agente;
 import agentesdabolsa.metric.BandwidthMetric;
 import agentesdabolsa.metric.OperationMetric;
@@ -27,7 +28,7 @@ public class ICEModel extends AbstractTrust {
 		if (++count < startTrust || count % startTrust == 0) {
 			return getRamdonAgent();
 		}
-		return gameBC.getAgent(getBestByMe());
+		return GameBC.getAgent(getBestByMe());
 	}
 	
 	public AID getBestByMe() {
@@ -37,7 +38,7 @@ public class ICEModel extends AbstractTrust {
 		while (it.hasNext()) {
 			OperationMetric.count();
 			AID aid = (AID) it.next();
-			double sum = ((ICEModel) gameBC.getAgent(aid).getTrust()).getDossie();
+			double sum = ((ICEModel) GameBC.getAgent(aid).getTrust()).getDossie();
 			if (sum > aux) {
 				rt = aid;
 				aux = sum;
@@ -48,7 +49,7 @@ public class ICEModel extends AbstractTrust {
 	@Override
 	public void addRating(Rating rating) {
 		super.addRating(rating);
-		Agente server = gameBC.getAgent(rating.getServer());
+		Agente server = GameBC.getAgent(rating.getServer());
 		((ICEModel)server.getTrust()).sendFeedback(rating);
 	}
 	

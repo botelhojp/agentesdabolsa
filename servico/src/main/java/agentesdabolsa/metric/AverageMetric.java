@@ -21,7 +21,7 @@ public class AverageMetric extends AbstractMetric {
 	@Override
 	public void add(Agente agente) {
 		count++;
-		sum += agenteBC.getGame(gameBC, agente).getCarteira() - AppConfig.INITIAL_VALUE;
+		sum += agenteBC.getGame(agente).getCarteira() - AppConfig.INITIAL_VALUE;
 	}
 
 	@Override

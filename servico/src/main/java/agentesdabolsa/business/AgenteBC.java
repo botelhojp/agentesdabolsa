@@ -17,8 +17,8 @@ public class AgenteBC {
 	private AcaoDAO agenteDao = AcaoDAO.getInstance();
 	private CotacaoDAO cotacaoDao = CotacaoDAO.getInstance();
 	private CotacaoDAO ctDao = CotacaoDAO.getInstance();
+	private GameBC gameBC = GameBC.getInstance();
 	private ConfigBC configBC = ConfigBC.getInstance();
-	private RunnerBC runnerBC = RunnerBC.getInstance();
 	private ITrust trust = null;
 
 	private static AgenteBC instance = new AgenteBC();
@@ -27,14 +27,13 @@ public class AgenteBC {
 		return instance;
 	}
 
-	public void play(Integer runnerId, Agente client, int iteration) {
-		GameBC gameBC = runnerBC.getRunner(runnerId);
+	public void play(Agente client, int iteration) {
 		gameBC.setCurrentIteration(iteration);
 		client.getTrust().setIteration(iteration);
-		Game game = getGame(gameBC, client);
-		game.setAcao(agenteDao.getRandom(configBC.getAcoes(), gameBC));
+		Game game = getGame(client);
+		game.setAcao(agenteDao.getRandom(GameBC.acoes));
 
-		List<Cotacao> cotacoes = ctDao.getCotacoes(game, gameBC, iteration * configBC.getConfig().getStop());
+		List<Cotacao> cotacoes = ctDao.getCotacoes(game, GameBC.random, iteration * configBC.getConfig().getStop());
 
 		Cotacao cotacaoD = cotacaoDao.getCotacao(game.getAcao().getNomeres(), game.getFrom() - configBC.getConfig().getStop());
 		game.setCotacao(cotacoes.get(0));
@@ -48,7 +47,6 @@ public class AgenteBC {
 			rule.set("_cotacoes", cotacoes);
 			rule.set("_cotacaoD", cotacaoD);
 			rule.set("_iteration", iteration);
-			rule.set("_random", gameBC.getRandom());
 			rule.set("_advice", null);
 			if (client.getRequestHelp() != null && !client.getRequestHelp().isEmpty()) {
 				rule.eval(client.getRequestHelp());
@@ -72,13 +70,13 @@ public class AgenteBC {
 				if (action != null && value != null) {
 					switch (action) {
 					case BUY:
-						gameBC.buy(game, value, cotacaoD);
+						GameBC.getInstance().buy(game, value, cotacaoD);
 						break;
 					case SELL:
-						gameBC.sell(game, value, cotacaoD);
+						GameBC.getInstance().sell(game, value, cotacaoD);
 						break;
 					case WAIT:
-						gameBC.wait(game);
+						GameBC.getInstance().wait(game);
 						break;
 					default:
 						break;
@@ -109,10 +107,10 @@ public class AgenteBC {
 		return rt;
 	}
 
-	public Game getGame(GameBC gameBC, Agente agente) {
+	public Game getGame(Agente agente) {
 		Game game = gameBC.getGame(agente.getAID().getName());
 		if (game == null) {
-			game = gameBC.start(agente.getAID().getName());
+			game = gameBC.newGame(agente.getAID().getName());
 		}
 		return game;
 	}

@@ -4,33 +4,27 @@ import agentesdabolsa.entity.Config;
 
 public class Random {
 
-	private java.util.Random rm;
+	private static java.util.Random rm;
 
-	private Config cfg;
+	private static Config cfg;
 
-	private double currentIteration;
-	private double total;
-	private int range;
-	private int phase;
-	private GameBC gameBC;
+	private static double currentIteration;
+	private static double total;
+	private static int range;
+	private static int phase;
 
-	public Random(int seed, GameBC _gameBC) {
-		rm = new java.util.Random(seed);
-		gameBC = _gameBC;
-	}
-
-	public double getNumer() {
+	public static double getNumer() {
 		return rm.nextDouble();
 	}
 
-	public boolean isAbove(double base) {
+	public static boolean isAbove(double base) {
 		if (revert()) {
 			base = revert(base);
 		}
 		return getNumer() > base;
 	}
 
-	private double revert(double base) {
+	private static double revert(double base) {
 		cfg = ConfigBC.getInstance().getConfig();
 		if (cfg.getChangeType().equals("AB")) {
 			return (base - 1.0) * (-1.0);
@@ -44,11 +38,11 @@ public class Random {
 		throw new RuntimeException("invalid option " + cfg.getChangeType());
 	}
 
-	private boolean revert() {
+	private static boolean revert() {
 		cfg = ConfigBC.getInstance().getConfig();
 		int changes = cfg.getChanges();
 		if (changes > 0) {
-			currentIteration = gameBC.getCurrentIteration() - 1;
+			currentIteration = GameBC.getCurrentIteration() - 1;
 			total = cfg.getIterationTotal();
 			range = (int) total / (changes + 1);
 			phase = (int) currentIteration / range;
@@ -57,11 +51,14 @@ public class Random {
 		return false;
 	}
 
-//	public static void main(String[] args) {
-//		Random r = new Random(7);
-//		for (int i = 0; i < 3000; i++) {
-//			System.out.println(i + ": " + r.getNumer());
-//		}
-//	}
-	
+	public static void initSeed(int seed) {
+		rm = new java.util.Random(seed);
+	}
+
+	public static void main(String[] args) {
+		Random.initSeed(7);
+		for (int i = 0; i < 3000; i++) {
+			System.out.println(i + ": " + Random.getNumer());
+		}
+	}
 }

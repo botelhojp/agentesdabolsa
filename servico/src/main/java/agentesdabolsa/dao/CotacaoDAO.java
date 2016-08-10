@@ -7,7 +7,7 @@ import javax.ws.rs.core.Response.Status;
 
 import org.codehaus.jettison.json.JSONArray;
 
-import agentesdabolsa.business.GameBC;
+import agentesdabolsa.business.Random;
 import agentesdabolsa.entity.Acao;
 import agentesdabolsa.entity.Cotacao;
 import agentesdabolsa.entity.Game;
@@ -45,7 +45,7 @@ public class CotacaoDAO extends GenericDAO<Cotacao> {
 		return super.list(jsonResult);
 	}
 
-	public List<Cotacao> getCotacoes(Game game, GameBC gameBC, int iteration) {
+	public List<Cotacao> getCotacoes(Game game, Boolean random, int iteration) {
 		Acao acao = acaoDao.findByName(game.getAcao().getNomeres());
 		if (acao == null) {
 			throw new AppException(Status.NOT_FOUND, "detalhe", "Ação [" + game.getAcao().getNomeres() + "] não encontrada");
@@ -70,8 +70,8 @@ public class CotacaoDAO extends GenericDAO<Cotacao> {
 		long from = (total - SIZE) - iteration;
 		
 		//pega aleatorio
-		if (gameBC.isRandom()){
-			from = Math.round((total - SIZE) * gameBC.getNumber());
+		if (random){
+			from = Math.round((total - SIZE) * Random.getNumer());
 		}
 		
 

@@ -22,7 +22,7 @@ public class SuccessMetric extends AbstractMetric {
 	@Override
 	public void add(Agente agente) {
 		count++;
-		boolean acertou = agenteBC.getGame(gameBC, agente).getResultado();
+		boolean acertou = agenteBC.getGame(agente).getResultado();
 		if (acertou) {
 			hits++;
 		}
