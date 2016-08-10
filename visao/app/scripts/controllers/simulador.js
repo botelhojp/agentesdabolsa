@@ -107,16 +107,16 @@ function($window, $http, $scope, $route, $rootScope, $location, GameService, Con
     };
     
     $rootScope.mySocket.onmessage = function(evt) {
-
-    	//if ($scope.refresh == true){
-
 	    	$window.document.getElementById("messageArea").value += evt.data;
 			
 			//rola para a ultima linha
 			var obj = $window.document.getElementById("messageArea");
 			var currentScrollHeight = obj.scrollHeight;
 			obj.scrollTop = (obj.scrollTop + 100000); 
-		//}
+
+    		if ( evt.data === '[done]' ){
+    			//alert('done');
+    		}			
 		
     };
     $rootScope.mySocket.onclose = function(evt) {

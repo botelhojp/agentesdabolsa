@@ -19,6 +19,7 @@ import agentesdabolsa.business.ConfigBC;
 import agentesdabolsa.business.GameBC;
 import agentesdabolsa.business.Log;
 import agentesdabolsa.business.Random;
+import agentesdabolsa.business.RunnerBC;
 import agentesdabolsa.commons.AppUtils;
 import agentesdabolsa.dao.AcaoDAO;
 import agentesdabolsa.dao.AgenteDAO;
@@ -93,32 +94,8 @@ public class GameREST extends AbstractREST{
 
 	@GET
 	@Path("simulate_start")
-	@SuppressWarnings("unchecked")
-	public Response add(@QueryParam("rounds") int rounds, @QueryParam("trust") String trustClassName, @QueryParam("metric") String metricClassName) throws NotFoundException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-		Log.info("start\n");
-		System.gc();
-		Random.initSeed(configBC.getConfig().getRandomSeed());
-		Class<ITrust> trustClazz = (Class<ITrust>) Class.forName(trustClassName);
-		Class<IMetric> metricClazz = (Class<IMetric>) Class.forName(metricClassName);
-		AgenteDAO agenteDao = AgenteDAO.getInstance();
-		IMetric metric = metricClazz.newInstance();
-		GameBC.configure(rounds);
-		GameBC gameBC = GameBC.getInstance();		
-		gameBC.setMetric(metric);
-		List<Agente> l = agenteDao.list();
-		for (Agente agente : l) {
-			if (agente.getEnabled() && agente.getClones() != null && agente.getClones() > 0) {
-				for (int i = 0; i < agente.getClones(); i++) {
-					Agente clone = (Agente) AppUtils.cloneObject(agente);
-					clone.setAID(new AID(clone.getName() + "_" + i, true));
-					ITrust instance = trustClazz.newInstance();
-					instance.setAgent(clone);
-					clone.setTrust(instance);
-					gameBC.add(clone);
-				}
-			}
-		}
-		GameBC.start();
+	public Response add(@QueryParam("rounds") int rounds, @QueryParam("trust") String trustClassName, @QueryParam("metric") String metricClassName) throws Exception {
+		RunnerBC.run(trustClassName, metricClassName, rounds, trustClassName.equals("all"));
 		return Response.ok().build();
 	}
 

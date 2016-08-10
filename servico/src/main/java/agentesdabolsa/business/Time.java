@@ -43,6 +43,10 @@ public class Time implements Runnable {
 					}
 					GameBC.putResult(trustName, metric.calc(), iteration);
 				}
+			if (iteration == maxIterations){
+				RunnerBC.run_continue();
+				Log.info("[done]");
+			}
 			} catch (Throwable e) {
 				Log.error(e);
 			}

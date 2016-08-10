@@ -140,11 +140,11 @@ public class GameBC {
 	}
 
 	public static void start() {
-		if (thread == null || !thread.isAlive()) {
+		//if (thread == null || !thread.isAlive()) {
 			time = new Time(agents, iterations);
 			thread = new Thread(time);
 			thread.start();
-		}
+		//}
 	}
 
 	public static Agente getAgent(AID agentAID) {
