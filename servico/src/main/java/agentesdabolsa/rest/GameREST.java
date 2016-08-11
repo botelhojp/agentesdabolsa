@@ -17,19 +17,12 @@ import com.sun.jersey.api.NotFoundException;
 
 import agentesdabolsa.business.ConfigBC;
 import agentesdabolsa.business.GameBC;
-import agentesdabolsa.business.Log;
 import agentesdabolsa.business.Random;
 import agentesdabolsa.business.RunnerBC;
-import agentesdabolsa.commons.AppUtils;
 import agentesdabolsa.dao.AcaoDAO;
-import agentesdabolsa.dao.AgenteDAO;
 import agentesdabolsa.dao.CotacaoDAO;
-import agentesdabolsa.entity.Agente;
 import agentesdabolsa.entity.Cotacao;
 import agentesdabolsa.entity.Game;
-import agentesdabolsa.metric.IMetric;
-import agentesdabolsa.trust.ITrust;
-import jade.core.AID;
 
 @Path("game")
 @Produces(APPLICATION_JSON)

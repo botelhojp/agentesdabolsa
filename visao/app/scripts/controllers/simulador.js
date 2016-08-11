@@ -7,7 +7,7 @@ function($window, $http, $scope, $route, $rootScope, $location, GameService, Con
 
     ConfigService.get().then(
         function (data) {
-            console.log(data);
+            //console.log(data);
             $scope.rounds = data.iterationTotal;
         },
         function (error) {
@@ -20,7 +20,7 @@ function($window, $http, $scope, $route, $rootScope, $location, GameService, Con
 		$window.document.getElementById("messageArea").value = "";		
 		GameService.simulate($scope.rounds, $scope.trust, $scope.metric).then(
 			function (data) {
-				console.log(data);		
+				//console.log(data);		
 			},
 			function (error) {
 				console.log(error);					
@@ -33,8 +33,10 @@ function($window, $http, $scope, $route, $rootScope, $location, GameService, Con
 		$window.document.getElementById("messageArea").value = "";			
 		GameService.stop().then(
 			function (data) {
-				console.log(data);
-				$scope.result();
+				//console.log(data);
+
+				location.reload();	
+
 			},
 			function (error) {
 				console.log(error);
@@ -51,7 +53,7 @@ function($window, $http, $scope, $route, $rootScope, $location, GameService, Con
 	$scope.csv = function () {		
 		GameService.csv().then(
 			function (data) {
-				console.log(data.result);
+				//console.log(data.result);
 				var blob = new Blob([data.result], { type:"application/csv;charset=utf-8;" });			
 				var downloadLink = angular.element('<a></a>');
 				downloadLink.attr('href',window.URL.createObjectURL(blob));
@@ -93,7 +95,7 @@ function($window, $http, $scope, $route, $rootScope, $location, GameService, Con
 					if ($scope.refresh == true){
 						$scope.result()	;
 					}
-				}, 1000); 
+				}, 10000); 
 			},
 			function (error) {
 				console.log(error);					
@@ -113,11 +115,7 @@ function($window, $http, $scope, $route, $rootScope, $location, GameService, Con
 			var obj = $window.document.getElementById("messageArea");
 			var currentScrollHeight = obj.scrollHeight;
 			obj.scrollTop = (obj.scrollTop + 100000); 
-
-    		if ( evt.data === '[done]' ){
-    			//alert('done');
-    		}			
-		
+				
     };
     $rootScope.mySocket.onclose = function(evt) {
     	 console.log("Conexão fechada…");
