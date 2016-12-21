@@ -6,7 +6,7 @@ import java.util.List;
 import agentesdabolsa.entity.Agente;
 import agentesdabolsa.metric.IMetric;
 
-public class Time implements Runnable {
+public class Timer implements Runnable {
 
 	private AgenteBC agenteBC = AgenteBC.getInstance();
 	private GameBC gameBC = GameBC.getInstance();
@@ -16,7 +16,7 @@ public class Time implements Runnable {
 	private long maxIterations = 0;
 	private boolean done = false;
 
-	public Time(List<Agente> list, int maxIterations) {
+	public Timer(List<Agente> list, int maxIterations) {
 		this.maxIterations = maxIterations;
 		this.list = list;
 	}
