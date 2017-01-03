@@ -140,6 +140,7 @@ public class GameBC {
 	}
 
 	public static void start() {
+		System.gc();
 		time = new Timer(agents, iterations);
 		thread = new Thread(time);
 		thread.start();
