@@ -24,7 +24,7 @@ public class OperationMetric extends AbstractMetric {
 
 	@Override
 	public double calc() {
-		return sum / 1024;
+		return sum;
 	}
 
 	@Override
