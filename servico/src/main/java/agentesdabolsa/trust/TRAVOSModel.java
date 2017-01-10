@@ -6,7 +6,7 @@ import java.util.List;
 
 import agentesdabolsa.business.GameBC;
 import agentesdabolsa.entity.Agente;
-import agentesdabolsa.metric.BandwidthMetric;
+import agentesdabolsa.metric.MessageMetric;
 import agentesdabolsa.metric.OperationMetric;
 import jade.core.AID;
 import openjade.ontology.Rating;
@@ -60,7 +60,7 @@ public class TRAVOSModel extends AbstractTrust {
 			TRAVOSModel witnessFire = ((TRAVOSModel) witnessAgent.getTrust());
 			if (witnessFire.know(serverAID)){
 				Double s = witnessFire.getValue(serverAID);
-				BandwidthMetric.count(s);
+				MessageMetric.count();
 				rt += s;
 			}
 		}
@@ -73,7 +73,7 @@ public class TRAVOSModel extends AbstractTrust {
 
 	private boolean know(AID serverAID) {
 		OperationMetric.count();
-		BandwidthMetric.count(serverAID.toString());
+		MessageMetric.count();
 		return localData.containsKey(serverAID);
 	}
 

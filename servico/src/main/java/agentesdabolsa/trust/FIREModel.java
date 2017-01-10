@@ -4,7 +4,7 @@ import java.util.Iterator;
 
 import agentesdabolsa.business.GameBC;
 import agentesdabolsa.entity.Agente;
-import agentesdabolsa.metric.BandwidthMetric;
+import agentesdabolsa.metric.MessageMetric;
 import agentesdabolsa.metric.OperationMetric;
 import jade.core.AID;
 import openjade.ontology.Rating;
@@ -59,7 +59,7 @@ public class FIREModel extends AbstractTrust {
 	 */
 	public void sendFeedback(Rating rating) {
 		OperationMetric.count();
-		BandwidthMetric.count(rating);
+		MessageMetric.count();
 		if (malice) {
 			Double value = Double.parseDouble(rating.getValue());
 			if (value < 0){

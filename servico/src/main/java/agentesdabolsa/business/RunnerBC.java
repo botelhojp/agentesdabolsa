@@ -8,7 +8,7 @@ import agentesdabolsa.entity.Agente;
 import agentesdabolsa.metric.IMetric;
 import agentesdabolsa.trust.CentralModel;
 import agentesdabolsa.trust.FIREModel;
-import agentesdabolsa.trust.ICEModel;
+import agentesdabolsa.trust.DossieModel;
 import agentesdabolsa.trust.ITrust;
 import agentesdabolsa.trust.LessModel;
 import agentesdabolsa.trust.MARSHModel;
@@ -19,7 +19,7 @@ import jade.core.AID;
 public class RunnerBC {
 
 	private static ConfigBC configBC = ConfigBC.getInstance();
-	private static Class[] classes = { LessModel.class, MARSHModel.class, TRAVOSModel.class, FIREModel.class, ICEModel.class, CentralModel.class };
+	private static Class[] classes = { LessModel.class, MARSHModel.class, TRAVOSModel.class, FIREModel.class, DossieModel.class, CentralModel.class };
 	private static int index = 0;
 
 	private static String trustClassName;

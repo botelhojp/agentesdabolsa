@@ -1,5 +1,6 @@
 package agentesdabolsa.trust;
 
+import agentesdabolsa.metric.MessageMetric;
 import openjade.ontology.Rating;
 
 /**
@@ -15,6 +16,7 @@ public class MARSHModel extends AbstractTrust {
 	
 	@Override
 	public void addRating(Rating rating) {
+		MessageMetric.count();
 		super.addRating(rating);
 	}
 	

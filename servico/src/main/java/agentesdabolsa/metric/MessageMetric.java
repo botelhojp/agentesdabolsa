@@ -1,13 +1,12 @@
 package agentesdabolsa.metric;
 
-import agentesdabolsa.commons.AppUtils;
 import agentesdabolsa.entity.Agente;
 
-public class BandwidthMetric extends AbstractMetric {
+public class MessageMetric extends AbstractMetric {
 
 	private static boolean ON = false;
 
-	public static long sum = 0;
+	public static long count = 0;
 
 	@Override
 	public void beforePlay() {
@@ -25,22 +24,20 @@ public class BandwidthMetric extends AbstractMetric {
 
 	@Override
 	public double calc() {
-		return sum / 1024;
+		return count;
 	}
 
 	@Override
 	public IMetric init(int iteration) {
 		if (iteration == 1) {
-			sum = 0;
+			count = 0;
 		}
 		return this;
 	}
 
-	public static void count(Object obj) {
-		if (BandwidthMetric.ON) {
-			int tam = AppUtils.serialize(obj).length;
-			sum += tam;
+	public static void count() {
+		if (MessageMetric.ON) {
+			count += 1;
 		}
-
 	}
 }

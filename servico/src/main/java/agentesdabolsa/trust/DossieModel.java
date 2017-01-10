@@ -4,7 +4,7 @@ import java.util.Iterator;
 
 import agentesdabolsa.business.GameBC;
 import agentesdabolsa.entity.Agente;
-import agentesdabolsa.metric.BandwidthMetric;
+import agentesdabolsa.metric.MessageMetric;
 import agentesdabolsa.metric.OperationMetric;
 import jade.core.AID;
 import openjade.ontology.Rating;
@@ -14,12 +14,12 @@ import openjade.ontology.Rating;
  * 
  * @author VandersonLocal
  */
-public class ICEModel extends AbstractTrust {
+public class DossieModel extends AbstractTrust {
 	
 	private static final int DOSSIE_SIZE = 10;
 	protected TrustData dossie;
 	
-	public ICEModel() {
+	public DossieModel() {
 		super();
 	}
 	
@@ -38,7 +38,7 @@ public class ICEModel extends AbstractTrust {
 		while (it.hasNext()) {
 			OperationMetric.count();
 			AID aid = (AID) it.next();
-			double sum = ((ICEModel) GameBC.getAgent(aid).getTrust()).getDossie();
+			double sum = ((DossieModel) GameBC.getAgent(aid).getTrust()).getDossie();
 			if (sum > aux) {
 				rt = aid;
 				aux = sum;
@@ -50,7 +50,7 @@ public class ICEModel extends AbstractTrust {
 	public void addRating(Rating rating) {
 		super.addRating(rating);
 		Agente server = GameBC.getAgent(rating.getServer());
-		((ICEModel)server.getTrust()).sendFeedback(rating);
+		((DossieModel)server.getTrust()).sendFeedback(rating);
 	}
 	
 	/**
@@ -58,13 +58,13 @@ public class ICEModel extends AbstractTrust {
 	 */
 	public void sendFeedback(Rating rating){
 		OperationMetric.count();
-		BandwidthMetric.count(rating);
+		MessageMetric.count();
 		dossie.addRating(rating);
 	}
 	
 	public double getDossie(){
 		OperationMetric.count();
-		BandwidthMetric.count(dossie);
+		MessageMetric.count();
 		return dossie.getSum()/dossie.size();
 	}
 	

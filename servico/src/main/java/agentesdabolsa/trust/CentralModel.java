@@ -2,7 +2,7 @@ package agentesdabolsa.trust;
 
 import java.util.HashMap;
 
-import agentesdabolsa.metric.BandwidthMetric;
+import agentesdabolsa.metric.MessageMetric;
 import agentesdabolsa.metric.OperationMetric;
 import jade.core.AID;
 import openjade.ontology.Rating;
@@ -21,7 +21,7 @@ public class CentralModel extends AbstractTrust {
 	 * Adicionar avaliacoes localmente
 	 */
 	public void addRating(Rating rating) {
-		BandwidthMetric.count(rating);
+		MessageMetric.count();
 		OperationMetric.count();
 		if (centralData.containsKey(rating.getServer())) {
 			centralData.get(rating.getServer()).addRating(rating);
@@ -36,7 +36,6 @@ public class CentralModel extends AbstractTrust {
 	 */
 	public AID getBestByMe() {
 		OperationMetric.count();
-		BandwidthMetric.count(centralData);
 		if (cacheBest.containsKey(getIteration())) {
 			return cacheBest.get(getIteration());
 		}

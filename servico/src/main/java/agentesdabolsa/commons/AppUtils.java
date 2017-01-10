@@ -112,6 +112,9 @@ public class AppUtils {
 
 	public static byte[] serialize(Object obj) {
 		try {
+			if (obj == null){
+				return null;
+			}
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
 			ObjectOutputStream os = new ObjectOutputStream(out);
 			os.writeObject(obj);
