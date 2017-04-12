@@ -140,6 +140,7 @@ app
                         } else {
                             if (!AppService.getToken()) {
                                 AppService.setTryUrl($location.path());
+        
                                 $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
                             }
                         }

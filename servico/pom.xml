@@ -139,7 +139,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>agentesdabolsa</finalName>
+		<finalName>service</finalName>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>

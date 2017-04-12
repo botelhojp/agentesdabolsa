@@ -95,7 +95,7 @@ public class ELKDAO<T extends JSONBean> {
 				wr.close();
 			}
 
-			if (conn.getResponseCode() == 200) {
+			if (conn.getResponseCode() >= 200 && conn.getResponseCode() < 300) {
 				is = new BufferedInputStream(conn.getInputStream());
 				BufferedReader br = new BufferedReader(new InputStreamReader((is)));
 				String responseBody = "";

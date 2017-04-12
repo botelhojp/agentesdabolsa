@@ -4,9 +4,9 @@ angular.module('config', [])
 (
 		'ENV', {
 			name:						'development',
-			oauth2_redirect:				'http://agentesdabolsa.com.br',
-			apiEndpoint:					'http://agentesdabolsa.com.br/s/agentesdabolsa',
-			wsEndpoint:					 	'ws://agentesdabolsa.com.br:8080/agentesdabolsa/websocket'
+			oauth2_redirect:			'http://agentesdabolsa.ddns.net',
+			apiEndpoint:				'http://agentesdabolsa.ddns.net/service',
+			wsEndpoint:					'ws://agentesdabolsa.ddns.net:8080/service/websocket'
 		}
 )
 ;

@@ -24,7 +24,7 @@ cp app/ace/theme-eclipse.js dist
 
 cd ..
 echo "enviando"
-scp -r  -i ~/.ssh/agdb.pem servico/target/agentesdabolsa.war 	ubuntu@agentesdabolsa.com.br:/home/ubuntu/devvander
-scp -r  -i ~/.ssh/agdb.pem visao/dist 				ubuntu@agentesdabolsa.com.br:/home/ubuntu/devvander
+scp -r  servico/target/service.war 	vander@agentesdabolsa.com.br:/home/vander/server
+scp -r  visao/dist 				vander@agentesdabolsa.com.br:/home/vander/server
 
-ssh -i ~/.ssh/agdb.pem ubuntu@agentesdabolsa.com.br
+#ssh -i ~/.ssh/agdb.pem ubuntu@agentesdabolsa.com.br
