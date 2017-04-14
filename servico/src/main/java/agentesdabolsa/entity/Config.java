@@ -21,6 +21,8 @@ public class Config extends JSONBean {
 	private Boolean random;
 
 	private Boolean malice;
+	
+	private Boolean ahp;
 
 	private String agentPattern;
 
@@ -110,6 +112,14 @@ public class Config extends JSONBean {
 
 	public void setMalice(Boolean malice) {
 		this.malice = malice;
+	}
+
+	public Boolean getAhp() {
+		return ahp;
+	}
+
+	public void setAhp(Boolean ahp) {
+		this.ahp = ahp;
 	}
 
 }

@@ -5,8 +5,8 @@ angular.module('config', [])
 		'ENV', {
 			name:							'development',
 			oauth2_redirect:				'http://localhost:9000/',
-			apiEndpoint:					'http://localhost:8080/agentesdabolsa',
-			wsEndpoint:					 	'ws://localhost:8080/agentesdabolsa/websocket'
+			apiEndpoint:					'http://localhost:8080/service',
+			wsEndpoint:					 	'ws://localhost:8080/service/websocket'
 		}
 )
 ;

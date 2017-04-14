@@ -41,6 +41,7 @@ public class AgenteBC {
 		Interpreter rule = new Interpreter();
 		try {
 			rule.set("_this", client);
+			rule.set("_ahpValue", 1.0);
 			rule.set("_game", game);
 			rule.set("_acao", game.getAcao());
 			rule.set("_carteira", game.getCarteira());
@@ -48,6 +49,11 @@ public class AgenteBC {
 			rule.set("_cotacaoD", cotacaoD);
 			rule.set("_iteration", iteration);
 			rule.set("_advice", null);
+			if (configBC.getConfig().getAhp() && client.getRiskAHP() != null && !client.getRiskAHP().isEmpty()) {
+				rule.eval(client.getRiskAHP());
+				Double _ahpValue = (Double) rule.get("_ahpValue");
+				rule.set("_ahpValue", _ahpValue);
+			}			
 			if (client.getRequestHelp() != null && !client.getRequestHelp().isEmpty()) {
 				rule.eval(client.getRequestHelp());
 				Agente server = (Agente) rule.get("_request");
@@ -61,7 +67,6 @@ public class AgenteBC {
 					rule.set("_advice", advice);
 				}
 			}
-
 			// joga
 			if (client.getActionBefore() != null && !client.getActionBefore().isEmpty()) {
 				rule.eval(client.getActionBefore());

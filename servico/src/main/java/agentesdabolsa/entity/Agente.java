@@ -20,6 +20,8 @@ public class Agente extends JSONBean {
 
 	private String responseHelp;
 	
+	private String riskAHP;
+	
 	private Boolean enabled;
 
 	private ITrust trust;
@@ -121,5 +123,13 @@ public class Agente extends JSONBean {
 
 	public ITrust getTrust() {
 		return trust;
+	}
+
+	public String getRiskAHP() {
+		return riskAHP;
+	}
+
+	public void setRiskAHP(String riskAHP) {
+		this.riskAHP = riskAHP;
 	}
 }

@@ -27,6 +27,11 @@ function($window, $http, $scope, $route, $rootScope, $location, AgenteService, D
     editorResponseHelp.session.setMode("ace/mode/java");     
     editorResponseHelp.$blockScrolling = Infinity;
 
+    var editorRiskAHP = ace.edit("editorRiskAHP");
+    editorRiskAHP.setTheme("ace/theme/eclipse");
+    editorRiskAHP.session.setMode("ace/mode/java");     
+    editorRiskAHP.$blockScrolling = Infinity;
+
 	$scope.new = function () {	
         modal.style.display = "block";	
 		$scope.agente = {};
@@ -35,6 +40,7 @@ function($window, $http, $scope, $route, $rootScope, $location, AgenteService, D
         editorActionAfter.setValue("");
         editorRequestHelp.setValue("");
         editorResponseHelp.setValue("");
+        editorRiskAHP.setValue("");
 	};
 
     $scope.close = function () {  
@@ -46,6 +52,7 @@ function($window, $http, $scope, $route, $rootScope, $location, AgenteService, D
         $scope.agente.actionAfter = editorActionAfter.getValue(); 
         $scope.agente.requestHelp = editorRequestHelp.getValue(); 
         $scope.agente.responseHelp = editorResponseHelp.getValue(); 
+        $scope.agente.riskAHP = editorRiskAHP.getValue(); 
                        
 		AgenteService.save($scope.agente).then(
 			function (data) {
@@ -96,7 +103,10 @@ function($window, $http, $scope, $route, $rootScope, $location, AgenteService, D
                     editorRequestHelp.gotoLine(0);
 
                     editorResponseHelp.setValue($scope.agente.responseHelp);
-                    editorResponseHelp.gotoLine(0);                    
+                    editorResponseHelp.gotoLine(0);  
+
+                    editorRiskAHP.setValue($scope.agente.riskAHP);
+                    editorRiskAHP.gotoLine(0);                    
 
                 },
                 function (error) {

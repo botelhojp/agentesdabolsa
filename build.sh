@@ -4,6 +4,8 @@ echo "**********************************************"
 echo "  Build Agentes da Bolsa    "
 echo "**********************************************"
 
+export SERVER=ec2-54-233-128-73.sa-east-1.compute.amazonaws.com
+
 echo "git pull"
 git pull
 
@@ -24,7 +26,6 @@ cp app/ace/theme-eclipse.js dist
 
 cd ..
 echo "enviando"
-scp -r  servico/target/service.war 	vander@agentesdabolsa.com.br:/home/vander/server
-scp -r  visao/dist 				vander@agentesdabolsa.com.br:/home/vander/server
-
-#ssh -i ~/.ssh/agdb.pem ubuntu@agentesdabolsa.com.br
+scp -i ~/.ssh/agdb.pem -r servico/target/service.war ubuntu@$SERVER:/home/ubuntu/server
+scp -i ~/.ssh/agdb.pem -r visao/dist ubuntu@$SERVER:/home/ubuntu/server
+ssh -i ~/.ssh/agdb.pem ubuntu@$SERVER

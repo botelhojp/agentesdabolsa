@@ -20,7 +20,7 @@ public class Log {
 		try {
 			// open websocket
 			if (clientEndPoint == null){
-				clientEndPoint = new WebsocketClientEndpoint(new URI("ws://localhost:8080/agentesdabolsa/websocket"));
+				clientEndPoint = new WebsocketClientEndpoint(new URI("ws://localhost:8080/service/websocket"));
 			}
 
 			// add listener
