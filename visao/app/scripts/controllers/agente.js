@@ -63,7 +63,13 @@ function($window, $http, $scope, $route, $rootScope, $location, AgenteService, D
 				console.log(error);					
 			}
 		);
-	};	
+	};
+
+    $scope.duplicate = function () { 
+        $scope.agente.id = null;
+        $scope.agente.name = "[Copy] -- " + $scope.agente.name;
+        $scope.save();  
+    };  	
     
 
      $scope.invert = function (id) {
