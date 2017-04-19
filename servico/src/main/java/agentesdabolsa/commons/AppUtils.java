@@ -20,6 +20,9 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 public class AppUtils {
+	
+	private static SimpleDateFormat formato_01 = new SimpleDateFormat("yyyy-MM-dd");
+	private static SimpleDateFormat formato_02 = new SimpleDateFormat("yyyyMMdd");
 
 	public static String normalize(String value) {
 		if (value == null) {
@@ -29,9 +32,8 @@ public class AppUtils {
 	}
 
 	public static Date makeData(String sData) {
-		SimpleDateFormat formato = new SimpleDateFormat("yyyyMMdd");
 		try {
-			return formato.parse(sData);
+			return formato_02.parse(sData);
 		} catch (ParseException e) {
 			e.printStackTrace();
 			return null;
@@ -39,8 +41,7 @@ public class AppUtils {
 	}
 
 	public static String makeData(Date sData) {
-		SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-		return formato.format(sData);
+		return formato_01.format(sData);
 	}
 
 	public static Float makeFloat(String sFloat) {

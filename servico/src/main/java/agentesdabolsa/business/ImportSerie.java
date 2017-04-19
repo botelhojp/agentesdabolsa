@@ -66,9 +66,9 @@ public class ImportSerie {
 			cont++;
 			System.out.print(".");
 			if (cont % 100 == 0)
-				System.out.print("\n(" + cont + ")" + AppUtils.makeData(linha.substring(02, 10)));
+				System.out.print("\n" + cont + ": " + AppUtils.makeData(AppUtils.makeData(linha.substring(02, 10))));
 
-			String nomefull = linha.substring(27, 39).trim() + " " + linha.substring(39, 49).trim();
+			String nomefull = (linha.substring(27, 39).trim() + " " + linha.substring(39, 49).trim()).replaceAll("�","");
 
 			agentesdabolsa.entity.Acao acao = acaoDao.findByName(nomeres);
 			if (acao == null) {
