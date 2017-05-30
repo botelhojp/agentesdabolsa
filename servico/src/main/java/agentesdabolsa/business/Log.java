@@ -18,6 +18,9 @@ public class Log {
 			return;
 		}
 		try {
+			if (!ConfigBC.getInstance().getConfig().getShowMessage()){
+				return;
+			}
 			// open websocket
 			if (clientEndPoint == null){
 				clientEndPoint = new WebsocketClientEndpoint(new URI("ws://localhost:8080/service/websocket"));
