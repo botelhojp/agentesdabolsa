@@ -1,5 +1,7 @@
 package agentesdabolsa.entity;
 
+import java.util.HashMap;
+
 import agentesdabolsa.commons.AppUtils;
 import agentesdabolsa.trust.ITrust;
 import jade.core.AID;
@@ -26,7 +28,10 @@ public class Agente extends JSONBean {
 
 	private ITrust trust;
 	
+	private HashMap<String, Double> values;
+	
 	public Agente(){
+		values = new HashMap<String, Double>();
 	}
 	
 	public Agente(AID aid, String name, long clones) {
@@ -131,5 +136,20 @@ public class Agente extends JSONBean {
 
 	public void setRiskAHP(String riskAHP) {
 		this.riskAHP = riskAHP;
+	}
+	
+	public void cleanValues(){
+		values.clear();
+	}
+	
+	public void setValue(String key, Double value){
+		values.put(key, value);
+	}
+	
+	public Double getValue(String key){
+		if (values.containsKey(key)){
+			return values.get(key);
+		}
+		return 0.0;
 	}
 }
