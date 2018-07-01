@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# Conexao
+# ssh -i ~/.ssh/agdb.pem ubuntu@agentesdabolsa.com.br
+
 echo "**********************************************"
 echo "  Build Agentes da Bolsa    "
 echo "**********************************************"
